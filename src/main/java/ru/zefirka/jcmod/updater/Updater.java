@@ -30,7 +30,7 @@ public class Updater {
     }
 
     public static void init() {
-        currentUpdater = UpdaterSource.GITHUB;
+        currentUpdater = UpdaterSource.DROPBOX;
         try {
             StartupMessageManager.addModMessage("UPDATES CHECK...");
 
