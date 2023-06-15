@@ -1,0 +1,14 @@
+{
+  "required": true,
+  "package": "ru.zefirka.jcmod.mixins",
+  "compatibilityLevel": "JAVA_8",
+  "client": [
+    "InGameHudMixin",
+    "RecipeToastDisabler",
+    "TutorialDisabler"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "refmap": "jcmod.mixin-refmap.json"
+}
