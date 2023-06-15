@@ -15,7 +15,10 @@ public class Updater {
     private static final Map<String, String> newHashSums = new HashMap<>();
     private static final Map<UpdaterSource, String> hashSumsUrls = BuilderEnumMap.stringsBuilder(UpdaterSource.class)
             .append(UpdaterSource.DROPBOX, "https://www.dropbox.com/s/q9e948x2db80vf9/sums.txt?dl=1")
-            .append(UpdaterSource.DROPBOX_RESERVE1, "https://www.dropbox.com/s/q9e948x2db80vf9/sums.txt?dl=1");
+            .append(UpdaterSource.DROPBOX_RESERVE1, "https://www.dropbox.com/scl/fi/vfka4g8pnq1p6b5z2332c/sums.txt?dl=1&rlkey=loeipadv7ksiy866w0zhaigtr")
+            .append(UpdaterSource.YANDEX_DISK, "https://getfile.dokpub.com/yandex/get/https://disk.yandex.ru/d/ViAMs6kL3s4XMA")
+            .append(UpdaterSource.GOOGLE_DRIVE, "https://drive.google.com/uc?export=download&confirm=no_antivirus&id=1uET9sHxEGCogttDXUMzDNwUspU56fXa_")
+            .append(UpdaterSource.ONE_DRIVE, "https://onedrive.live.com/download?cid=CE8924A0FDC7D9EB&resid=CE8924A0FDC7D9EB%21806&authkey=ALhOGufe0Jl6Mmo");
     private static String absolutePath;
     private static UpdaterSource currentUpdater;
 
@@ -37,10 +40,10 @@ public class Updater {
                     .path(absolutePath + File.separator + "resourcepacks")
                     .updateUrls(BuilderEnumMap.stringsBuilder(UpdaterSource.class)
                             .append(UpdaterSource.DROPBOX, "https://www.dropbox.com/s/nk6af45cgs6ady8/JediPack%20Eternal.zip?dl=1")
-                            .append(UpdaterSource.DROPBOX_RESERVE1, "https://www.dropbox.com/s/nk6af45cgs6ady8/JediPack%20Eternal.zip?dl=1")
-                            .append(UpdaterSource.YANDEX_DISK, "")
-                            .append(UpdaterSource.GOOGLE_DRIVE, "")
-                            .append(UpdaterSource.ONE_DRIVE, ""))
+                            .append(UpdaterSource.DROPBOX_RESERVE1, "https://www.dropbox.com/scl/fi/8ohh8s72gl7gxbbrlj7q0/JediPack-Eternal.zip?dl=1&rlkey=9stkfeqi5cxqsht8ews5ky0ha")
+                            .append(UpdaterSource.YANDEX_DISK, "https://getfile.dokpub.com/yandex/get/https://disk.yandex.ru/d/efol4xkb4fbURg")
+                            .append(UpdaterSource.GOOGLE_DRIVE, "https://drive.google.com/uc?export=download&id=161f88pfXUUTPF2otS5pxYsNe8lHz9Se8")
+                            .append(UpdaterSource.ONE_DRIVE, "https://onedrive.live.com/download?cid=CE8924A0FDC7D9EB&resid=CE8924A0FDC7D9EB%21809&authkey=AMSi88xNvboy3xo"))
                     .build());
 
             initFile(UpdateFile.builder().id("ips").fileName("servers.dat")
@@ -48,23 +51,23 @@ public class Updater {
                     .updateUrls(
                             BuilderEnumMap.stringsBuilder(UpdaterSource.class)
                                     .append(UpdaterSource.DROPBOX, "https://www.dropbox.com/s/l600pueyz81e7jm/servers.dat?dl=1")
-                                    .append(UpdaterSource.DROPBOX_RESERVE1, "https://www.dropbox.com/s/l600pueyz81e7jm/servers.dat?dl=1")
-                                    .append(UpdaterSource.YANDEX_DISK, "")
-                                    .append(UpdaterSource.GOOGLE_DRIVE, "")
-                                    .append(UpdaterSource.ONE_DRIVE, ""))
+                                    .append(UpdaterSource.DROPBOX_RESERVE1, "https://www.dropbox.com/scl/fi/yfwykitqhs4txwrankokp/servers.dat?dl=1&rlkey=t3o8f4rmmnsmmalnalrz5kv3n")
+                                    .append(UpdaterSource.YANDEX_DISK, "https://getfile.dokpub.com/yandex/get/https://disk.yandex.ru/d/VdtsVuajuOexfw")
+                                    .append(UpdaterSource.GOOGLE_DRIVE, "https://drive.google.com/uc?export=download&id=1szuFQt_4GLhQ_hV6pu0SQBhUNIWrLdpc")
+                                    .append(UpdaterSource.ONE_DRIVE, "https://onedrive.live.com/download?cid=CE8924A0FDC7D9EB&resid=CE8924A0FDC7D9EB%21807&authkey=ADr1CCPiG7KQ6mc"))
                     .build());
 
             initFile(UpdateFile.builder()
                             .id("mod")
-                            .fileName("JCMod-1.2-Final.jar")
+                            .fileName("EternalMod-STABLE.jar")
                             .path(absolutePath + File.separator + "mods")
                                     .updateUrls(
                     BuilderEnumMap.stringsBuilder(UpdaterSource.class)
                             .append(UpdaterSource.DROPBOX, "https://www.dropbox.com/s/zoydenumhw7nd2q/JCMod-1.2-Final.jar?dl=1")
-                            .append(UpdaterSource.DROPBOX_RESERVE1, "https://www.dropbox.com/s/zoydenumhw7nd2q/JCMod-1.2-Final.jar?dl=1")
-                            .append(UpdaterSource.YANDEX_DISK, "")
-                            .append(UpdaterSource.GOOGLE_DRIVE, "")
-                            .append(UpdaterSource.ONE_DRIVE, ""))
+                            .append(UpdaterSource.DROPBOX_RESERVE1, "https://www.dropbox.com/scl/fi/vrckrda7eytz4gu03ae58/EternalMod-STABLE.jar?dl=1&rlkey=78ayhv5hceb89s4zi40wi88iq")
+                            .append(UpdaterSource.YANDEX_DISK, "https://getfile.dokpub.com/yandex/get/https://disk.yandex.ru/d/A-09nx0ZCtmW0A")
+                            .append(UpdaterSource.GOOGLE_DRIVE, "https://drive.google.com/uc?export=download&id=14UYDk0Gx1Hn4oC8srqX2neHO0rlLXCqA")
+                            .append(UpdaterSource.ONE_DRIVE, "https://onedrive.live.com/download?cid=CE8924A0FDC7D9EB&resid=CE8924A0FDC7D9EB%21808&authkey=ALvCLnPcFBdCg38"))
                             .rebootClient(true)
                             .build());
 
@@ -79,9 +82,9 @@ public class Updater {
         updateFiles.forEach((id, updateFile) -> {
             updateFile.setNewFileSum(newHashSums.get(id));
             if (updateFile.getNewFileSum().equals(updateFile.getOriginalFileSum())) {
-                System.out.println("SIMILAR");
+                System.out.println(getCurrentUpdater() + ": " + id + " SIMILAR");
             } else {
-                System.out.println("NOT SIMILAR, UPDATING...");
+                System.out.println(getCurrentUpdater() + ": NOT SIMILAR, UPDATING...");
                 updateFile.update();
                 if (updateFile.isRebootClient()) {
                     REBOOT = true;

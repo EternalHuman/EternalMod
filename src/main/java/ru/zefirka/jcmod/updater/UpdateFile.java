@@ -41,6 +41,10 @@ public class UpdateFile {
     public void update() {
         try {
             StartupMessageManager.addModMessage("Updating: " + getFileName());
+            if (this.file != null) {
+                Files.deleteIfExists(this.file.toPath());
+                System.out.println("Old " + getId() + " file deleted!");
+            }
             long startMs = System.currentTimeMillis();
             URL website = new URL(getUpdateUrl());
             URLConnection urlConnection = website.openConnection();
