@@ -1,5 +1,6 @@
 package ru.zefirka.jcmod.binds;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.client.util.InputMappings;
@@ -17,8 +18,8 @@ import java.util.function.Consumer;
 @OnlyIn(Dist.CLIENT)
 public class BindManager
 {
-    public static final Map<String, CustomBind> customBindMap = new HashMap<>();
-    public static final Set<KeyBinding> keybindsMap = new HashSet<>();
+    private static final Map<String, CustomBind> customBindMap = new HashMap<>();
+    private static final Set<KeyBinding> keybindsMap = new HashSet<>();
     public static final String CATEGORY = "jcmod.category";
 
     public static void init() {
@@ -101,5 +102,22 @@ public class BindManager
     }
     public static CustomBind getCustomBind(String techName) {
         return customBindMap.getOrDefault(techName, null);
+    }
+
+    public static void onInput() {
+        Minecraft minecraft = JCMod.MINECRAFT;
+        if (!JCMod.ENABLED) return;
+        if (minecraft.screen != null) return;
+        for (KeyBinding keyBinding : keybindsMap) {
+            if (!keyBinding.isDown()) continue;
+            CustomBind customBind = BindManager.getCustomBind(keyBinding.getName());
+            if (customBind == null) continue;
+            JCMod.debug("M #4 SD NOT NULL");
+            if (customBind.getConsumer() != null) {
+                customBind.getConsumer().accept(minecraft.player);
+            } else {
+                minecraft.player.chat(customBind.getCommand());
+            }
+        }
     }
 }

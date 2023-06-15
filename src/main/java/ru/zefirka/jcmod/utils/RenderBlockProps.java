@@ -15,10 +15,6 @@ public class RenderBlockProps {
         this.color = color;
     }
 
-    public RenderBlockProps(int x, int y, int z, int color) {
-        this(new BlockPos(x, y, z), color );
-    }
-
     public int getColor() {
         return color;
     }

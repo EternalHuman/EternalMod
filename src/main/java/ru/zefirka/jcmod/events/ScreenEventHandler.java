@@ -98,7 +98,6 @@ public class ScreenEventHandler {
                 }, JCMod.DS_LINK, true));
             }));
         } else if (screen instanceof InventoryScreen) {
-            InventoryScreen inventoryScreen = (InventoryScreen) screen;
             while (widgetIterator.hasNext()) {
                 Widget widget = widgetIterator.next();
                 if (widget instanceof ImageButton) {

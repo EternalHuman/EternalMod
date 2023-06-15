@@ -124,7 +124,7 @@ public class RenderUtils {
             }
         };
 
-        private Profile() {}
+        Profile() {}
         public abstract void apply();
         public abstract void clean();
     }

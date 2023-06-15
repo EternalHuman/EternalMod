@@ -4,17 +4,14 @@ import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.client.util.InputMappings;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
-
 import java.util.function.Consumer;
 
 public class CustomBind {
-    private String command, techName;
-    private int key;
-    private long lastPressTime;
-    private InputMappings.Type type;
+    private final String command, techName;
+    private final int key;
+    private final InputMappings.Type type;
     private KeyBinding keyBinding;
-
-    private Consumer<ClientPlayerEntity> consumer;
+    private final Consumer<ClientPlayerEntity> consumer;
 
     public CustomBind(String techName, String command, Consumer<ClientPlayerEntity> consumer, int key, InputMappings.Type type) {
         this.command = command;
@@ -25,21 +22,6 @@ public class CustomBind {
         initKey();
     }
 
-    public CustomBind(String techName, String command, int key, InputMappings.Type type) {
-        this(techName, command, null, key, type);
-    }
-
-    public CustomBind(String techName, Consumer<ClientPlayerEntity> consumer, int key, InputMappings.Type type) {
-        this(techName, null, consumer, key, type);
-    }
-
-    public void setLastPressTime(long lastPressTime) {
-        this.lastPressTime = lastPressTime;
-    }
-
-    public long getLastPressTime() {
-        return lastPressTime;
-    }
     public Consumer<ClientPlayerEntity> getConsumer() {
         return this.consumer;
     }
