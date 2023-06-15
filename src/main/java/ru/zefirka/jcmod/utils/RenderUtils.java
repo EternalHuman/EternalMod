@@ -19,6 +19,7 @@ public class RenderUtils {
     private static final int GL_LINE = 6913;
     private static final int GL_FILL = 6914;
     private static final int GL_LINES = 1;
+    private static final float OPACITY = 1;
 
     public static final List<RenderBlockProps> syncRenderList = Collections.synchronizedList(new ArrayList<>());
 
@@ -43,7 +44,7 @@ public class RenderUtils {
             RenderSystem.pushMatrix();
             RenderSystem.translated(blockProps.getPos().getX(), blockProps.getPos().getY(), blockProps.getPos().getZ());
             buffer.begin(GL_LINES, DefaultVertexFormats.POSITION_COLOR );
-            renderBlock(buffer, blockProps, 1);
+            renderBlock(buffer, blockProps);
             tessellator.end();
             RenderSystem.popMatrix();
         } );
@@ -51,46 +52,46 @@ public class RenderUtils {
         RenderSystem.popMatrix();
     }
 
-    private static void renderBlock(IVertexBuilder buffer, RenderBlockProps props, float opacity) {
+    private static void renderBlock(IVertexBuilder buffer, RenderBlockProps props) {
         final float red = (props.getColor() >> 16 & 0xff) / 255f;
         final float green = (props.getColor() >> 8 & 0xff) / 255f;
         final float blue = (props.getColor() & 0xff) / 255f;
 
         //.vertex?
-        buffer.vertex(0, 1, 0).color(red, green, blue, opacity).endVertex();
-        buffer.vertex(1, 1, 0).color(red, green, blue, opacity).endVertex();
-        buffer.vertex(1, 1, 0).color(red, green, blue, opacity).endVertex();
-        buffer.vertex(1, 1, 1).color(red, green, blue, opacity).endVertex();
-        buffer.vertex(1, 1, 1).color(red, green, blue, opacity).endVertex();
-        buffer.vertex(0, 1, 1).color(red, green, blue, opacity).endVertex();
-        buffer.vertex(0, 1, 1).color(red, green, blue, opacity).endVertex();
-        buffer.vertex(0, 1, 0).color(red, green, blue, opacity).endVertex();
+        buffer.vertex(0, 1, 0).color(red, green, blue, OPACITY).endVertex();
+        buffer.vertex(1, 1, 0).color(red, green, blue, OPACITY).endVertex();
+        buffer.vertex(1, 1, 0).color(red, green, blue, OPACITY).endVertex();
+        buffer.vertex(1, 1, 1).color(red, green, blue, OPACITY).endVertex();
+        buffer.vertex(1, 1, 1).color(red, green, blue, OPACITY).endVertex();
+        buffer.vertex(0, 1, 1).color(red, green, blue, OPACITY).endVertex();
+        buffer.vertex(0, 1, 1).color(red, green, blue, OPACITY).endVertex();
+        buffer.vertex(0, 1, 0).color(red, green, blue, OPACITY).endVertex();
 
         // BOTTOM
-        buffer.vertex(1, 0, 0).color(red, green, blue, opacity).endVertex();
-        buffer.vertex(1, 0, 1).color(red, green, blue, opacity).endVertex();
-        buffer.vertex(1, 0, 1).color(red, green, blue, opacity).endVertex();
-        buffer.vertex(0, 0, 1).color(red, green, blue, opacity).endVertex();
-        buffer.vertex(0, 0, 1).color(red, green, blue, opacity).endVertex();
-        buffer.vertex(0, 0, 0).color(red, green, blue, opacity).endVertex();
-        buffer.vertex(0, 0, 0).color(red, green, blue, opacity).endVertex();
-        buffer.vertex(1, 0, 0).color(red, green, blue, opacity).endVertex();
+        buffer.vertex(1, 0, 0).color(red, green, blue, OPACITY).endVertex();
+        buffer.vertex(1, 0, 1).color(red, green, blue, OPACITY).endVertex();
+        buffer.vertex(1, 0, 1).color(red, green, blue, OPACITY).endVertex();
+        buffer.vertex(0, 0, 1).color(red, green, blue, OPACITY).endVertex();
+        buffer.vertex(0, 0, 1).color(red, green, blue, OPACITY).endVertex();
+        buffer.vertex(0, 0, 0).color(red, green, blue, OPACITY).endVertex();
+        buffer.vertex(0, 0, 0).color(red, green, blue, OPACITY).endVertex();
+        buffer.vertex(1, 0, 0).color(red, green, blue, OPACITY).endVertex();
 
         // Edgevertex
-        buffer.vertex(1, 0, 1).color(red, green, blue, opacity).endVertex();
-        buffer.vertex(1, 1, 1).color(red, green, blue, opacity).endVertex();
+        buffer.vertex(1, 0, 1).color(red, green, blue, OPACITY).endVertex();
+        buffer.vertex(1, 1, 1).color(red, green, blue, OPACITY).endVertex();
 
         // Edgevertex
-        buffer.vertex(1, 0, 0).color(red, green, blue, opacity).endVertex();
-        buffer.vertex(1, 1, 0).color(red, green, blue, opacity).endVertex();
+        buffer.vertex(1, 0, 0).color(red, green, blue, OPACITY).endVertex();
+        buffer.vertex(1, 1, 0).color(red, green, blue, OPACITY).endVertex();
 
         // Edgevertex
-        buffer.vertex(0, 0, 1).color(red, green, blue, opacity).endVertex();
-        buffer.vertex(0, 1, 1).color(red, green, blue, opacity).endVertex();
+        buffer.vertex(0, 0, 1).color(red, green, blue, OPACITY).endVertex();
+        buffer.vertex(0, 1, 1).color(red, green, blue, OPACITY).endVertex();
 
         // Edgevertex
-        buffer.vertex(0, 0, 0).color(red, green, blue, opacity).endVertex();
-        buffer.vertex(0, 1, 0).color(red, green, blue, opacity).endVertex();
+        buffer.vertex(0, 0, 0).color(red, green, blue, OPACITY).endVertex();
+        buffer.vertex(0, 1, 0).color(red, green, blue, OPACITY).endVertex();
     }
 
 
@@ -124,8 +125,8 @@ public class RenderUtils {
         };
 
         Profile() {}
-        public abstract void apply();
-        public abstract void clean();
+        protected abstract void apply();
+        protected abstract void clean();
     }
 }
 

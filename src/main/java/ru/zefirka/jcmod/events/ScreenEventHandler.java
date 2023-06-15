@@ -44,13 +44,16 @@ public class ScreenEventHandler {
                         widget.visible = false;
                     }
                 } else {
-                    if (key.equals("menu.singleplayer") ||
-                            key.equals("menu.online")) {
-                        widget.visible = false;
-                        widget.active = false;
-                    } else if (key.equals("menu.multiplayer")) {
-                        widget.active = true;
-                        widget.setMessage(new TranslationTextComponent("menu.select"));
+                    switch (key) {
+                        case "menu.singleplayer":
+                        case "menu.online":
+                            widget.visible = false;
+                            widget.active = false;
+                            break;
+                        case "menu.multiplayer":
+                            widget.active = true;
+                            widget.setMessage(new TranslationTextComponent("menu.select"));
+                            break;
                     }
                 }
                 System.out.println(translationTextComponent.getKey());
@@ -70,15 +73,21 @@ public class ScreenEventHandler {
                 if (!(widget.getMessage() instanceof TranslationTextComponent)) return;
                 TranslationTextComponent translationTextComponent = (TranslationTextComponent) widget.getMessage();
                 String key = translationTextComponent.getKey();
-                if (key.equals("menu.shareToLan") || key.equals("gui.advancements") || //If you use switch, tear out your eyes
-                        key.equals("menu.sendFeedback") || key.equals("menu.reportBugs")) {
-                    widget.visible = false;
-                    widget.active = false;
-                } else if (key.equals("menu.options")) {
-                    widget.setWidth(204);
-                } else if (key.equals("gui.stats")) {
-                    widget.setWidth(204);
-                    widget.x = ingameMenuScreen.width / 2 - 102;
+                switch (key) {
+                    case "menu.shareToLan":
+                    case "gui.advancements":
+                    case "menu.sendFeedback":
+                    case "menu.reportBugs":
+                        widget.visible = false;
+                        widget.active = false;
+                        break;
+                    case "menu.options":
+                        widget.setWidth(204);
+                        break;
+                    case "gui.stats":
+                        widget.setWidth(204);
+                        widget.x = ingameMenuScreen.width / 2 - 102;
+                        break;
                 }
             }
             event.addWidget(new Button(ingameMenuScreen.width / 2 - 102, ingameMenuScreen.height / 4 + 72 - 16, 98, 20,

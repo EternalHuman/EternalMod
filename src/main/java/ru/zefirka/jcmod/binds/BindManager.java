@@ -22,7 +22,7 @@ public class BindManager
     public static final String CATEGORY = "jcmod.category";
 
     public static void init() {
-        createBind("key.bind.cl", clientPlayerEntity -> {
+        createKeyBind("key.bind.cl", clientPlayerEntity -> {
             long endTime = ChestLocator.getLastEspTime() + ChestLocator.COOLDOWN;
             long nowTime = System.currentTimeMillis();
             if (nowTime < endTime) {
@@ -49,49 +49,49 @@ public class BindManager
                             }),
                     ChestLocator.DURATION
             );
-        }, GLFW.GLFW_KEY_F6, InputMappings.Type.KEYSYM);
+        }, GLFW.GLFW_KEY_F6);
 
-        createBind("key.bind.ability1a", "/keybind 1 -c", GLFW.GLFW_KEY_Z);
-        createBind("key.bind.ability1b", "/keybind 2 -c", GLFW.GLFW_KEY_X);
-        createBind("key.bind.ability1c", "/keybind 3 -c", GLFW.GLFW_KEY_C);
-        createBind("key.bind.ability1d", "/keybind 4 -c", GLFW.GLFW_KEY_R);
-        createBind("key.bind.ability1e", "/keybind 5 -c", GLFW.GLFW_KEY_F4);
-        createBind("key.bind.ability1f", "/keybind 6 -c", GLFW.GLFW_KEY_V);
-        createBind("key.bind.ability1g", "/keybind 7 -c", GLFW.GLFW_KEY_U);
-        createBind("key.bind.ability1h", "/keybind 8 -c", GLFW.GLFW_KEY_G);
-        createBind("key.bind.ability1i", "/keybind 9 -c", GLFW.GLFW_KEY_B);
-        createBind("key.bind.ability1j", "/keybind 10 -c", GLFW.GLFW_KEY_Y);
-        createBind("key.bind.ability1k", "/keybind 11 -c", GLFW.GLFW_KEY_H);
-        createBind("key.bind.ability1l", "/keybind 12 -c", GLFW.GLFW_KEY_N);
-        createBind("key.bind.ability1m", "/keybind 13 -c", GLFW.GLFW_KEY_LEFT_ALT);
-        createBind("key.bind.ability1n", "/keybind 14 -c", GLFW.GLFW_MOUSE_BUTTON_4, InputMappings.Type.MOUSE);
-        createBind("key.bind.ability1o", "/keybind 15 -c", GLFW.GLFW_MOUSE_BUTTON_5, InputMappings.Type.MOUSE);
+        createKeyBind("key.bind.ability1a", "/keybind 1 -c", GLFW.GLFW_KEY_Z);
+        createKeyBind("key.bind.ability1b", "/keybind 2 -c", GLFW.GLFW_KEY_X);
+        createKeyBind("key.bind.ability1c", "/keybind 3 -c", GLFW.GLFW_KEY_C);
+        createKeyBind("key.bind.ability1d", "/keybind 4 -c", GLFW.GLFW_KEY_R);
+        createKeyBind("key.bind.ability1e", "/keybind 5 -c", GLFW.GLFW_KEY_F4);
+        createKeyBind("key.bind.ability1f", "/keybind 6 -c", GLFW.GLFW_KEY_V);
+        createKeyBind("key.bind.ability1g", "/keybind 7 -c", GLFW.GLFW_KEY_U);
+        createKeyBind("key.bind.ability1h", "/keybind 8 -c", GLFW.GLFW_KEY_G);
+        createKeyBind("key.bind.ability1i", "/keybind 9 -c", GLFW.GLFW_KEY_B);
+        createKeyBind("key.bind.ability1j", "/keybind 10 -c", GLFW.GLFW_KEY_Y);
+        createKeyBind("key.bind.ability1k", "/keybind 11 -c", GLFW.GLFW_KEY_H);
+        createKeyBind("key.bind.ability1l", "/keybind 12 -c", GLFW.GLFW_KEY_N);
+        createKeyBind("key.bind.ability1m", "/keybind 13 -c", GLFW.GLFW_KEY_LEFT_ALT);
+        createMouseBind("key.bind.ability1n", "/keybind 14 -c", GLFW.GLFW_MOUSE_BUTTON_4);
+        createMouseBind("key.bind.ability1o", "/keybind 15 -c", GLFW.GLFW_MOUSE_BUTTON_5);
 
-        createBind("key.bind.grenade1a", "/keybind 17 -c", GLFW.GLFW_MOUSE_BUTTON_6, InputMappings.Type.MOUSE);
-        createBind("key.bind.grenade1b", "/keybind 18 -c",  GLFW.GLFW_KEY_O);
-        createBind("key.bind.grenade1c", "/keybind 19 -c", GLFW.GLFW_KEY_CAPS_LOCK);
-        createBind("key.bind.grenade1d", "/keybind 20 -c", GLFW.GLFW_KEY_F1);
+        createMouseBind("key.bind.grenade1a", "/keybind 17 -c", GLFW.GLFW_MOUSE_BUTTON_6);
+        createKeyBind("key.bind.grenade1b", "/keybind 18 -c",  GLFW.GLFW_KEY_O);
+        createKeyBind("key.bind.grenade1c", "/keybind 19 -c", GLFW.GLFW_KEY_CAPS_LOCK);
+        createKeyBind("key.bind.grenade1d", "/keybind 20 -c", GLFW.GLFW_KEY_F1);
 
-        createBind("key.bind.debug", entityPlayer -> {
+        createKeyBind("key.bind.debug", entityPlayer -> {
             JCMod.DEBUG = !JCMod.DEBUG;
             entityPlayer.sendMessage(new StringTextComponent("Debug mode" + (JCMod.DEBUG ? " enabled" : " disabled")), entityPlayer.getUUID());
-        },  GLFW.GLFW_KEY_F8, InputMappings.Type.KEYSYM);
-        createBind("key.bind.disable", entityPlayer -> {
+        },  GLFW.GLFW_KEY_F8);
+        createKeyBind("key.bind.disable", entityPlayer -> {
             JCMod.ENABLED = !JCMod.ENABLED;
             entityPlayer.sendMessage(new StringTextComponent("Binds" + (JCMod.ENABLED ? " enabled" : " disabled")), entityPlayer.getUUID());
-        },  GLFW.GLFW_KEY_F9, InputMappings.Type.KEYSYM);
+        },  GLFW.GLFW_KEY_F9);
     }
 
-    private static void createBind(String techName, String command, int key, InputMappings.Type type) {
-        createBind(techName, command, null, key, type);
-    }
-
-    private static void createBind(String techName, String command, int key) {
+    private static void createKeyBind(String techName, String command, int key) {
         createBind(techName, command, null, key, InputMappings.Type.KEYSYM);
     }
 
-    private static void createBind(String techName, Consumer<ClientPlayerEntity> consumer, int key, InputMappings.Type type) {
-        createBind(techName, null, consumer, key, type);
+    private static void createMouseBind(String techName, String command, int key) {
+        createBind(techName, command, null, key, InputMappings.Type.MOUSE);
+    }
+
+    private static void createKeyBind(String techName, Consumer<ClientPlayerEntity> consumer, int key) {
+        createBind(techName, null, consumer, key, InputMappings.Type.KEYSYM);
     }
 
     private static void createBind(String techName, String command, Consumer<ClientPlayerEntity> consumer, int key, InputMappings.Type type) {
