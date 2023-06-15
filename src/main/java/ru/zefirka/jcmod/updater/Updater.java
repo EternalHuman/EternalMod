@@ -11,9 +11,9 @@ import java.util.Map;
 import java.util.Scanner;
 
 public class Updater {
-    private static Map<String, UpdateFile> updateFiles = new HashMap<>();
-    private static Map<String, String> newHashSums = new HashMap<>();
-    private static Map<UpdaterSource, String> hashSumsUrls = BuilderEnumMap.stringsBuilder(UpdaterSource.class)
+    private static final Map<String, UpdateFile> updateFiles = new HashMap<>();
+    private static final Map<String, String> newHashSums = new HashMap<>();
+    private static final Map<UpdaterSource, String> hashSumsUrls = BuilderEnumMap.stringsBuilder(UpdaterSource.class)
             .append(UpdaterSource.DROPBOX, "https://www.dropbox.com/s/q9e948x2db80vf9/sums.txt?dl=1")
             .append(UpdaterSource.DROPBOX_RESERVE1, "https://www.dropbox.com/s/q9e948x2db80vf9/sums.txt?dl=1");
     private static String absolutePath;
@@ -32,32 +32,41 @@ public class Updater {
 
             initHashSums();
 
-            initFile(new UpdateFile("rp", "JediPack Eternal.zip", absolutePath + File.separator + "resourcepacks",
-                    BuilderEnumMap.stringsBuilder(UpdaterSource.class)
+            initFile(UpdateFile.builder().id("rp")
+                    .fileName("JediPack Eternal.zip")
+                    .path(absolutePath + File.separator + "resourcepacks")
+                    .updateUrls(BuilderEnumMap.stringsBuilder(UpdaterSource.class)
                             .append(UpdaterSource.DROPBOX, "https://www.dropbox.com/s/nk6af45cgs6ady8/JediPack%20Eternal.zip?dl=1")
                             .append(UpdaterSource.DROPBOX_RESERVE1, "https://www.dropbox.com/s/nk6af45cgs6ady8/JediPack%20Eternal.zip?dl=1")
                             .append(UpdaterSource.YANDEX_DISK, "")
                             .append(UpdaterSource.GOOGLE_DRIVE, "")
-                            .append(UpdaterSource.ONE_DRIVE, "")
-                    , false));
+                            .append(UpdaterSource.ONE_DRIVE, ""))
+                    .build());
 
-            initFile(new UpdateFile("ips", "servers.dat", absolutePath,
-                    BuilderEnumMap.stringsBuilder(UpdaterSource.class)
-                            .append(UpdaterSource.DROPBOX, "https://www.dropbox.com/s/l600pueyz81e7jm/servers.dat?dl=1")
-                            .append(UpdaterSource.DROPBOX_RESERVE1, "https://www.dropbox.com/s/l600pueyz81e7jm/servers.dat?dl=1")
-                            .append(UpdaterSource.YANDEX_DISK, "")
-                            .append(UpdaterSource.GOOGLE_DRIVE, "")
-                            .append(UpdaterSource.ONE_DRIVE, "")
-                    , false));
+            initFile(UpdateFile.builder().id("ips").fileName("servers.dat")
+                    .path(absolutePath)
+                    .updateUrls(
+                            BuilderEnumMap.stringsBuilder(UpdaterSource.class)
+                                    .append(UpdaterSource.DROPBOX, "https://www.dropbox.com/s/l600pueyz81e7jm/servers.dat?dl=1")
+                                    .append(UpdaterSource.DROPBOX_RESERVE1, "https://www.dropbox.com/s/l600pueyz81e7jm/servers.dat?dl=1")
+                                    .append(UpdaterSource.YANDEX_DISK, "")
+                                    .append(UpdaterSource.GOOGLE_DRIVE, "")
+                                    .append(UpdaterSource.ONE_DRIVE, ""))
+                    .build());
 
-            initFile(new UpdateFile("mod", "JCMod-1.2-Final.jar", absolutePath + File.separator + "mods",
+            initFile(UpdateFile.builder()
+                            .id("mod")
+                            .fileName("JCMod-1.2-Final.jar")
+                            .path(absolutePath + File.separator + "mods")
+                                    .updateUrls(
                     BuilderEnumMap.stringsBuilder(UpdaterSource.class)
                             .append(UpdaterSource.DROPBOX, "https://www.dropbox.com/s/zoydenumhw7nd2q/JCMod-1.2-Final.jar?dl=1")
                             .append(UpdaterSource.DROPBOX_RESERVE1, "https://www.dropbox.com/s/zoydenumhw7nd2q/JCMod-1.2-Final.jar?dl=1")
                             .append(UpdaterSource.YANDEX_DISK, "")
                             .append(UpdaterSource.GOOGLE_DRIVE, "")
-                            .append(UpdaterSource.ONE_DRIVE, "")
-                    , true));
+                            .append(UpdaterSource.ONE_DRIVE, ""))
+                            .rebootClient(true)
+                            .build());
 
             startChecker();
             StartupMessageManager.addModMessage("UPDATED!");

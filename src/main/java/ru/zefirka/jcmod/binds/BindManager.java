@@ -98,7 +98,7 @@ public class BindManager
     private static void createBind(String techName, String command, Consumer<ClientPlayerEntity> consumer, int key, InputMappings.Type type) {
         CustomBind customBind = new CustomBind(techName, command, consumer, key, type);
         customBindMap.put(customBind.getTechName(), customBind);
-        keybindsMap.add(customBind.getKey());
+        keybindsMap.add(customBind.getKeyBinding());
     }
     public static CustomBind getCustomBind(String techName) {
         return customBindMap.getOrDefault(techName, null);
@@ -112,12 +112,7 @@ public class BindManager
             if (!keyBinding.isDown()) continue;
             CustomBind customBind = BindManager.getCustomBind(keyBinding.getName());
             if (customBind == null) continue;
-            JCMod.debug("M #4 SD NOT NULL");
-            if (customBind.getConsumer() != null) {
-                customBind.getConsumer().accept(minecraft.player);
-            } else {
-                minecraft.player.chat(customBind.getCommand());
-            }
+            customBind.handle(minecraft.player);
         }
     }
 }

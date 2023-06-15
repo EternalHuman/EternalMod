@@ -1,5 +1,8 @@
 package ru.zefirka.jcmod.updater;
 
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
 import net.minecraftforge.fml.loading.progress.StartupMessageManager;
 import ru.zefirka.jcmod.JCMod;
 
@@ -17,28 +20,21 @@ import java.security.MessageDigest;
 import java.util.Map;
 import java.util.function.Consumer;
 
+@Builder
 public class UpdateFile {
-    private final String id, fileName, path;
-    private String originalFileSum, newFileSum;
+    @Getter @Setter
+    private String id, fileName, path, originalFileSum, newFileSum;
     private File file;
     private final Map<UpdaterSource, String> updateUrls;
     private final boolean rebootClient;
     private Consumer<UpdateFile> afterUpdate;
 
-    public UpdateFile(String id, String fileName, String path, Map<UpdaterSource, String> updateUrls, boolean rebootClient) {
-        this.id = id;
-        this.fileName = fileName;
-        this.path = path;
-        this.updateUrls = updateUrls;
-        this.rebootClient = rebootClient;
-    }
-
-    public void init() {
+    protected void init() {
         initFileMD5();
         initFile();
     }
 
-    public Consumer<UpdateFile> getAfterUpdate() {
+    protected Consumer<UpdateFile> getAfterUpdate() {
         return afterUpdate;
     }
 
@@ -67,11 +63,11 @@ public class UpdateFile {
         }
     }
 
-    public String getFullPath() {
+    protected String getFullPath() {
         return getPath() + File.separator + getFileName();
     }
 
-    public boolean isRebootClient() {
+    protected boolean isRebootClient() {
         return rebootClient;
     }
 
@@ -90,35 +86,7 @@ public class UpdateFile {
         }
     }
 
-    public String getId() {
-        return id;
-    }
-
-    public String getOriginalFileSum() {
-        return originalFileSum;
-    }
-
-    public void setOriginalFileSum(String originalFileSum) {
-        this.originalFileSum = originalFileSum;
-    }
-
-    public String getNewFileSum() {
-        return newFileSum;
-    }
-
-    public void setNewFileSum(String newFileSum) {
-        this.newFileSum = newFileSum;
-    }
-
-    public String getFileName() {
-        return fileName;
-    }
-
-    public String getPath() {
-        return path;
-    }
-
-    public String getUpdateUrl() {
+    protected String getUpdateUrl() {
         return updateUrls.get(Updater.getCurrentUpdater());
     }
 }

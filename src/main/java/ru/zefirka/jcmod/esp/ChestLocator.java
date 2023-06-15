@@ -1,5 +1,7 @@
 package ru.zefirka.jcmod.esp;
 
+import lombok.Getter;
+import lombok.Setter;
 import net.minecraft.client.Minecraft;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraftforge.api.distmarker.Dist;
@@ -18,7 +20,9 @@ public class ChestLocator {
     public static long COOLDOWN = TimeUnit.SECONDS.toMicros(60);
     public static long DURATION = TimeUnit.SECONDS.toMicros(15);
 
+    @Getter
     public static boolean enabled = false;
+    @Getter @Setter
     private static long lastEspTime = -1;
 
     @SubscribeEvent
@@ -44,18 +48,6 @@ public class ChestLocator {
             if (tileEntity.getType() != TileEntityType.CHEST && tileEntity.getType() != TileEntityType.TRAPPED_CHEST) return;
             RenderUtils.syncRenderList.add(new RenderBlockProps(tileEntity.getBlockPos(), Color.GREEN.getRGB()));
         });
-    }
-
-    public static long getLastEspTime() {
-        return lastEspTime;
-    }
-
-    public static void setLastEspTime(long lastEspTime) {
-        ChestLocator.lastEspTime = lastEspTime;
-    }
-
-    public static boolean isEnabled() {
-        return enabled;
     }
 
     public static void setEnabled(boolean enabled) {

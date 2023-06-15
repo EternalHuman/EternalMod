@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ResourcePack {
-    public static final String MAIN_PACK_NAME = "file/JediPack Eternal.zip";
+    private static final String MAIN_PACK_NAME = "file/JediPack Eternal.zip";
 
     public static void updateRP(Minecraft minecraft) {
         ResourcePackList resourcePackList = minecraft.getResourcePackRepository();
