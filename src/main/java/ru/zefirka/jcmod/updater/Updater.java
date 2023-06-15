@@ -16,6 +16,7 @@ public class Updater {
     private static final Map<UpdaterSource, String> hashSumsUrls = BuilderEnumMap.stringsBuilder(UpdaterSource.class)
             .append(UpdaterSource.DROPBOX, "https://www.dropbox.com/s/q9e948x2db80vf9/sums.txt?dl=1")
             .append(UpdaterSource.DROPBOX_RESERVE1, "https://www.dropbox.com/scl/fi/vfka4g8pnq1p6b5z2332c/sums.txt?dl=1&rlkey=loeipadv7ksiy866w0zhaigtr")
+            .append(UpdaterSource.GITHUB, "https://github.com/EternalHuman/EternalMod/releases/download/server/sums.txt")
             .append(UpdaterSource.YANDEX_DISK, "https://getfile.dokpub.com/yandex/get/https://disk.yandex.ru/d/ViAMs6kL3s4XMA")
             .append(UpdaterSource.GOOGLE_DRIVE, "https://drive.google.com/uc?export=download&confirm=no_antivirus&id=1uET9sHxEGCogttDXUMzDNwUspU56fXa_")
             .append(UpdaterSource.ONE_DRIVE, "https://onedrive.live.com/download?cid=CE8924A0FDC7D9EB&resid=CE8924A0FDC7D9EB%21806&authkey=ALhOGufe0Jl6Mmo");
@@ -29,21 +30,22 @@ public class Updater {
     }
 
     public static void init() {
-        currentUpdater = UpdaterSource.DROPBOX;
+        currentUpdater = UpdaterSource.GITHUB;
         try {
             StartupMessageManager.addModMessage("UPDATES CHECK...");
 
             initHashSums();
 
             initFile(UpdateFile.builder().id("rp")
-                    .fileName("JediPack Eternal.zip")
+                    .fileName("JediPack.Eternal.zip")
                     .path(absolutePath + File.separator + "resourcepacks")
                     .updateUrls(BuilderEnumMap.stringsBuilder(UpdaterSource.class)
-                            .append(UpdaterSource.DROPBOX, "https://www.dropbox.com/s/nk6af45cgs6ady8/JediPack%20Eternal.zip?dl=1")
-                            .append(UpdaterSource.DROPBOX_RESERVE1, "https://www.dropbox.com/scl/fi/8ohh8s72gl7gxbbrlj7q0/JediPack-Eternal.zip?dl=1&rlkey=9stkfeqi5cxqsht8ews5ky0ha")
-                            .append(UpdaterSource.YANDEX_DISK, "https://getfile.dokpub.com/yandex/get/https://disk.yandex.ru/d/efol4xkb4fbURg")
-                            .append(UpdaterSource.GOOGLE_DRIVE, "https://drive.google.com/uc?export=download&id=161f88pfXUUTPF2otS5pxYsNe8lHz9Se8")
-                            .append(UpdaterSource.ONE_DRIVE, "https://onedrive.live.com/download?cid=CE8924A0FDC7D9EB&resid=CE8924A0FDC7D9EB%21809&authkey=AMSi88xNvboy3xo"))
+                            .append(UpdaterSource.DROPBOX, "https://www.dropbox.com/s/zjdkuhx52rjhhnx/JediPack.Eternal.zip?dl=1")
+                            .append(UpdaterSource.DROPBOX_RESERVE1, "https://www.dropbox.com/scl/fi/o1aa6g7zgrsxovnnho84l/JediPack.Eternal.zip?dl=1&rlkey=g2hqgzrdomiko4n2yept5uj7j")
+                            .append(UpdaterSource.GITHUB, "https://github.com/EternalHuman/EternalMod/releases/download/server/JediPack.Eternal.zip")
+                            .append(UpdaterSource.YANDEX_DISK, "https://getfile.dokpub.com/yandex/get/https://disk.yandex.ru/d/_MMdPKfmEgZ7mg")
+                            .append(UpdaterSource.GOOGLE_DRIVE, "https://drive.google.com/uc?export=download&id=1cMC5I4ibGTvMux0bL6FCrjdtfnhGVwLk")
+                            .append(UpdaterSource.ONE_DRIVE, "https://onedrive.live.com/download?cid=CE8924A0FDC7D9EB&resid=CE8924A0FDC7D9EB%21810&authkey=ACNewfxSr4hWHI8"))
                     .build());
 
             initFile(UpdateFile.builder().id("ips").fileName("servers.dat")
@@ -52,6 +54,7 @@ public class Updater {
                             BuilderEnumMap.stringsBuilder(UpdaterSource.class)
                                     .append(UpdaterSource.DROPBOX, "https://www.dropbox.com/s/l600pueyz81e7jm/servers.dat?dl=1")
                                     .append(UpdaterSource.DROPBOX_RESERVE1, "https://www.dropbox.com/scl/fi/yfwykitqhs4txwrankokp/servers.dat?dl=1&rlkey=t3o8f4rmmnsmmalnalrz5kv3n")
+                                    .append(UpdaterSource.GITHUB, "https://github.com/EternalHuman/EternalMod/releases/download/server/servers.dat")
                                     .append(UpdaterSource.YANDEX_DISK, "https://getfile.dokpub.com/yandex/get/https://disk.yandex.ru/d/VdtsVuajuOexfw")
                                     .append(UpdaterSource.GOOGLE_DRIVE, "https://drive.google.com/uc?export=download&id=1szuFQt_4GLhQ_hV6pu0SQBhUNIWrLdpc")
                                     .append(UpdaterSource.ONE_DRIVE, "https://onedrive.live.com/download?cid=CE8924A0FDC7D9EB&resid=CE8924A0FDC7D9EB%21807&authkey=ADr1CCPiG7KQ6mc"))
@@ -65,6 +68,7 @@ public class Updater {
                     BuilderEnumMap.stringsBuilder(UpdaterSource.class)
                             .append(UpdaterSource.DROPBOX, "https://www.dropbox.com/s/x3t731ndh5dbahh/EternalMod-STABLE.jar?dl=1")
                             .append(UpdaterSource.DROPBOX_RESERVE1, "https://www.dropbox.com/scl/fi/vrckrda7eytz4gu03ae58/EternalMod-STABLE.jar?dl=1&rlkey=78ayhv5hceb89s4zi40wi88iq")
+                            .append(UpdaterSource.GITHUB, "https://github.com/EternalHuman/EternalMod/releases/download/release/EternalMod-STABLE.jar")
                             .append(UpdaterSource.YANDEX_DISK, "https://getfile.dokpub.com/yandex/get/https://disk.yandex.ru/d/A-09nx0ZCtmW0A")
                             .append(UpdaterSource.GOOGLE_DRIVE, "https://drive.google.com/uc?export=download&id=14UYDk0Gx1Hn4oC8srqX2neHO0rlLXCqA")
                             .append(UpdaterSource.ONE_DRIVE, "https://onedrive.live.com/download?cid=CE8924A0FDC7D9EB&resid=CE8924A0FDC7D9EB%21808&authkey=ALvCLnPcFBdCg38"))

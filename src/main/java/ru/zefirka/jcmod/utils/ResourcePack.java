@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ResourcePack {
-    private static final String MAIN_PACK_NAME = "file/JediPack Eternal.zip";
+    private static final String MAIN_PACK_NAME = "file/JediPack.Eternal.zip";
 
     public static void updateRP(Minecraft minecraft) {
         ResourcePackList resourcePackList = minecraft.getResourcePackRepository();
@@ -23,7 +23,6 @@ public class ResourcePack {
         for (ResourcePackInfo resourcePackInfo : resourcePackList.getAvailablePacks()) {
             final String id = resourcePackInfo.getId();
             if (id.toLowerCase().startsWith("custom")) return; //custom RP available
-
             if (resourcePackInfo.getId().equals(MAIN_PACK_NAME)) {
                 jediPack = resourcePackInfo;
                 break;
