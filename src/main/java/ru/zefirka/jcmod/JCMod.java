@@ -1,13 +1,11 @@
 package ru.zefirka.jcmod;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.tutorial.TutorialSteps;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.fml.common.Mod;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import ru.zefirka.jcmod.updater.Updater;
-
 import java.io.IOException;
 
 @Mod("jcmod")
@@ -22,7 +20,7 @@ public class JCMod
 
     public static boolean DEBUG = false, ENABLED = true;
 
-    public static Logger logger = LogManager.getLogger();
+    public static final Logger LOGGER = LogManager.getLogger();
     public static Minecraft MINECRAFT;
 
     public JCMod() {
@@ -41,6 +39,6 @@ public class JCMod
     public static void debug(String text) {
         if (!JCMod.DEBUG) return;
         if (MINECRAFT.player == null) return;
-        MINECRAFT.player.sendMessage(new StringTextComponent(text), Minecraft.getInstance().player.getUUID());
+        MINECRAFT.player.sendMessage(new StringTextComponent(text), MINECRAFT.player.getUUID());
     }
 }

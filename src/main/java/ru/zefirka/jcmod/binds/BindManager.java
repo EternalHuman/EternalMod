@@ -11,7 +11,6 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import org.lwjgl.glfw.GLFW;
 import ru.zefirka.jcmod.JCMod;
 import ru.zefirka.jcmod.esp.ChestLocator;
-
 import java.util.*;
 import java.util.function.Consumer;
 
@@ -39,15 +38,15 @@ public class BindManager
                     clientPlayerEntity.getUUID());
             clientPlayerEntity.chat("/tutorial esp");
             new Timer().schedule((
-                    new TimerTask() {
-                        @Override
-                        public void run() {
-                            ChestLocator.setEnabled(false);
-                            clientPlayerEntity.sendMessage(new TranslationTextComponent("eternalmod.cl.disabled",
-                                            (ChestLocator.COOLDOWN - ChestLocator.DURATION) / 1000),
-                                    clientPlayerEntity.getUUID());
-                        }
-                    }),
+                            new TimerTask() {
+                                @Override
+                                public void run() {
+                                    ChestLocator.setEnabled(false);
+                                    clientPlayerEntity.sendMessage(new TranslationTextComponent("eternalmod.cl.disabled",
+                                                    (ChestLocator.COOLDOWN - ChestLocator.DURATION) / 1000),
+                                            clientPlayerEntity.getUUID());
+                                }
+                            }),
                     ChestLocator.DURATION
             );
         }, GLFW.GLFW_KEY_F6, InputMappings.Type.KEYSYM);

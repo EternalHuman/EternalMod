@@ -6,5 +6,5 @@ public enum UpdaterSource {
     GOOGLE_DRIVE,
     GITHUB, //???
     YANDEX_DISK,
-    ONE_DRIVE;
+    ONE_DRIVE
 }

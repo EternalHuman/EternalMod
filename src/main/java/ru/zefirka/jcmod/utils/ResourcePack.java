@@ -5,13 +5,13 @@ import com.google.common.collect.Lists;
 import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourcePackInfo;
 import net.minecraft.resources.ResourcePackList;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class ResourcePack {
     private static final String MAIN_PACK_NAME = "file/JediPack.Eternal.zip";
 
+    @SuppressWarnings("UnstableApiUsage")
     public static void updateRP(Minecraft minecraft) {
         ResourcePackList resourcePackList = minecraft.getResourcePackRepository();
         for (ResourcePackInfo resourcePackInfo : resourcePackList.getSelectedPacks()) {
@@ -38,6 +38,7 @@ public class ResourcePack {
         }
     }
 
+    @SuppressWarnings("deprecation")
     private static void updatePackList(Minecraft minecraft, ResourcePackList resourcePackList) {
         List<String> list = ImmutableList.copyOf(minecraft.options.resourcePacks);
         minecraft.options.resourcePacks.clear();

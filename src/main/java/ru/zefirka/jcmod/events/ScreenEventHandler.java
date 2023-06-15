@@ -15,7 +15,6 @@ import net.minecraftforge.fml.common.Mod;
 import ru.zefirka.jcmod.JCMod;
 import ru.zefirka.jcmod.updater.Updater;
 import ru.zefirka.jcmod.utils.ResourcePack;
-
 import java.util.Iterator;
 
 @Mod.EventBusSubscriber(modid = JCMod.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)
@@ -58,14 +57,12 @@ public class ScreenEventHandler {
             }
 
             event.addWidget(new Button(mainMenuScreen.width / 2 + 2, j + diff * 2, 98, 20,
-                    new TranslationTextComponent("menu.site"), (button) -> {
-                Util.getPlatform().openUri("https://discord.gg/BYXs8TBeEG");
-            }));
+                    new TranslationTextComponent("menu.site"), (button) ->
+                    Util.getPlatform().openUri("https://discord.gg/BYXs8TBeEG")));
             event.addWidget(new Button(mainMenuScreen.width / 2 - 100, j, 200, 20,
-                    new TranslationTextComponent("menu.play"), (button) -> {
-                minecraft.setScreen(new ConnectingScreen(mainMenuScreen, minecraft,
-                        "31.184.215.54", 25565));
-            }));
+                    new TranslationTextComponent("menu.play"), (button) ->
+                    minecraft.setScreen(new ConnectingScreen(mainMenuScreen, minecraft,
+                            "31.184.215.54", 25565))));
         } else if (screen instanceof IngameMenuScreen) {
             IngameMenuScreen ingameMenuScreen = (IngameMenuScreen) screen;
             while (widgetIterator.hasNext()) {
@@ -73,7 +70,7 @@ public class ScreenEventHandler {
                 if (!(widget.getMessage() instanceof TranslationTextComponent)) return;
                 TranslationTextComponent translationTextComponent = (TranslationTextComponent) widget.getMessage();
                 String key = translationTextComponent.getKey();
-                if (key.equals("menu.shareToLan") || key.equals("gui.advancements") ||
+                if (key.equals("menu.shareToLan") || key.equals("gui.advancements") || //If you use switch, tear out your eyes
                         key.equals("menu.sendFeedback") || key.equals("menu.reportBugs")) {
                     widget.visible = false;
                     widget.active = false;
@@ -84,20 +81,18 @@ public class ScreenEventHandler {
                     widget.x = ingameMenuScreen.width / 2 - 102;
                 }
             }
-            event.addWidget(new Button(ingameMenuScreen.width / 2 - 102, ingameMenuScreen.height / 4 + 72 + -16, 98, 20,
-                    new TranslationTextComponent("menu.vklink"), (button) -> {
-                minecraft.setScreen(new ConfirmOpenLinkScreen((confirm) -> {
-                    if (confirm) Util.getPlatform().openUri(JCMod.VK_LINK);
-                    minecraft.setScreen(ingameMenuScreen);
-                }, JCMod.VK_LINK, true));
-            }));
-            event.addWidget(new Button(ingameMenuScreen.width / 2 + 4, ingameMenuScreen.height / 4 + 72 + -16, 98, 20,
-                    new TranslationTextComponent("menu.dslink"), (button) -> {
-                minecraft.setScreen(new ConfirmOpenLinkScreen((confirm) -> {
-                    if (confirm) Util.getPlatform().openUri(JCMod.DS_LINK);
-                    minecraft.setScreen(ingameMenuScreen);
-                }, JCMod.DS_LINK, true));
-            }));
+            event.addWidget(new Button(ingameMenuScreen.width / 2 - 102, ingameMenuScreen.height / 4 + 72 - 16, 98, 20,
+                    new TranslationTextComponent("menu.vklink"), (button) ->
+                    minecraft.setScreen(new ConfirmOpenLinkScreen((confirm) -> {
+                        if (confirm) Util.getPlatform().openUri(JCMod.VK_LINK);
+                        minecraft.setScreen(ingameMenuScreen);
+                    }, JCMod.VK_LINK, true))));
+            event.addWidget(new Button(ingameMenuScreen.width / 2 + 4, ingameMenuScreen.height / 4 + 72 - 16, 98, 20,
+                    new TranslationTextComponent("menu.dslink"), (button) ->
+                    minecraft.setScreen(new ConfirmOpenLinkScreen((confirm) -> {
+                        if (confirm) Util.getPlatform().openUri(JCMod.DS_LINK);
+                        minecraft.setScreen(ingameMenuScreen);
+                    }, JCMod.DS_LINK, true))));
         } else if (screen instanceof InventoryScreen) {
             while (widgetIterator.hasNext()) {
                 Widget widget = widgetIterator.next();

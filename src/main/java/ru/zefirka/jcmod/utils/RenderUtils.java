@@ -4,14 +4,12 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
 import ru.zefirka.jcmod.JCMod;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -22,8 +20,9 @@ public class RenderUtils {
     private static final int GL_FILL = 6914;
     private static final int GL_LINES = 1;
 
-    public static List<RenderBlockProps> syncRenderList = Collections.synchronizedList( new ArrayList<>() );
+    public static final List<RenderBlockProps> syncRenderList = Collections.synchronizedList(new ArrayList<>());
 
+    @SuppressWarnings("deprecation")
     public static void renderBlocks(RenderWorldLastEvent event) {
         Vector3d view = JCMod.MINECRAFT.gameRenderer.getMainCamera().getPosition();
 

@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.Setter;
 import net.minecraftforge.fml.loading.progress.StartupMessageManager;
 import ru.zefirka.jcmod.JCMod;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.math.BigInteger;
@@ -58,12 +57,12 @@ public class UpdateFile {
             } catch (Exception e) {
                 Updater.nextUpdater();
                 update();
-                JCMod.logger.error("Error while download file, change updater", e);
+                JCMod.LOGGER.error("Error while download file, change updater", e);
             }
         } catch (Exception e) {
             Updater.nextUpdater();
             update();
-            JCMod.logger.error("Error while updating, change updater", e);
+            JCMod.LOGGER.error("Error while updating, change updater", e);
         }
     }
 

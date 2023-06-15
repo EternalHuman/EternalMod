@@ -3,7 +3,6 @@ package ru.zefirka.jcmod.updater;
 import net.minecraftforge.fml.loading.progress.StartupMessageManager;
 import ru.zefirka.jcmod.JCMod;
 import ru.zefirka.jcmod.utils.BuilderEnumMap;
-
 import java.io.File;
 import java.net.URL;
 import java.util.HashMap;
@@ -61,19 +60,19 @@ public class Updater {
                     .build());
 
             initFile(UpdateFile.builder()
-                            .id("mod")
-                            .fileName("EternalMod-STABLE.jar")
-                            .path(absolutePath + File.separator + "mods")
-                                    .updateUrls(
-                    BuilderEnumMap.stringsBuilder(UpdaterSource.class)
-                            .append(UpdaterSource.DROPBOX, "https://www.dropbox.com/s/x3t731ndh5dbahh/EternalMod-STABLE.jar?dl=1")
-                            .append(UpdaterSource.DROPBOX_RESERVE1, "https://www.dropbox.com/scl/fi/vrckrda7eytz4gu03ae58/EternalMod-STABLE.jar?dl=1&rlkey=78ayhv5hceb89s4zi40wi88iq")
-                            .append(UpdaterSource.GITHUB, "https://github.com/EternalHuman/EternalMod/releases/download/release/EternalMod-STABLE.jar")
-                            .append(UpdaterSource.YANDEX_DISK, "https://getfile.dokpub.com/yandex/get/https://disk.yandex.ru/d/A-09nx0ZCtmW0A")
-                            .append(UpdaterSource.GOOGLE_DRIVE, "https://drive.google.com/uc?export=download&id=14UYDk0Gx1Hn4oC8srqX2neHO0rlLXCqA")
-                            .append(UpdaterSource.ONE_DRIVE, "https://onedrive.live.com/download?cid=CE8924A0FDC7D9EB&resid=CE8924A0FDC7D9EB%21808&authkey=ALvCLnPcFBdCg38"))
-                            .rebootClient(true)
-                            .build());
+                    .id("mod")
+                    .fileName("EternalMod-STABLE.jar")
+                    .path(absolutePath + File.separator + "mods")
+                    .updateUrls(
+                            BuilderEnumMap.stringsBuilder(UpdaterSource.class)
+                                    .append(UpdaterSource.DROPBOX, "https://www.dropbox.com/s/x3t731ndh5dbahh/EternalMod-STABLE.jar?dl=1")
+                                    .append(UpdaterSource.DROPBOX_RESERVE1, "https://www.dropbox.com/scl/fi/vrckrda7eytz4gu03ae58/EternalMod-STABLE.jar?dl=1&rlkey=78ayhv5hceb89s4zi40wi88iq")
+                                    .append(UpdaterSource.GITHUB, "https://github.com/EternalHuman/EternalMod/releases/download/release/EternalMod-STABLE.jar")
+                                    .append(UpdaterSource.YANDEX_DISK, "https://getfile.dokpub.com/yandex/get/https://disk.yandex.ru/d/A-09nx0ZCtmW0A")
+                                    .append(UpdaterSource.GOOGLE_DRIVE, "https://drive.google.com/uc?export=download&id=14UYDk0Gx1Hn4oC8srqX2neHO0rlLXCqA")
+                                    .append(UpdaterSource.ONE_DRIVE, "https://onedrive.live.com/download?cid=CE8924A0FDC7D9EB&resid=CE8924A0FDC7D9EB%21808&authkey=ALvCLnPcFBdCg38"))
+                    .rebootClient(true)
+                    .build());
 
             startChecker();
             StartupMessageManager.addModMessage("UPDATED!");
@@ -128,7 +127,7 @@ public class Updater {
             throw new UnsupportedOperationException("Failed all updaters");
         }
         UpdaterSource nextSource = UpdaterSource.values()[currentUpdater.ordinal() + 1];
-        JCMod.logger.info("Change updater from " + currentUpdater.name() + " to " + nextSource.name());
+        JCMod.LOGGER.info("Change updater from " + currentUpdater.name() + " to " + nextSource.name());
         currentUpdater = nextSource;
     }
 
