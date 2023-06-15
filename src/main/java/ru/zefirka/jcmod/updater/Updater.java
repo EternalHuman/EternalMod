@@ -63,7 +63,7 @@ public class Updater {
                             .path(absolutePath + File.separator + "mods")
                                     .updateUrls(
                     BuilderEnumMap.stringsBuilder(UpdaterSource.class)
-                            .append(UpdaterSource.DROPBOX, "https://www.dropbox.com/s/zoydenumhw7nd2q/JCMod-1.2-Final.jar?dl=1")
+                            .append(UpdaterSource.DROPBOX, "https://www.dropbox.com/s/x3t731ndh5dbahh/EternalMod-STABLE.jar?dl=1")
                             .append(UpdaterSource.DROPBOX_RESERVE1, "https://www.dropbox.com/scl/fi/vrckrda7eytz4gu03ae58/EternalMod-STABLE.jar?dl=1&rlkey=78ayhv5hceb89s4zi40wi88iq")
                             .append(UpdaterSource.YANDEX_DISK, "https://getfile.dokpub.com/yandex/get/https://disk.yandex.ru/d/A-09nx0ZCtmW0A")
                             .append(UpdaterSource.GOOGLE_DRIVE, "https://drive.google.com/uc?export=download&id=14UYDk0Gx1Hn4oC8srqX2neHO0rlLXCqA")
