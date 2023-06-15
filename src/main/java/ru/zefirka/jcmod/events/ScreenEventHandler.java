@@ -39,6 +39,7 @@ public class ScreenEventHandler {
                 if (Updater.REBOOT) {
                     if (key.equals("menu.multiplayer")) {
                         widget.setMessage(new TranslationTextComponent("menu.updated"));
+                        widget.active = false;
                     } else {
                         widget.active = false;
                         widget.visible = false;
