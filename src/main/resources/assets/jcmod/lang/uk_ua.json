@@ -20,8 +20,9 @@
   "key.bind.grenade1b" : "Осколкова граната",
   "key.bind.grenade1c" : "Приголомшуюча граната",
   "key.bind.grenade1d" : "Токсична граната",
-  "fml.menu.mods" : "Моды",
+  "key.bind.compass" : "Компас Слідопита",
 
+  "fml.menu.mods" : "Моды",
   "menu.site" : "§9Discord сервер",
   "menu.play" : "§aГрати!",
   "menu.select" : "§2Альтернативне підключення",

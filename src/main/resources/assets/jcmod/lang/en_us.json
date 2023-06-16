@@ -22,6 +22,7 @@
   "key.bind.grenade1d" : "Toxic grenade",
   "key.bind.debug" : "Debug mode",
   "key.bind.disable" : "Disable binds",
+  "key.bind.compass" : "Compass (Player radar)",
 
   "menu.site" : "§9Discord",
   "menu.play" : "§aPlay!",

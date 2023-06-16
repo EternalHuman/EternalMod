@@ -51,6 +51,8 @@ public class BindManager
             );
         }, GLFW.GLFW_KEY_F6);
 
+        createKeyBind("key.bind.compass", "/keybind 101 -c", GLFW.GLFW_KEY_F7);
+
         createKeyBind("key.bind.ability1a", "/keybind 1 -c", GLFW.GLFW_KEY_Z);
         createKeyBind("key.bind.ability1b", "/keybind 2 -c", GLFW.GLFW_KEY_X);
         createKeyBind("key.bind.ability1c", "/keybind 3 -c", GLFW.GLFW_KEY_C);
