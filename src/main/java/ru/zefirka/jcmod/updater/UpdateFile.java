@@ -16,7 +16,10 @@ import java.nio.channels.ReadableByteChannel;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.security.MessageDigest;
+import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Consumer;
 
 @Builder
@@ -91,5 +94,66 @@ public class UpdateFile {
 
     protected String getUpdateUrl() {
         return updateUrls.get(Updater.getCurrentUpdater());
+    }
+
+    public static class UpdaterTest {
+        public static void start() {
+            Map<UpdateFile, String> hashSums = new HashMap<>();
+            String path = JCMod.path + File.separator + "/tests";
+            AtomicInteger tests = new AtomicInteger();
+            for (UpdateFile updateFile : Updater.updateFiles.values()) {
+                String hashSum = null;
+                for (UpdaterSource updaterSource : UpdaterSource.values()) {
+                    update(path, updateFile, updaterSource);
+                    updateFile.init();
+                    if (hashSum != null && !hashSum.equals(updateFile.newFileSum)) {
+                        System.out.println("ERROR!");
+                        System.out.println("Error with hashsums: " + updateFile.getId() + " " + updaterSource.name());
+                        System.out.println("ERROR!");
+                        return;
+                    } else {
+                        hashSum = updateFile.newFileSum;
+                        System.out.println("Similar for " + updateFile.getId() + " " + updaterSource.name() + " md5: " + hashSum);
+                        tests.incrementAndGet();
+                    }
+                }
+                hashSums.put(updateFile, hashSum);
+            }
+            AtomicBoolean result = new AtomicBoolean(true);
+            hashSums.forEach((file, nowHash) -> {
+                String txtHash = Updater.newHashSums.get(file.getId());
+                if (!txtHash.equals(nowHash)) {
+                    System.out.println("ERROR!");
+                    System.out.println("Error with sums.txt: " + file.getId());
+                    System.out.println("Now: " + nowHash + " .txt: " + txtHash);
+                    System.out.println("ERROR!");
+                    result.set(false);
+                } else {
+                    System.out.println("Test for " + file.getId() + " passed!");
+                    tests.incrementAndGet();
+                }
+            });
+            if (result.get()) {
+                System.out.println("----------------------");
+                System.out.println("all " + tests.get() + " tests have been passed!");
+                System.out.println("----------------------");
+            }
+        }
+
+        public static void update(String path, UpdateFile updateFile, UpdaterSource updaterSource) {
+            try {
+                URL website = new URL(updateFile.updateUrls.get(updaterSource));
+                URLConnection urlConnection = website.openConnection();
+                ReadableByteChannel rbc = Channels.newChannel(urlConnection.getInputStream());
+                try (FileOutputStream fos = new FileOutputStream(path + File.separator + updateFile.getFileName() + updaterSource.ordinal())) {
+                    FileChannel fileChannel = fos.getChannel();
+                    fileChannel.transferFrom(rbc, 0, Long.MAX_VALUE);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

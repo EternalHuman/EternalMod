@@ -18,7 +18,7 @@ public class JCMod
 
     public static String path;
 
-    public static boolean DEBUG = false, ENABLED = true;
+    public static boolean DEBUG = false, ENABLED = true, UPDATER_TESTS = false;
 
     public static final Logger LOGGER = LogManager.getLogger();
     public static Minecraft MINECRAFT;

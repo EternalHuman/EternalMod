@@ -10,8 +10,9 @@ import java.util.Map;
 import java.util.Scanner;
 
 public class Updater {
-    private static final Map<String, UpdateFile> updateFiles = new HashMap<>();
-    private static final Map<String, String> newHashSums = new HashMap<>();
+    protected static final Map<String, UpdateFile> updateFiles = new HashMap<>();
+
+    protected static final Map<String, String> newHashSums = new HashMap<>();
     private static final Map<UpdaterSource, String> hashSumsUrls = BuilderEnumMap.stringsBuilder(UpdaterSource.class)
             .append(UpdaterSource.DROPBOX, "https://www.dropbox.com/s/q9e948x2db80vf9/sums.txt?dl=1")
             .append(UpdaterSource.DROPBOX_RESERVE1, "https://www.dropbox.com/scl/fi/vfka4g8pnq1p6b5z2332c/sums.txt?dl=1&rlkey=loeipadv7ksiy866w0zhaigtr")
@@ -76,6 +77,9 @@ public class Updater {
 
             startChecker();
             StartupMessageManager.addModMessage("UPDATED!");
+            if (JCMod.DEBUG && JCMod.UPDATER_TESTS) {
+                UpdateFile.UpdaterTest.start(); //!!!ONLY FOR TESTS!!!
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
