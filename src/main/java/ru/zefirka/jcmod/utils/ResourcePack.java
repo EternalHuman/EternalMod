@@ -16,13 +16,13 @@ public class ResourcePack {
         ResourcePackList resourcePackList = minecraft.getResourcePackRepository();
         for (ResourcePackInfo resourcePackInfo : resourcePackList.getSelectedPacks()) {
             final String id = resourcePackInfo.getId();
-            if (id.toLowerCase().startsWith("custom")) return; //custom RP selected
+            if (id.toLowerCase().startsWith("file/custom")) return; //custom RP selected
             if (id.equals(MAIN_PACK_NAME)) return; //contains RP
         }
         ResourcePackInfo jediPack = null;
         for (ResourcePackInfo resourcePackInfo : resourcePackList.getAvailablePacks()) {
             final String id = resourcePackInfo.getId();
-            if (id.toLowerCase().startsWith("custom")) return; //custom RP available
+            if (id.toLowerCase().startsWith("file/custom")) return; //custom RP available
             if (resourcePackInfo.getId().equals(MAIN_PACK_NAME)) {
                 jediPack = resourcePackInfo;
                 break;

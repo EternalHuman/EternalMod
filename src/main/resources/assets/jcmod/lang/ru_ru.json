@@ -24,6 +24,7 @@
   "key.bind.disable" : "Отключение биндов",
   "key.bind.compass" : "Компас Следопыта",
 
+  "cpack.dropInfo": "§a§l§nДля кастомных РП добавьте Custom в название файла (CustomABC.zip).",
   "fml.menu.mods" : "Моды",
   "menu.site" : "§9Discord сервер",
   "menu.play" : "§aИграть!",

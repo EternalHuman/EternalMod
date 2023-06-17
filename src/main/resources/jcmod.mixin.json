@@ -5,7 +5,8 @@
   "client": [
     "InGameHudMixin",
     "RecipeToastDisabler",
-    "TutorialDisabler"
+    "TutorialDisabler",
+    "PackScreenChanger"
   ],
   "injectors": {
     "defaultRequire": 1

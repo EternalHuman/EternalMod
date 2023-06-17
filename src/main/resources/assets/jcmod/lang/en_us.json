@@ -24,6 +24,7 @@
   "key.bind.disable" : "Disable binds",
   "key.bind.compass" : "Compass (Player radar)",
 
+  "cpack.dropInfo": "§a§l§nFor custom RP add \"Custom\" to the file name (CustomABC.zip).",
   "menu.site" : "§9Discord",
   "menu.play" : "§aPlay!",
   "menu.select" : "§2Alternative connection",
