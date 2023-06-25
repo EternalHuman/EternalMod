@@ -6,6 +6,7 @@ import net.minecraft.client.gui.screen.inventory.InventoryScreen;
 import net.minecraft.client.gui.widget.Widget;
 import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.client.gui.widget.button.ImageButton;
+import net.minecraft.client.multiplayer.ServerData;
 import net.minecraft.util.Util;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
@@ -19,7 +20,11 @@ import java.util.Iterator;
 
 @Mod.EventBusSubscriber(modid = JCMod.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)
 public class ScreenEventHandler {
+    private static final ServerData mainServer = new ServerData("Eternal", "31.184.215.54", true);
 
+    static {
+        mainServer.setResourcePackStatus(ServerData.ServerResourceMode.DISABLED);
+    }
     @SubscribeEvent
     public static void onEvent(GuiScreenEvent.InitGuiEvent event) {
         Screen screen = event.getGui();
@@ -64,8 +69,7 @@ public class ScreenEventHandler {
                     Util.getPlatform().openUri("https://discord.gg/BYXs8TBeEG")));
             event.addWidget(new Button(mainMenuScreen.width / 2 - 100, j, 200, 20,
                     new TranslationTextComponent("menu.play"), (button) ->
-                    minecraft.setScreen(new ConnectingScreen(mainMenuScreen, minecraft,
-                            "31.184.215.54", 25565))));
+                    minecraft.setScreen(new ConnectingScreen(mainMenuScreen, minecraft, mainServer))));
         } else if (screen instanceof IngameMenuScreen) {
             IngameMenuScreen ingameMenuScreen = (IngameMenuScreen) screen;
             while (widgetIterator.hasNext()) {
