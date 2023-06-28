@@ -17,7 +17,7 @@ import java.util.concurrent.TimeUnit;
 
 @Mod.EventBusSubscriber(modid = JCMod.MODID, value = Dist.CLIENT)
 public class ChestLocator {
-    public static final long COOLDOWN = TimeUnit.SECONDS.toMillis(60);
+    public static final long COOLDOWN = TimeUnit.SECONDS.toMillis(45);
     public static final long DURATION = TimeUnit.SECONDS.toMillis(15);
 
     @Getter
@@ -45,7 +45,7 @@ public class ChestLocator {
         Minecraft minecraft = JCMod.MINECRAFT;
         if (minecraft.level == null) return;
         minecraft.level.blockEntityList.forEach(tileEntity -> {
-            if (tileEntity.getType() != TileEntityType.CHEST && tileEntity.getType() != TileEntityType.TRAPPED_CHEST) return;
+            if (tileEntity.getType() != TileEntityType.CHEST) return;
             RenderUtils.syncRenderList.add(new RenderBlockProps(tileEntity.getBlockPos(), Color.GREEN.getRGB()));
         });
     }
