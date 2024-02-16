@@ -1,5 +1,6 @@
 package ru.zefirka.jcmod.mixins.common.lightengine;
 
+import net.minecraft.world.World;
 import ru.zefirka.jcmod.lightoptimizer.common.chunk.ExtendedChunk;
 import ru.zefirka.jcmod.lightoptimizer.common.light.SWMRNibbleArray;
 import ru.zefirka.jcmod.lightoptimizer.common.light.StarLightEngine;
@@ -59,7 +60,11 @@ public abstract class WorldLightManagerMixin implements ILightListener, StarLigh
     )
     public void construct(final IChunkLightProvider provider, final boolean hasBlockLight, final boolean hasSkyLight,
                           final CallbackInfo ci) {
-        this.lightEngine = new StarLightInterface(provider, hasSkyLight, hasBlockLight);
+        if (provider.getLevel() instanceof World) {
+            this.lightEngine = new StarLightInterface(provider, hasSkyLight, hasBlockLight);
+        } else {
+            this.lightEngine = new StarLightInterface(null, hasSkyLight, hasBlockLight);
+        }
         // intentionally destroy mods hooking into old light engine state
         this.blockEngine = null;
         this.skyEngine = null;

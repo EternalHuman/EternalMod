@@ -54,6 +54,9 @@ public abstract class AbstractBlockStateMixin extends StateHolder<Block, BlockSt
     public void initLightAccessState(final CallbackInfo ci) {
         this.isConditionallyFullOpaque = this.canOcclude & this.useShapeForLightOcclusion; // oof this mapping.
         this.opacityIfCached = this.cache == null || this.isConditionallyFullOpaque ? -1 : this.cache.lightBlock;
+        if (true) {
+            this.opacityIfCached = -1;
+        }
     }
 
     @Override

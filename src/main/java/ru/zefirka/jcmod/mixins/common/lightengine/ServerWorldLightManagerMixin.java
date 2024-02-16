@@ -47,7 +47,8 @@ public abstract class ServerWorldLightManagerMixin extends WorldLightManager imp
     private final Long2IntOpenHashMap chunksBeingWorkedOn = new Long2IntOpenHashMap();
 
     @Unique
-    private void queueTaskForSection(final int chunkX, final int chunkY, final int chunkZ, final Supplier<CompletableFuture<Void>> runnable) {
+    private void queueTaskForSection(final int chunkX, final int chunkY, final int chunkZ,
+                                     final Supplier<StarLightInterface.LightQueue.ChunkTasks> runnable) {
         final ServerWorld world = (ServerWorld)this.getLightEngine().getWorld();
 
         final IChunk center = this.getLightEngine().getAnyChunkNow(chunkX, chunkZ);
@@ -74,12 +75,18 @@ public abstract class ServerWorldLightManagerMixin extends WorldLightManager imp
 
         final long key = CoordinateUtils.getChunkKey(chunkX, chunkZ);
 
-        final CompletableFuture<Void> updateFuture = runnable.get();
+        final StarLightInterface.LightQueue.ChunkTasks updateFuture = runnable.get();
 
         if (updateFuture == null) {
             // not scheduled
             return;
         }
+
+        if (updateFuture.isTicketAdded) {
+            // ticket already added
+            return;
+        }
+        updateFuture.isTicketAdded = true;
 
         final int references = this.chunksBeingWorkedOn.addTo(key, 1);
         if (references == 0) {
@@ -87,21 +94,7 @@ public abstract class ServerWorldLightManagerMixin extends WorldLightManager imp
             world.getChunkSource().registerTickingTicket(StarLightInterface.CHUNK_WORK_TICKET, pos, 0, pos);
         }
 
-        // append future to this chunk and 1 radius neighbours chunk save futures
-        // this prevents us from saving the world without first waiting for the light engine
-
-        for (int dx = -1; dx <= 1; ++dx) {
-            for (int dz = -1; dz <= 1; ++dz) {
-                ChunkHolder neighbour = world.getChunkSource().chunkMap.getUpdatingChunkIfPresent(CoordinateUtils.getChunkKey(dx + chunkX, dz + chunkZ)); // getUpdatingChunkIfPresent
-                if (neighbour != null) {
-                    neighbour.chunkToSave = neighbour.chunkToSave.thenCombine(updateFuture, (final IChunk curr, final Void ignore) -> { // chunkToSave
-                        return curr;
-                    });
-                }
-            }
-        }
-
-        updateFuture.thenAcceptAsync((final Void ignore) -> {
+        updateFuture.onComplete.thenAcceptAsync((final Void ignore) -> {
             final int newReferences = this.chunksBeingWorkedOn.get(key);
             if (newReferences == 1) {
                 this.chunksBeingWorkedOn.remove(key);

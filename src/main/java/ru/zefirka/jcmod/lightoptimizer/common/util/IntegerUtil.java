@@ -97,7 +97,7 @@ public final class IntegerUtil {
     // copied from hacker's delight (signed division magic value)
     // http://www.hackersdelight.org/hdcodetxt/magic.c.txt
     public static long getDivisorNumbers(final int d) {
-        final int ad = IntegerUtil.branchlessAbs(d);
+        final int ad = branchlessAbs(d);
 
         if (ad < 2) {
             throw new IllegalArgumentException("|number| must be in [2, 2^31 -1], not: " + d);
@@ -110,7 +110,7 @@ public final class IntegerUtil {
 
         // all these variables are UNSIGNED!
         int t = two31 + (d >>> 31);
-        int anc = t - 1 - t%ad;
+        int anc = t - 1 - (int)((t & mask)%ad);
         int q1 = (int)((two31 & mask)/(anc & mask));
         int r1 = two31 - q1*anc;
         int q2 = (int)((two31 & mask)/(ad & mask));
@@ -138,7 +138,7 @@ public final class IntegerUtil {
         if (d < 0) {
             magicNum = -magicNum;
         }
-        int shift = p - 32;
+        int shift = p;
         return ((long)magicNum << 32) | shift;
     }
 

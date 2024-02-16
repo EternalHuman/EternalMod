@@ -36,6 +36,7 @@ public abstract class StarLightEngine {
 
     protected static final ChunkSection EMPTY_CHUNK_SECTION = new ChunkSection(0);
 
+    protected final BlockPos.Mutable checkBlockPos = new BlockPos.Mutable(); // Forge
     protected static final AxisDirection[] DIRECTIONS = AxisDirection.values();
     protected static final AxisDirection[] AXIS_DIRECTIONS = DIRECTIONS;
     protected static final AxisDirection[] ONLY_HORIZONTAL_DIRECTIONS = new AxisDirection[] {
@@ -1345,7 +1346,6 @@ public abstract class StarLightEngine {
         final int encodeOffset = this.coordinateOffset;
         final int sectionOffset = this.chunkSectionIndexOffset;
         final int emittedMask = this.emittedLightMask;
-        final VariableBlockLightHandler customLightHandler = this.skylightPropagator ? null : ((ExtendedWorld)world).getCustomLightHandler();
 
         while (queueReadIndex < queueLength) {
             final long queueValue = queue[queueReadIndex++];
@@ -1393,7 +1393,7 @@ public abstract class StarLightEngine {
                                             | FLAG_RECHECK_LEVEL;
                             continue;
                         }
-                        final int emittedLight = (customLightHandler != null ? this.getCustomLightLevel(customLightHandler, offX, offY, offZ, blockState.getLightEmission()) : blockState.getLightEmission()) & emittedMask;
+                        final int emittedLight = blockState.getLightEmission() & emittedMask;
                         if (emittedLight != 0) {
                             // re-propagate source
                             if (increaseQueueLength >= increaseQueue.length) {
@@ -1446,7 +1446,7 @@ public abstract class StarLightEngine {
                                             | (FLAG_RECHECK_LEVEL | flags);
                             continue;
                         }
-                        final int emittedLight = (customLightHandler != null ? this.getCustomLightLevel(customLightHandler, offX, offY, offZ, blockState.getLightEmission()) : blockState.getLightEmission()) & emittedMask;
+                        final int emittedLight = blockState.getLightValue(world, this.mutablePos1) & emittedMask; // Forge
                         if (emittedLight != 0) {
                             // re-propagate source
                             if (increaseQueueLength >= increaseQueue.length) {
@@ -1520,7 +1520,7 @@ public abstract class StarLightEngine {
                                             | FLAG_RECHECK_LEVEL;
                             continue;
                         }
-                        final int emittedLight = (customLightHandler != null ? this.getCustomLightLevel(customLightHandler, offX, offY, offZ, blockState.getLightEmission()) : blockState.getLightEmission()) & emittedMask;
+                        final int emittedLight = blockState.getLightEmission() & emittedMask;
                         if (emittedLight != 0) {
                             // re-propagate source
                             if (increaseQueueLength >= increaseQueue.length) {
@@ -1573,7 +1573,7 @@ public abstract class StarLightEngine {
                                             | (FLAG_RECHECK_LEVEL | flags);
                             continue;
                         }
-                        final int emittedLight = (customLightHandler != null ? this.getCustomLightLevel(customLightHandler, offX, offY, offZ, blockState.getLightEmission()) : blockState.getLightEmission()) & emittedMask;
+                        final int emittedLight = blockState.getLightValue(world, this.mutablePos1) & emittedMask; // Forge
                         if (emittedLight != 0) {
                             // re-propagate source
                             if (increaseQueueLength >= increaseQueue.length) {
