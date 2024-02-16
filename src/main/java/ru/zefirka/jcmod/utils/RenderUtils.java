@@ -10,9 +10,9 @@ import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.dispenser.IPosition;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.util.math.vector.Vector3i;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
 import ru.zefirka.jcmod.JCMod;
-import ru.zefirka.jcmod.culling.CullTask;
 
 import java.awt.*;
 import java.util.*;
@@ -117,12 +117,27 @@ public class RenderUtils {
         return distSqr(blockPos, position.x(), position.y(), position.z(), true) < d * d;
     }
 
-    private static double distSqr(BlockPos blockPos, double d, double e, double f, boolean bl) {
+    public static boolean closerThan(double distance, double d) {
+        return distance < d * d;
+    }
+
+    public static double distSqr(BlockPos blockPos, IPosition position) {
+        return distSqr(blockPos, position.x(), position.y(), position.z(), true);
+    }
+
+    public static double distSqr(BlockPos blockPos, double d, double e, double f, boolean bl) {
         double g = bl ? 0.5D : 0.0D;
         double h = (double) blockPos.getX() + g - d;
         double i = (double) blockPos.getY() + g - e;
         double j = (double) blockPos.getZ() + g - f;
         return h * h + i * i + j * j;
+    }
+
+    public static boolean isPlayerLookingAtEntity(Vector3d visionVec, Vector3d position, Vector3i stalker, double fov) {
+        final Vector3d toEntity = new Vector3d(stalker.getX(), stalker.getY(), stalker.getZ()).subtract(position);
+
+        final double dotProduct = visionVec.dot(toEntity);
+        return 90 * (1 - dotProduct) < fov / 2;
     }
 
     /**

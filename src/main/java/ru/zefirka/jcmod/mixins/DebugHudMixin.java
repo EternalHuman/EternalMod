@@ -27,13 +27,13 @@ public class DebugHudMixin {
             return callback.getReturnValue();
         }
         List<String> list = callback.getReturnValue();
-        list.add("[Culling] Last pass: " + EternalOptimizer.getInstance().cullTask.lastTime + "ms");
-        list.add("[Culling] Rendered Block Entities: " + DebugStats.renderedBlockEntities
+        list.add("[EternalMod] Last pass: " + EternalOptimizer.getInstance().cullingTask.lastTime + "ms");
+        list.add("[EternalMod] Rendered Block Entities: " + DebugStats.renderedBlockEntities
                 + " Skipped: " + DebugStats.skippedBlockEntities);
-        list.add("[Culling] Rendered Entities: " + DebugStats.renderedEntities + " Skipped: "
+        list.add("[EternalMod] Rendered Entities: " + DebugStats.renderedEntities + " Skipped: "
                 + DebugStats.skippedEntities);
-        list.add("[Culling] Ticked Entities: " + lastTickedEntities + " Skipped: " + lastSkippedEntityTicks);
-        list.add("[Culling] OutOfCamera: " + DebugStats.outOfCameraEntities);
+        list.add("[EternalMod] Ticked Entities: " + lastTickedEntities + " Skipped: " + lastSkippedEntityTicks);
+        list.add("[EternalMod] OutOfCamera: " + DebugStats.outOfCameraEntities);
 
         DebugStats.renderedBlockEntities = 0;
         DebugStats.skippedBlockEntities = 0;

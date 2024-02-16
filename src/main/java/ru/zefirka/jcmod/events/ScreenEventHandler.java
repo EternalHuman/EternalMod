@@ -67,9 +67,11 @@ public class ScreenEventHandler {
             event.addWidget(new Button(mainMenuScreen.width / 2 + 2, j + diff * 2, 98, 20,
                     new TranslationTextComponent("menu.site"), (button) ->
                     Util.getPlatform().openUri("https://discord.gg/BYXs8TBeEG")));
-            event.addWidget(new Button(mainMenuScreen.width / 2 - 100, j, 200, 20,
-                    new TranslationTextComponent("menu.play"), (button) ->
-                    minecraft.setScreen(new ConnectingScreen(mainMenuScreen, minecraft, mainServer))));
+            if (!Updater.REBOOT) {
+                event.addWidget(new Button(mainMenuScreen.width / 2 - 100, j, 200, 20,
+                        new TranslationTextComponent("menu.play"), (button) ->
+                        minecraft.setScreen(new ConnectingScreen(mainMenuScreen, minecraft, mainServer))));
+            }
         } else if (screen instanceof IngameMenuScreen) {
             IngameMenuScreen ingameMenuScreen = (IngameMenuScreen) screen;
             while (widgetIterator.hasNext()) {

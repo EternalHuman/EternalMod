@@ -68,6 +68,7 @@ public class BindManager
         createKeyBind("key.bind.ability1m", "/keybind 13 -c", GLFW.GLFW_KEY_LEFT_ALT);
         createMouseBind("key.bind.ability1n", "/keybind 14 -c", GLFW.GLFW_MOUSE_BUTTON_4);
         createMouseBind("key.bind.ability1o", "/keybind 15 -c", GLFW.GLFW_MOUSE_BUTTON_5);
+        createKeyBind("key.bind.ability1p", "/keybind 16 -c", -1);
 
         createMouseBind("key.bind.grenade1a", "/keybind 17 -c", GLFW.GLFW_MOUSE_BUTTON_6);
         createKeyBind("key.bind.grenade1b", "/keybind 18 -c",  GLFW.GLFW_KEY_O);
@@ -83,9 +84,10 @@ public class BindManager
         createKeyBind("key.bind.disable", entityPlayer -> {
             if (!passConfirm(entityPlayer)) return;
             JCMod.ENABLED = !JCMod.ENABLED;
-            entityPlayer.sendMessage(new StringTextComponent("Бинды на способности " + (JCMod.ENABLED ? " включены" : " выключены")), entityPlayer.getUUID());
+            entityPlayer.sendMessage(new StringTextComponent("Binds " + (JCMod.ENABLED ? " enabled" : " disabled")), entityPlayer.getUUID());
             resetConfirm();
         },  GLFW.GLFW_KEY_F9);
+        getCustomBind("key.bind.disable").skipDisabled();
     }
 
     private static boolean passConfirm(ClientPlayerEntity entityPlayer) {
@@ -125,12 +127,12 @@ public class BindManager
 
     public static void onInput() {
         Minecraft minecraft = JCMod.MINECRAFT;
-        if (!JCMod.ENABLED) return;
         if (minecraft.screen != null) return;
         for (KeyBinding keyBinding : keybindsMap) {
             if (!keyBinding.isDown()) continue;
             CustomBind customBind = BindManager.getCustomBind(keyBinding.getName());
             if (customBind == null) continue;
+            if (!JCMod.ENABLED && !customBind.isSkipDisabled()) return;
             customBind.handle(minecraft.player);
         }
     }

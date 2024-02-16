@@ -2,13 +2,11 @@ package ru.zefirka.jcmod.culling;
 
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
-import java.util.Map.Entry;
 import java.util.Set;
 
 import com.logisticscraft.occlusionculling.OcclusionCullingInstance;
 import com.logisticscraft.occlusionculling.util.Vec3d;
 import net.minecraft.client.Minecraft;
-import net.minecraft.dispenser.IPosition;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.item.ArmorStandEntity;
@@ -17,10 +15,9 @@ import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.chunk.Chunk;
 import ru.zefirka.jcmod.utils.RenderUtils;
 
-public class CullTask implements Runnable {
+public class CullingTask implements Runnable {
 
     public boolean requestCull = false;
     public boolean disableEntityCulling = false;
@@ -41,8 +38,8 @@ public class CullTask implements Runnable {
     private Vec3d aabbMin = new Vec3d(0, 0, 0);
     private Vec3d aabbMax = new Vec3d(0, 0, 0);
 
-    public CullTask(OcclusionCullingInstance culling, Set<TileEntityType<?>> blockEntityWhitelist,
-                    Set<EntityType<?>> entityWhistelist, EternalOptimizer eternalOptimizer) {
+    public CullingTask(OcclusionCullingInstance culling, Set<TileEntityType<?>> blockEntityWhitelist,
+                       Set<EntityType<?>> entityWhistelist, EternalOptimizer eternalOptimizer) {
         this.eternalOptimizer = eternalOptimizer;
         this.sleepDelay = eternalOptimizer.config.sleepDelay;
         this.hitboxLimit = eternalOptimizer.config.hitboxLimit;
@@ -117,7 +114,7 @@ public class CullTask implements Runnable {
                 continue;
             }
             Cullable cullable = (Cullable) entity;
-            if (!cullable.isForcedVisible()) {
+            if (!cullable.isCheckTimeout()) {
                 double distance = Math.sqrt(entity.distanceToSqr(cameraMC));
                 if (spectator || entity.isGlowing() || distance < 5) {
                     cullable.setCulled(false);
@@ -150,7 +147,12 @@ public class CullTask implements Runnable {
         if (disableBlockEntityCulling) {
             return;
         }
+        Vector3d position = cameraMC;
+        Vector3d visionVec = client.player.getLookAngle();
+
         TileEntity entity = null;
+        double fov = client.options.fov * client.player.getFieldOfViewModifier() * 1.05;
+
         Iterator<TileEntity> tileEntityIterator = client.level.blockEntityList.iterator();
         while (tileEntityIterator.hasNext()) {
             try {
@@ -167,13 +169,23 @@ public class CullTask implements Runnable {
                 continue;
             }
             Cullable cullable = (Cullable) entity;
-            if (!cullable.isForcedVisible()) {
+            if (!cullable.isCheckTimeout()) {
                 if (spectator) {
                     cullable.setCulled(false);
                     continue;
                 }
                 BlockPos pos = entity.getBlockPos();
-                if (RenderUtils.closerThan(pos, cameraMC, 64)) { // 64 is the fixed max tile view distance
+                double distance = RenderUtils.distSqr(pos, cameraMC);
+                if (RenderUtils.closerThan(distance, 6)) {
+                    cullable.setCulled(false);
+                    cullable.addCheckTimeout(500);
+                    continue;
+                }
+                if (!RenderUtils.isPlayerLookingAtEntity(visionVec, position, pos, fov)) {
+                    cullable.setCulled(true);
+                    continue;
+                }
+                if (RenderUtils.closerThan(distance, eternalOptimizer.config.tracingTileDistance)) { // max tile view distance
                     AxisAlignedBB boundingBox = eternalOptimizer.setupAABB(entity, pos);
                     if (boundingBox.getXsize() > hitboxLimit || boundingBox.getYsize() > hitboxLimit
                             || boundingBox.getZsize() > hitboxLimit) {

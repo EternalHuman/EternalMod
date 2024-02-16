@@ -18,9 +18,10 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
-import ru.zefirka.jcmod.Config;
-import ru.zefirka.jcmod.ConfigUpgrader;
+import ru.zefirka.jcmod.config.Config;
+import ru.zefirka.jcmod.config.ConfigUpgrader;
 import ru.zefirka.jcmod.Provider;
+import ru.zefirka.jcmod.updater.Updater;
 
 import java.io.File;
 import java.io.IOException;
@@ -38,7 +39,7 @@ public abstract class EternalOptimizer {
     public Set<TileEntityType<?>> blockEntityWhitelist = new HashSet<>();
     public Set<EntityType<?>> entityWhistelist = new HashSet<>();
     public static boolean enabled = true; // public static to make it faster for the jvm
-    public CullTask cullTask;
+    public CullingTask cullingTask;
     private Thread cullThread;
     protected KeyBinding keybind = new KeyBinding("key.optimization.toggle", -1, "EternalOptimizer");
     protected boolean pressed = false;
@@ -49,11 +50,19 @@ public abstract class EternalOptimizer {
     public Config config;
     private final File settingsFile = new File("config", "entitycullingeternal.json");
     private final File legacyVersion = new File("mods", "entityculling-forge-mc1.16.5-1.5.2.jar");
+    private final File legacyStarlight = new File("mods", "starlight-forge-1.0.0-RC2-1.16.5.jar");
     private final Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
     public void onInitialize() {
         instance = this;
-        if (legacyVersion.exists()) legacyVersion.delete();
+        if (legacyVersion.exists()) {
+            legacyVersion.delete();
+            Updater.REBOOT = true;
+        }
+        if (legacyStarlight.exists()) {
+            legacyStarlight.delete();
+            Updater.REBOOT = true;
+        }
 
         if (settingsFile.exists()) {
             try {
@@ -73,9 +82,9 @@ public abstract class EternalOptimizer {
             }
         }
         culling = new OcclusionCullingInstance(config.tracingDistance, new Provider());
-        cullTask = new CullTask(culling, blockEntityWhitelist, entityWhistelist, this);
+        cullingTask = new CullingTask(culling, blockEntityWhitelist, entityWhistelist, this);
 
-        cullThread = new Thread(cullTask, "CullThread");
+        cullThread = new Thread(cullingTask, "CullThread");
         cullThread.setUncaughtExceptionHandler((thread, ex) -> {
             System.out.println("The CullingThread has crashed! Please report the following stacktrace!");
             ex.printStackTrace();
@@ -95,7 +104,7 @@ public abstract class EternalOptimizer {
     }
 
     public void worldTick() {
-        cullTask.requestCull = true;
+        cullingTask.requestCull = true;
     }
 
     @SuppressWarnings("resource")
@@ -129,16 +138,17 @@ public abstract class EternalOptimizer {
             if (pressed)
                 return;
             pressed = true;
+            cullingTask.disableBlockEntityCulling = !cullingTask.disableBlockEntityCulling;
             enabled = !enabled;
             ClientPlayerEntity player = Minecraft.getInstance().player;
-            if (enabled) {
+            if (!cullingTask.disableBlockEntityCulling) {
                 if (player != null) {
-                    player.sendMessage(new StringTextComponent("Culling on").withStyle(TextFormatting.GREEN),
+                    player.sendMessage(new StringTextComponent("Optimization enabled! Good :)").withStyle(TextFormatting.GREEN),
                             Util.NIL_UUID);
                 }
             } else {
                 if (player != null) {
-                    player.sendMessage(new StringTextComponent("Culling off").withStyle(TextFormatting.RED),
+                    player.sendMessage(new StringTextComponent("Optimization disabled! Bad :(").withStyle(TextFormatting.RED),
                             Util.NIL_UUID);
                 }
             }
@@ -146,7 +156,7 @@ public abstract class EternalOptimizer {
             pressed = false;
         }
 
-        cullTask.requestCull = true;
+        cullingTask.requestCull = true;
     }
 
     public abstract void initModloader();

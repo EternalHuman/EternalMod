@@ -28,7 +28,7 @@ public class WorldRendererMixin {
     private void renderEntity(Entity entity, double cameraX, double cameraY, double cameraZ, float tickDelta,
                               MatrixStack matrices, IRenderTypeBuffer vertexConsumers, CallbackInfo info) {
         Cullable cullable = (Cullable) entity;
-        if (!cullable.isForcedVisible() && cullable.isCulled() && !entity.noCulling) {
+        if (!cullable.isCheckTimeout() && cullable.isCulled() && !entity.noCulling) {
             @SuppressWarnings("unchecked")
             EntityRenderer<Entity> entityRenderer = (EntityRenderer<Entity>) entityRenderDispatcher.getRenderer(entity);
             @SuppressWarnings("unchecked")

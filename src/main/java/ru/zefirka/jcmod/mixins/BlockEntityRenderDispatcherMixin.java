@@ -12,6 +12,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import ru.zefirka.jcmod.culling.DebugStats;
 import ru.zefirka.jcmod.culling.Cullable;
+import ru.zefirka.jcmod.culling.EternalOptimizer;
 
 @Mixin(TileEntityRendererDispatcher.class)
 public abstract class BlockEntityRenderDispatcherMixin {
@@ -20,11 +21,14 @@ public abstract class BlockEntityRenderDispatcherMixin {
     public <E extends TileEntity> void render(E blockEntity, float f, MatrixStack poseStack, IRenderTypeBuffer multiBufferSource, CallbackInfo info) {
         TileEntityRenderer<E> blockEntityRenderer = getRenderer(blockEntity);
         // respect the "shouldRenderOffScreen" method
+        if (EternalOptimizer.getInstance().cullingTask.disableBlockEntityCulling) {
+            return;
+        }
         if (blockEntityRenderer != null && blockEntityRenderer.shouldRenderOffScreen(blockEntity)) {
             DebugStats.renderedBlockEntities++;
             return;
         }
-        if (!((Cullable) blockEntity).isForcedVisible() && ((Cullable) blockEntity).isCulled()) {
+        if (!((Cullable) blockEntity).isCheckTimeout() && ((Cullable) blockEntity).isCulled()) {
             DebugStats.skippedBlockEntities++;
             info.cancel();
             return;

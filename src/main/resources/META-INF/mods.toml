@@ -45,3 +45,17 @@ To answer power with power, the Jedi way this is not. In this war, a danger ther
     versionRange="[1.16.5,1.17)"
     ordering="NONE"
     side="BOTH"
+
+[[dependencies.jcmod]]
+modId="starlight"
+mandatory=false
+versionRange="[1.0,)"
+ordering="BEFORE"
+side="BOTH"
+
+[[dependencies.jcmod]]
+modId="entityculling"
+mandatory=false
+versionRange="[1.0,)"
+ordering="BEFORE"
+side="BOTH"

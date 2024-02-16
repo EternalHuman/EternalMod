@@ -13,6 +13,8 @@ public class CustomBind {
     @Getter
     private final String command, techName;
     private final int key;
+    @Getter
+    private boolean skipDisabled;
     private final InputMappings.Type type;
     @Getter
     private KeyBinding keyBinding;
@@ -34,6 +36,11 @@ public class CustomBind {
         } else {
             clientPlayerEntity.chat(this.command);
         }
+    }
+
+    public CustomBind skipDisabled() {
+        this.skipDisabled = true;
+        return this;
     }
 
     private void initKey() {

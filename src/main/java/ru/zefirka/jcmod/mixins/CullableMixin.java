@@ -15,12 +15,12 @@ public class CullableMixin implements Cullable {
 	private boolean preOutOfCamera = false;
 
 	@Override
-	public void setTimeout() {
-		lasttime = System.currentTimeMillis() + 1000;
+	public void addCheckTimeout(long timeout) {
+		lasttime = System.currentTimeMillis() + timeout;
 	}
 
 	@Override
-	public boolean isForcedVisible() {
+	public boolean isCheckTimeout() {
 		return lasttime > System.currentTimeMillis();
 	}
 
@@ -28,7 +28,7 @@ public class CullableMixin implements Cullable {
 	public void setCulled(boolean value) {
 		this.culled = value;
 		if (!value) {
-			setTimeout();
+			addCheckTimeout(1250);
 		}
 	}
 
