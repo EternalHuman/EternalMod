@@ -17,7 +17,7 @@ import java.util.concurrent.TimeUnit;
 
 @Mod.EventBusSubscriber(modid = JCMod.MODID, value = Dist.CLIENT)
 public class ChestLocator {
-    public static final long COOLDOWN = TimeUnit.SECONDS.toMillis(45);
+    public static final long COOLDOWN = TimeUnit.SECONDS.toMillis(20);
     public static final long DURATION = TimeUnit.SECONDS.toMillis(15);
 
     @Getter
@@ -26,32 +26,22 @@ public class ChestLocator {
     private static long lastEspTime = -1;
 
     @SubscribeEvent
-    public static void chunkLoad(ChunkEvent.Load event) {
-        if (isEnabled()) runChestFinder();
-    }
-
-    @SubscribeEvent
-    public static void chunkUnload(ChunkEvent.Unload event) {
-        if (isEnabled()) runChestFinder();
-    }
-
-    @SubscribeEvent
     public static void onWorldRenderLast(RenderWorldLastEvent event) {
-        if (isEnabled() && JCMod.MINECRAFT.player != null) RenderUtils.renderBlocks(event);
+        if (enabled && JCMod.MINECRAFT.player != null) RenderUtils.renderBlocks(event);
     }
 
     public static void runChestFinder() {
-        RenderUtils.syncRenderList.clear();
+        RenderUtils.clearCache();
         Minecraft minecraft = JCMod.MINECRAFT;
         if (minecraft.level == null) return;
         minecraft.level.blockEntityList.forEach(tileEntity -> {
             if (tileEntity.getType() != TileEntityType.CHEST) return;
-            RenderUtils.syncRenderList.add(new RenderBlockProps(tileEntity.getBlockPos(), Color.GREEN.getRGB()));
+            RenderUtils.addChest(tileEntity.getBlockPos());
         });
     }
 
     public static void setEnabled(boolean enabled) {
-        if (!enabled) RenderUtils.syncRenderList.clear();
+        if (!enabled) RenderUtils.clearCache();
         ChestLocator.enabled = enabled;
     }
 }

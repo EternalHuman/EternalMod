@@ -20,6 +20,7 @@ public class BindManager
     private static final Map<String, CustomBind> customBindMap = new HashMap<>();
     private static final Set<KeyBinding> keybindsMap = new HashSet<>();
     public static final String CATEGORY = "jcmod.category";
+    private static long confirmTime = -1;
 
     public static void init() {
         createKeyBind("key.bind.cl", clientPlayerEntity -> {
@@ -47,8 +48,7 @@ public class BindManager
                                             clientPlayerEntity.getUUID());
                                 }
                             }),
-                    ChestLocator.DURATION
-            );
+                    ChestLocator.DURATION);
         }, GLFW.GLFW_KEY_F6);
 
         createKeyBind("key.bind.compass", "/keybind 101 -c", GLFW.GLFW_KEY_F7);
@@ -75,13 +75,30 @@ public class BindManager
         createKeyBind("key.bind.grenade1d", "/keybind 20 -c", GLFW.GLFW_KEY_F1);
 
         createKeyBind("key.bind.debug", entityPlayer -> {
+            if (!passConfirm(entityPlayer)) return;
             JCMod.DEBUG = !JCMod.DEBUG;
             entityPlayer.sendMessage(new StringTextComponent("Debug mode" + (JCMod.DEBUG ? " enabled" : " disabled")), entityPlayer.getUUID());
+            resetConfirm();
         },  GLFW.GLFW_KEY_F8);
         createKeyBind("key.bind.disable", entityPlayer -> {
+            if (!passConfirm(entityPlayer)) return;
             JCMod.ENABLED = !JCMod.ENABLED;
-            entityPlayer.sendMessage(new StringTextComponent("Binds" + (JCMod.ENABLED ? " enabled" : " disabled")), entityPlayer.getUUID());
+            entityPlayer.sendMessage(new StringTextComponent("Бинды на способности " + (JCMod.ENABLED ? " включены" : " выключены")), entityPlayer.getUUID());
+            resetConfirm();
         },  GLFW.GLFW_KEY_F9);
+    }
+
+    private static boolean passConfirm(ClientPlayerEntity entityPlayer) {
+        if (confirmTime == -1 || System.currentTimeMillis() > confirmTime) {
+            confirmTime = System.currentTimeMillis() + 5000;
+            entityPlayer.sendMessage(new StringTextComponent("Confirm action (double tap)"), entityPlayer.getUUID());
+            return false;
+        }
+        return true;
+    }
+
+    private static void resetConfirm() {
+        confirmTime = -1;
     }
 
     private static void createKeyBind(String techName, String command, int key) {
@@ -101,6 +118,7 @@ public class BindManager
         customBindMap.put(customBind.getTechName(), customBind);
         keybindsMap.add(customBind.getKeyBinding());
     }
+
     public static CustomBind getCustomBind(String techName) {
         return customBindMap.getOrDefault(techName, null);
     }

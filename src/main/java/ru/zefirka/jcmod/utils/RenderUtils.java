@@ -7,12 +7,15 @@ import com.mojang.blaze3d.vertex.IVertexBuilder;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
+import net.minecraft.dispenser.IPosition;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
 import ru.zefirka.jcmod.JCMod;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import ru.zefirka.jcmod.culling.CullTask;
+
+import java.awt.*;
+import java.util.*;
 
 public class RenderUtils {
     private static final int GL_FRONT_AND_BACK = 1032;
@@ -21,7 +24,19 @@ public class RenderUtils {
     private static final int GL_LINES = 1;
     private static final float OPACITY = 1;
 
-    public static final List<RenderBlockProps> syncRenderList = Collections.synchronizedList(new ArrayList<>());
+    private static final Map<BlockPos, RenderBlockProps> syncRenderMap = Collections.synchronizedMap(new HashMap<>());
+
+    public static void addChest(BlockPos blockPos) {
+        syncRenderMap.put(blockPos, new RenderBlockProps(blockPos, Color.GREEN.getRGB()));
+    }
+
+    public static void removeChest(BlockPos blockPos) {
+        syncRenderMap.remove(blockPos);
+    }
+
+    public static void clearCache() {
+        syncRenderMap.clear();
+    }
 
     @SuppressWarnings("deprecation")
     public static void renderBlocks(RenderWorldLastEvent event) {
@@ -37,13 +52,16 @@ public class RenderUtils {
         BufferBuilder buffer = tessellator.getBuilder();
         Profile.BLOCKS.apply(); // Sets GL state for block drawing
 
-        syncRenderList.forEach(blockProps -> {
+        syncRenderMap.forEach((blockPos, blockProps) -> {
             if (blockProps == null) {
+                return;
+            }
+            if (!closerThan(blockPos, view, 48)) {
                 return;
             }
             RenderSystem.pushMatrix();
             RenderSystem.translated(blockProps.getPos().getX(), blockProps.getPos().getY(), blockProps.getPos().getZ());
-            buffer.begin(GL_LINES, DefaultVertexFormats.POSITION_COLOR );
+            buffer.begin(GL_LINES, DefaultVertexFormats.POSITION_COLOR);
             renderBlock(buffer, blockProps);
             tessellator.end();
             RenderSystem.popMatrix();
@@ -94,6 +112,18 @@ public class RenderUtils {
         buffer.vertex(0, 1, 0).color(red, green, blue, OPACITY).endVertex();
     }
 
+    // Vec3i forward compatibility functions
+    public static boolean closerThan(BlockPos blockPos, IPosition position, double d) {
+        return distSqr(blockPos, position.x(), position.y(), position.z(), true) < d * d;
+    }
+
+    private static double distSqr(BlockPos blockPos, double d, double e, double f, boolean bl) {
+        double g = bl ? 0.5D : 0.0D;
+        double h = (double) blockPos.getX() + g - d;
+        double i = (double) blockPos.getY() + g - e;
+        double j = (double) blockPos.getZ() + g - f;
+        return h * h + i * i + j * j;
+    }
 
     /**
      * OpenGL Profiles used for rendering blocks and entities

@@ -12,5 +12,6 @@ public class ClientEventBusSubscriber {
     @SubscribeEvent
     public static void clientSetup(FMLClientSetupEvent event) {
         BindManager.init();
+        JCMod.INSTANCE.onInitialize();
     }
 }

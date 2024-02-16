@@ -29,7 +29,6 @@ public class CustomBind {
     }
 
     protected void handle(ClientPlayerEntity clientPlayerEntity) {
-        JCMod.debug("M #4 SD NOT NULL");
         if (this.consumer != null) {
             this.consumer.accept(clientPlayerEntity);
         } else {
