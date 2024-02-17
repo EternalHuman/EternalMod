@@ -20,7 +20,6 @@ public abstract class BlockEntityRenderDispatcherMixin {
     @Inject(method = {"render"}, at = {@At("HEAD")}, cancellable = true)
     public <E extends TileEntity> void render(E blockEntity, float f, MatrixStack poseStack, IRenderTypeBuffer multiBufferSource, CallbackInfo info) {
         TileEntityRenderer<E> blockEntityRenderer = getRenderer(blockEntity);
-        // respect the "shouldRenderOffScreen" method
         if (EternalOptimizer.getInstance().cullingTask.disableBlockEntityCulling) {
             return;
         }

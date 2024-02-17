@@ -90,6 +90,7 @@ public class CullingTask implements Runnable {
         if (disableEntityCulling) {
             return;
         }
+        int tracingDistance = eternalOptimizer.config.tracingDistance;
         Entity entity = null;
         Iterator<Entity> iterable = client.level.entitiesForRendering().iterator();
         while (iterable.hasNext()) {
@@ -120,7 +121,7 @@ public class CullingTask implements Runnable {
                     cullable.setCulled(false);
                     continue;
                 }
-                if (distance >= eternalOptimizer.config.tracingDistance) {
+                if (distance >= tracingDistance) {
                     cullable.setCulled(false); // If your entity view distance is larger than tracingDistance just
                     // render it
                     continue;
@@ -147,6 +148,7 @@ public class CullingTask implements Runnable {
         if (disableBlockEntityCulling) {
             return;
         }
+        int tracingTileDistance = eternalOptimizer.config.tracingTileDistance;
         Vector3d position = cameraMC;
         Vector3d visionVec = client.player.getLookAngle();
 
@@ -176,7 +178,7 @@ public class CullingTask implements Runnable {
                 }
                 BlockPos pos = entity.getBlockPos();
                 double distance = RenderUtils.distSqr(pos, cameraMC);
-                if (RenderUtils.closerThan(distance, 6)) {
+                if (RenderUtils.closerThan(distance, 7)) {
                     cullable.setCulled(false);
                     cullable.addCheckTimeout(500);
                     continue;
@@ -185,7 +187,7 @@ public class CullingTask implements Runnable {
                     cullable.setCulled(true);
                     continue;
                 }
-                if (RenderUtils.closerThan(distance, eternalOptimizer.config.tracingTileDistance)) { // max tile view distance
+                if (RenderUtils.closerThan(distance, tracingTileDistance)) { // max tile view distance
                     AxisAlignedBB boundingBox = eternalOptimizer.setupAABB(entity, pos);
                     if (boundingBox.getXsize() > hitboxLimit || boundingBox.getYsize() > hitboxLimit
                             || boundingBox.getZsize() > hitboxLimit) {

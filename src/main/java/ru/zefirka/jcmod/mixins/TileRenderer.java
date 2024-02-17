@@ -13,14 +13,14 @@ import ru.zefirka.jcmod.utils.RenderUtils;
 
 @Mixin(World.class)
 public class TileRenderer {
-    @Inject(method = "removeBlockEntity", at = @At("HEAD"))
+    @Inject(method = "removeBlockEntity", at = @At("TAIL"))
     public void removeTile(BlockPos p_175713_1_, CallbackInfo ci) {
         if (ChestLocator.isEnabled()) {
             RenderUtils.removeChest(p_175713_1_);
         }
     }
 
-    @Inject(method = "addBlockEntity", at = @At("HEAD"))
+    @Inject(method = "addBlockEntity", at = @At("TAIL"))
     public void addTile(TileEntity p_175700_1_, CallbackInfoReturnable<Boolean> cir) {
         if (ChestLocator.isEnabled()) {
             RenderUtils.addChest(p_175700_1_.getBlockPos());
