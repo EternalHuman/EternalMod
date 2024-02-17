@@ -89,12 +89,12 @@ public class Updater {
                         .path(absolutePath + File.separator + "mods")
                         .updateUrls(
                                 BuilderEnumMap.stringsBuilder(UpdaterSource.class)
-                                        .append(UpdaterSource.DROPBOX, "https://www.dropbox.com/s/x3t731ndh5dbahh/EternalMod-STABLE.jar?dl=1")
-                                        .append(UpdaterSource.DROPBOX_RESERVE1, "https://www.dropbox.com/scl/fi/vrckrda7eytz4gu03ae58/EternalMod-STABLE.jar?dl=1&rlkey=78ayhv5hceb89s4zi40wi88iq")
-                                        .append(UpdaterSource.GITHUB, "https://github.com/EternalHuman/EternalMod/releases/download/release/EternalMod-STABLE.jar")
-                                        .append(UpdaterSource.YANDEX_DISK, "https://getfile.dokpub.com/yandex/get/https://disk.yandex.ru/d/A-09nx0ZCtmW0A")
-                                        .append(UpdaterSource.GOOGLE_DRIVE, "https://drive.google.com/uc?export=download&id=14UYDk0Gx1Hn4oC8srqX2neHO0rlLXCqA")
-                                        .append(UpdaterSource.ONE_DRIVE, "https://onedrive.live.com/download?cid=CE8924A0FDC7D9EB&resid=CE8924A0FDC7D9EB%21808&authkey=ALvCLnPcFBdCg38"))
+                                        .append(UpdaterSource.DROPBOX, "https://www.dropbox.com/scl/fi/6mkkec9n3ao2ukj3juazb/OptiFine_1.16.5.jar?rlkey=oguai3g3x3kz7t13p2bg49rin&dl=1")
+                                        .append(UpdaterSource.DROPBOX_RESERVE1, "https://www.dropbox.com/scl/fi/ogms7pn3hfxb3wm2ns5qo/OptiFine_1.16.5.jar?rlkey=cenx2iqpw55s6pjg605thceqz&dl=1")
+                                        .append(UpdaterSource.GITHUB, "https://github.com/EternalHuman/EternalMod/releases/download/server/OptiFine_1.16.5.jar")
+                                        .append(UpdaterSource.YANDEX_DISK, "https://getfile.dokpub.com/yandex/get/https://disk.yandex.ru/d/jtQSkD9f4lvbSg")
+                                        .append(UpdaterSource.GOOGLE_DRIVE, "https://drive.google.com/uc?export=download&confirm=no_antivirus&id=1Ydtih8K5ARKFxjpbMVMKtXaGIKQ1OW-u")
+                                        .append(UpdaterSource.ONE_DRIVE, "https://onedrive.live.com/download?resid=CE8924A0FDC7D9EB%21965&authkey=!AL9ffVdpA6LW4aA"))
                         .rebootClient(true)
                         .build());
                 System.out.println("OPTIFINE NOT FOUND! INSTALL...");
