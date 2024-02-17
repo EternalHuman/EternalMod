@@ -44,7 +44,7 @@ public abstract class StarLightEngine {
             AxisDirection.POSITIVE_Z, AxisDirection.NEGATIVE_Z
     };
 
-    protected static enum AxisDirection {
+    protected enum AxisDirection {
 
         // Declaration order is important and relied upon. Do not change without modifying propagation code.
         POSITIVE_X(1, 0, 0), NEGATIVE_X(-1, 0, 0),
@@ -267,7 +267,8 @@ public abstract class StarLightEngine {
 
             final int chunkX = (index % 5) - this.chunkOffsetX;
             final int chunkZ = ((index / 5) % 5) - this.chunkOffsetZ;
-            final int chunkY = ((index / (5*5)) % (16 + 2 + 2)) - this.chunkOffsetY;
+            final int ySections = this.maxSection - this.minSection + 1;
+            final int chunkY = ((index / (5*5)) % (ySections + 2 + 2)) - this.chunkOffsetY;
             if ((nibble != null && nibble.updateVisible()) || this.notifyUpdateCache[index]) {
                 lightAccess.onLightUpdate(this.skylightPropagator ? LightType.SKY : LightType.BLOCK, SectionPos.of(chunkX, chunkY, chunkZ));
             }
@@ -789,12 +790,13 @@ public abstract class StarLightEngine {
 
         // update emptiness map
         for (int sectionIndex = (emptinessChanges.length - 1); sectionIndex >= 0; --sectionIndex) {
-            final Boolean valueBoxed = emptinessChanges[sectionIndex];
+            Boolean valueBoxed = emptinessChanges[sectionIndex];
             if (valueBoxed == null) {
-                if (needsInit) {
-                    throw new IllegalStateException("Current chunk has not initialised emptiness map yet supplied emptiness map isn't filled?");
+                if (!needsInit) {
+                    continue;
                 }
-                continue;
+                final ChunkSection section = this.getChunkSection(chunkX, sectionIndex + this.minSection, chunkZ);
+                emptinessChanges[sectionIndex] = valueBoxed = section == null || section.isEmpty() ? Boolean.TRUE : Boolean.FALSE;
             }
             chunkEmptinessMap[sectionIndex] = valueBoxed.booleanValue();
         }

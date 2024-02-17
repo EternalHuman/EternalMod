@@ -1,6 +1,7 @@
 package ru.zefirka.jcmod;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.settings.AttackIndicatorStatus;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -59,8 +60,6 @@ public class JCMod extends EternalOptimizer {
         ClientRegistry.registerKeyBinding(this.keybind);
         MinecraftForge.EVENT_BUS.addListener(this::doClientTick);
         MinecraftForge.EVENT_BUS.addListener(this::doWorldTick);
-        ModLoadingContext.get().registerExtensionPoint(ExtensionPoint.DISPLAYTEST,
-                () -> Pair.of(() -> FMLNetworkConstants.IGNORESERVERONLY, (remote, isServer) -> true));
     }
 
     private void doClientTick(TickEvent.ClientTickEvent event) {

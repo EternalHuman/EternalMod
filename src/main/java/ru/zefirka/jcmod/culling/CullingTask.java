@@ -126,7 +126,7 @@ public class CullingTask implements Runnable {
                     continue;
                 }
                 if (entity instanceof ArmorStandEntity) {
-                    cullable.setCulled(distance >= (((ArmorStandEntity) entity).isMarker() ? 26 : 48));
+                    cullable.setCulled(distance >= (((ArmorStandEntity) entity).isMarker() ? 24 : 40));
                     continue;
                 }
                 AxisAlignedBB boundingBox = entity.getBoundingBoxForCulling();
