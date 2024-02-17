@@ -1,5 +1,9 @@
 package ru.zefirka.jcmod.updater;
 
+import cpw.mods.modlauncher.api.ITransformer;
+import net.minecraftforge.fml.ModList;
+import net.minecraftforge.fml.loading.FMLLoader;
+import net.minecraftforge.fml.loading.moddiscovery.ModInfo;
 import net.minecraftforge.fml.loading.progress.StartupMessageManager;
 import ru.zefirka.jcmod.JCMod;
 import ru.zefirka.jcmod.utils.BuilderEnumMap;
@@ -75,10 +79,36 @@ public class Updater {
                     .rebootClient(true)
                     .build());
 
+            try {
+                Class.forName("net.optifine.Config");
+                System.out.println("OPTIFINE FOUND!");
+            } catch (Exception e) {
+                initFile(UpdateFile.builder()
+                        .id("of")
+                        .fileName("OptiFine_1.16.5.jar")
+                        .path(absolutePath + File.separator + "mods")
+                        .updateUrls(
+                                BuilderEnumMap.stringsBuilder(UpdaterSource.class)
+                                        .append(UpdaterSource.DROPBOX, "https://www.dropbox.com/s/x3t731ndh5dbahh/EternalMod-STABLE.jar?dl=1")
+                                        .append(UpdaterSource.DROPBOX_RESERVE1, "https://www.dropbox.com/scl/fi/vrckrda7eytz4gu03ae58/EternalMod-STABLE.jar?dl=1&rlkey=78ayhv5hceb89s4zi40wi88iq")
+                                        .append(UpdaterSource.GITHUB, "https://github.com/EternalHuman/EternalMod/releases/download/release/EternalMod-STABLE.jar")
+                                        .append(UpdaterSource.YANDEX_DISK, "https://getfile.dokpub.com/yandex/get/https://disk.yandex.ru/d/A-09nx0ZCtmW0A")
+                                        .append(UpdaterSource.GOOGLE_DRIVE, "https://drive.google.com/uc?export=download&id=14UYDk0Gx1Hn4oC8srqX2neHO0rlLXCqA")
+                                        .append(UpdaterSource.ONE_DRIVE, "https://onedrive.live.com/download?cid=CE8924A0FDC7D9EB&resid=CE8924A0FDC7D9EB%21808&authkey=ALvCLnPcFBdCg38"))
+                        .rebootClient(true)
+                        .build());
+                System.out.println("OPTIFINE NOT FOUND! INSTALL...");
+            }
+
             startChecker();
             StartupMessageManager.addModMessage("UPDATED!");
             if (JCMod.DEBUG && JCMod.UPDATER_TESTS) {
                 UpdateFile.UpdaterTest.start(); //!!!ONLY FOR TESTS!!!
+            }
+            for (ITransformer<?> coreModTransformer : FMLLoader.getCoreModProvider().getCoreModTransformers()) {
+                for (String label : coreModTransformer.labels()) {
+                    System.out.println("label: " + label);
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();

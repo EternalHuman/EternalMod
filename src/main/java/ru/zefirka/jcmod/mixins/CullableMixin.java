@@ -10,25 +10,36 @@ import ru.zefirka.jcmod.culling.Cullable;
 public class CullableMixin implements Cullable {
 
 	private long lasttime = 0;
+	private long timeout = 0;
 	private boolean culled = false;
 	private boolean outOfCamera = false;
 	private boolean preOutOfCamera = false;
 
 	@Override
-	public void addCheckTimeout(long timeout) {
+	public void addForcedVisible(long timeout) {
 		lasttime = System.currentTimeMillis() + timeout;
 	}
 
 	@Override
-	public boolean isCheckTimeout() {
+	public boolean isForcedVisible() {
 		return lasttime > System.currentTimeMillis();
+	}
+
+	@Override
+	public void addCheckTimeout(long timeout) {
+		timeout = System.currentTimeMillis() + timeout;
+	}
+
+	@Override
+	public boolean isCheckTimeout() {
+		return timeout > System.currentTimeMillis();
 	}
 
 	@Override
 	public void setCulled(boolean value) {
 		this.culled = value;
 		if (!value) {
-			addCheckTimeout(1250);
+			addForcedVisible(1250);
 		}
 	}
 

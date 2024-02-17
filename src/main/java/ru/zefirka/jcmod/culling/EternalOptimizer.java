@@ -35,7 +35,7 @@ import java.util.function.Function;
 public abstract class EternalOptimizer {
     @Getter
     private static EternalOptimizer instance;
-    public OcclusionCullingInstance culling;
+    public OcclusionCullingInstance culling, cullingTiles;
     public Set<TileEntityType<?>> blockEntityWhitelist = new HashSet<>();
     public Set<EntityType<?>> entityWhistelist = new HashSet<>();
     public static boolean enabled = true; // public static to make it faster for the jvm
@@ -48,7 +48,7 @@ public abstract class EternalOptimizer {
     private Set<Function<Entity, Boolean>> dynamicEntityWhitelist = new HashSet<>();
 
     public Config config;
-    private final File settingsFile = new File("config", "entitycullingeternal.json");
+    private final File settingsFile = new File("config", "eternalmod.json");
     private final File legacyVersion = new File("mods", "entityculling-forge-mc1.16.5-1.5.2.jar");
     private final File legacyStarlight = new File("mods", "starlight-forge-1.0.0-RC2-1.16.5.jar");
     private final Gson gson = new GsonBuilder().setPrettyPrinting().create();
@@ -81,8 +81,9 @@ public abstract class EternalOptimizer {
                 writeConfig(); // Config got modified
             }
         }
-        culling = new OcclusionCullingInstance(config.tracingDistance, new Provider());
-        cullingTask = new CullingTask(culling, blockEntityWhitelist, entityWhistelist, this);
+        culling = new OcclusionCullingInstance(config.cullingEntitiesDistance, new Provider());
+        cullingTiles = new OcclusionCullingInstance(config.cullingTileDistance, new Provider());
+        cullingTask = new CullingTask(culling, cullingTiles, blockEntityWhitelist, entityWhistelist, this);
 
         cullThread = new Thread(cullingTask, "CullThread");
         cullThread.setUncaughtExceptionHandler((thread, ex) -> {

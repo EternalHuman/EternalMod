@@ -125,6 +125,18 @@ public class RenderUtils {
         return distSqr(blockPos, position.x(), position.y(), position.z(), true);
     }
 
+    public static double dist(BlockPos blockPos, IPosition position) {
+        return dist(blockPos, position.x(), position.y(), position.z(), true);
+    }
+
+    public static double dist(BlockPos blockPos, double d, double e, double f, boolean bl) {
+        double g = bl ? 0.5D : 0.0D;
+        double h = (double) blockPos.getX() + g - d;
+        double i = (double) blockPos.getY() + g - e;
+        double j = (double) blockPos.getZ() + g - f;
+        return h + i + j;
+    }
+
     public static double distSqr(BlockPos blockPos, double d, double e, double f, boolean bl) {
         double g = bl ? 0.5D : 0.0D;
         double h = (double) blockPos.getX() + g - d;

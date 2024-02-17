@@ -6,12 +6,12 @@ import java.util.Set;
 
 public class Config {
 
-    public int configVersion = 5;
+    public int configVersion = 1;
     public boolean renderNametagsThroughWalls = true;
     public Set<String> blockEntityWhitelist = new HashSet<>(Arrays.asList("minecraft:beacon"));
     public Set<String> entityWhitelist = new HashSet<>();
-    public int tracingDistance = 70;
-    public int tracingTileDistance = 50;
+    public int cullingEntitiesDistance = 120;
+    public int cullingTileDistance = 100;
     public boolean debugMode = false;
     public int sleepDelay = 15;
     public int hitboxLimit = 50;

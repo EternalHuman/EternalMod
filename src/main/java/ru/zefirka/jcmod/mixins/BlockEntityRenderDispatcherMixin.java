@@ -27,7 +27,7 @@ public abstract class BlockEntityRenderDispatcherMixin {
             DebugStats.renderedBlockEntities++;
             return;
         }
-        if (!((Cullable) blockEntity).isCheckTimeout() && ((Cullable) blockEntity).isCulled()) {
+        if (!((Cullable) blockEntity).isForcedVisible() && ((Cullable) blockEntity).isCulled()) {
             DebugStats.skippedBlockEntities++;
             info.cancel();
             return;

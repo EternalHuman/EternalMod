@@ -23,7 +23,7 @@ public class CullingTask implements Runnable {
     public boolean disableEntityCulling = false;
     public boolean disableBlockEntityCulling = false;
 
-    private final OcclusionCullingInstance culling;
+    private final OcclusionCullingInstance culling, cullingTiles;
     private final EternalOptimizer eternalOptimizer;
     private final Minecraft client = Minecraft.getInstance();
     private final int sleepDelay;
@@ -38,12 +38,13 @@ public class CullingTask implements Runnable {
     private Vec3d aabbMin = new Vec3d(0, 0, 0);
     private Vec3d aabbMax = new Vec3d(0, 0, 0);
 
-    public CullingTask(OcclusionCullingInstance culling, Set<TileEntityType<?>> blockEntityWhitelist,
+    public CullingTask(OcclusionCullingInstance culling, OcclusionCullingInstance cullingTiles, Set<TileEntityType<?>> blockEntityWhitelist,
                        Set<EntityType<?>> entityWhistelist, EternalOptimizer eternalOptimizer) {
         this.eternalOptimizer = eternalOptimizer;
         this.sleepDelay = eternalOptimizer.config.sleepDelay;
         this.hitboxLimit = eternalOptimizer.config.hitboxLimit;
         this.culling = culling;
+        this.cullingTiles = cullingTiles;
         this.blockEntityWhitelist = blockEntityWhitelist;
         this.entityWhistelist = entityWhistelist;
     }
@@ -90,7 +91,7 @@ public class CullingTask implements Runnable {
         if (disableEntityCulling) {
             return;
         }
-        int tracingDistance = eternalOptimizer.config.tracingDistance;
+        int tracingDistance = eternalOptimizer.config.cullingEntitiesDistance;
         Entity entity = null;
         Iterator<Entity> iterable = client.level.entitiesForRendering().iterator();
         while (iterable.hasNext()) {
@@ -115,7 +116,7 @@ public class CullingTask implements Runnable {
                 continue;
             }
             Cullable cullable = (Cullable) entity;
-            if (!cullable.isCheckTimeout()) {
+            if (!cullable.isForcedVisible()) {
                 double distance = Math.sqrt(entity.distanceToSqr(cameraMC));
                 if (spectator || entity.isGlowing() || distance < 5) {
                     cullable.setCulled(false);
@@ -148,7 +149,7 @@ public class CullingTask implements Runnable {
         if (disableBlockEntityCulling) {
             return;
         }
-        int tracingTileDistance = eternalOptimizer.config.tracingTileDistance;
+        int tracingTileDistance = eternalOptimizer.config.cullingTileDistance;
         Vector3d position = cameraMC;
         Vector3d visionVec = client.player.getLookAngle();
 
@@ -171,23 +172,23 @@ public class CullingTask implements Runnable {
                 continue;
             }
             Cullable cullable = (Cullable) entity;
-            if (!cullable.isCheckTimeout()) {
+            if (!cullable.isForcedVisible() && !cullable.isCheckTimeout()) {
                 if (spectator) {
                     cullable.setCulled(false);
                     continue;
                 }
                 BlockPos pos = entity.getBlockPos();
-                double distance = RenderUtils.distSqr(pos, cameraMC);
-                if (RenderUtils.closerThan(distance, 7)) {
+                double distance = RenderUtils.dist(pos, cameraMC);
+                if (distance < 7) {
                     cullable.setCulled(false);
-                    cullable.addCheckTimeout(500);
+                    cullable.addForcedVisible(500);
                     continue;
                 }
                 if (!RenderUtils.isPlayerLookingAtEntity(visionVec, position, pos, fov)) {
                     cullable.setCulled(true);
                     continue;
                 }
-                if (RenderUtils.closerThan(distance, tracingTileDistance)) { // max tile view distance
+                if (distance < tracingTileDistance) { // max tile view distance
                     AxisAlignedBB boundingBox = eternalOptimizer.setupAABB(entity, pos);
                     if (boundingBox.getXsize() > hitboxLimit || boundingBox.getYsize() > hitboxLimit
                             || boundingBox.getZsize() > hitboxLimit) {
@@ -196,8 +197,11 @@ public class CullingTask implements Runnable {
                     }
                     aabbMin.set(boundingBox.minX, boundingBox.minY, boundingBox.minZ);
                     aabbMax.set(boundingBox.maxX, boundingBox.maxY, boundingBox.maxZ);
-                    boolean visible = culling.isAABBVisible(aabbMin, aabbMax, camera);
+                    boolean visible = cullingTiles.isAABBVisible(aabbMin, aabbMax, camera);
                     cullable.setCulled(!visible);
+                } else {
+                    cullable.setCulled(true);
+                    cullable.addCheckTimeout(1000);
                 }
             }
         }
