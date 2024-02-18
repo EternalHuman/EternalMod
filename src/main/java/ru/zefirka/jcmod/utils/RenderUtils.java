@@ -148,7 +148,12 @@ public class RenderUtils {
         final Vector3d toEntity = fromVector3i(targetVector).subtract(lookerPosition);
 
         final double dotProduct = direction.dot(toEntity);
+        //if (testChest) debug("dot: " + dotProduct);
         return 90 * (1 - dotProduct) < fov / 2;
+    }
+
+    public static void debug(String debug) {
+        Minecraft.getInstance().player.sendMessage(new StringTextComponent(debug), Util.NIL_UUID);
     }
 
     /**

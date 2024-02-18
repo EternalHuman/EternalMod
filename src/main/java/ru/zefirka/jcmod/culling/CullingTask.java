@@ -2,6 +2,7 @@ package ru.zefirka.jcmod.culling;
 
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.Set;
 
 import com.logisticscraft.occlusionculling.OcclusionCullingInstance;
@@ -18,6 +19,7 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.world.chunk.Chunk;
 import ru.zefirka.jcmod.utils.RenderUtils;
 
 public class CullingTask implements Runnable {
@@ -77,6 +79,7 @@ public class CullingTask implements Runnable {
                         lastPos.set(cameraMC.x, cameraMC.y, cameraMC.z);
                         Vec3d camera = lastPos;
                         culling.resetCache();
+                        cullingTiles.resetCache();
                         boolean spectator = client.player.isSpectator();
                         cullBlockEntities(cameraMC, camera, spectator);
                         cullEntities(cameraMC, camera, spectator);
@@ -130,7 +133,7 @@ public class CullingTask implements Runnable {
                     // render it
                     continue;
                 }
-                if (entity instanceof ArmorStandEntity) {
+                if (entity.getType() == EntityType.ARMOR_STAND) {
                     cullable.setCulled(distance >= (((ArmorStandEntity) entity).isMarker() ? 24 : 40));
                     continue;
                 }
@@ -152,8 +155,6 @@ public class CullingTask implements Runnable {
         if (disableBlockEntityCulling) {
             return;
         }
-        int tracingTileDistance = eternalOptimizer.config.cullingTileDistance;
-
         TileEntity entity;
         double fov = client.options.fov * client.player.getFieldOfViewModifier() * 1.05;
         Vector3d direction = client.player.getLookAngle();
@@ -195,11 +196,11 @@ public class CullingTask implements Runnable {
                     continue;
                 }
                 cullable.setOffScreen(false);
-                if (distance < tracingTileDistance) { // max tile view distance
+                if (distance < 68) { // max tile view distance
                     AxisAlignedBB boundingBox = eternalOptimizer.setupAABB(entity, pos);
                     if (boundingBox.getXsize() > hitboxLimit || boundingBox.getYsize() > hitboxLimit
                             || boundingBox.getZsize() > hitboxLimit) {
-                        cullable.setCulled(false); // To big to bother to cull
+                        cullable.setCulled(false);
                         continue;
                     }
                     aabbMin.set(boundingBox.minX, boundingBox.minY, boundingBox.minZ);
@@ -208,7 +209,7 @@ public class CullingTask implements Runnable {
                     cullable.setCulled(!visible);
                 } else {
                     cullable.setCulled(true);
-                    cullable.addCheckTimeout(600);
+                    cullable.addCheckTimeout(200);
                 }
             }
         }

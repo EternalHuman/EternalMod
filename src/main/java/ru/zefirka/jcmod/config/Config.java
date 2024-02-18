@@ -11,7 +11,6 @@ public class Config {
     public Set<String> blockEntityWhitelist = new HashSet<>(Arrays.asList("minecraft:beacon"));
     public Set<String> entityWhitelist = new HashSet<>();
     public int cullingEntitiesDistance = 120;
-    public int cullingTileDistance = 100;
     public boolean debugMode = false;
     public int sleepDelay = 15;
     public int hitboxLimit = 50;

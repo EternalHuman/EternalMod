@@ -82,7 +82,7 @@ public abstract class EternalOptimizer {
             }
         }
         culling = new OcclusionCullingInstance(config.cullingEntitiesDistance, new Provider());
-        cullingTiles = new OcclusionCullingInstance(config.cullingTileDistance, new Provider());
+        cullingTiles = new OcclusionCullingInstance(70, new Provider());
         cullingTask = new CullingTask(culling, cullingTiles, blockEntityWhitelist, entityWhistelist, this);
 
         cullThread = new Thread(cullingTask, "CullThread");
