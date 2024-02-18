@@ -23,7 +23,7 @@ public abstract class BlockEntityRenderDispatcherMixin {
         if (EternalOptimizer.getInstance().cullingTask.disableBlockEntityCulling) {
             return;
         }
-        if (blockEntityRenderer != null && blockEntityRenderer.shouldRenderOffScreen(blockEntity)) {
+        if (blockEntityRenderer != null && blockEntityRenderer.shouldRenderOffScreen(blockEntity) && !((Cullable) blockEntity).isOffScreen()) {
             DebugStats.renderedBlockEntities++;
             return;
         }

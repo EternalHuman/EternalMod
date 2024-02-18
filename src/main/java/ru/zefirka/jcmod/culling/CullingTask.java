@@ -12,9 +12,11 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.item.ArmorStandEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
+import net.minecraft.util.Util;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.util.text.StringTextComponent;
 import ru.zefirka.jcmod.utils.RenderUtils;
 
 public class CullingTask implements Runnable {
@@ -92,7 +94,7 @@ public class CullingTask implements Runnable {
             return;
         }
         int tracingDistance = eternalOptimizer.config.cullingEntitiesDistance;
-        Entity entity = null;
+        Entity entity;
         Iterator<Entity> iterable = client.level.entitiesForRendering().iterator();
         while (iterable.hasNext()) {
             try {
@@ -117,7 +119,7 @@ public class CullingTask implements Runnable {
             }
             Cullable cullable = (Cullable) entity;
             if (!cullable.isForcedVisible()) {
-                double distance = Math.sqrt(entity.distanceToSqr(cameraMC));
+                double distance = cameraMC.distanceTo(entity.position());
                 if (spectator || entity.isGlowing() || distance < 5) {
                     cullable.setCulled(false);
                     continue;
@@ -150,17 +152,17 @@ public class CullingTask implements Runnable {
             return;
         }
         int tracingTileDistance = eternalOptimizer.config.cullingTileDistance;
-        Vector3d position = cameraMC;
-        Vector3d visionVec = client.player.getLookAngle();
 
-        TileEntity entity = null;
+        TileEntity entity;
         double fov = client.options.fov * client.player.getFieldOfViewModifier() * 1.05;
+        Vector3d direction = client.player.getLookAngle();
 
         Iterator<TileEntity> tileEntityIterator = client.level.blockEntityList.iterator();
         while (tileEntityIterator.hasNext()) {
             try {
                 entity = tileEntityIterator.next();
             } catch (NullPointerException | ConcurrentModificationException ex) {
+                ex.printStackTrace();
                 break; // We are not synced to the main thread, so NPE's/CME are allowed here and way
                 // less
                 // overhead probably than trying to sync stuff up for no really good reason
@@ -181,13 +183,16 @@ public class CullingTask implements Runnable {
                 double distance = RenderUtils.dist(pos, cameraMC);
                 if (distance < 7) {
                     cullable.setCulled(false);
+                    cullable.setOffScreen(false);
                     cullable.addForcedVisible(500);
                     continue;
                 }
-                if (!RenderUtils.isPlayerLookingAtEntity(visionVec, position, pos, fov)) {
+                if (!RenderUtils.isPlayerLookingAtEntity(direction, cameraMC, pos, fov)) {
                     cullable.setCulled(true);
+                    cullable.setOffScreen(true);
                     continue;
                 }
+                cullable.setOffScreen(false);
                 if (distance < tracingTileDistance) { // max tile view distance
                     AxisAlignedBB boundingBox = eternalOptimizer.setupAABB(entity, pos);
                     if (boundingBox.getXsize() > hitboxLimit || boundingBox.getYsize() > hitboxLimit
@@ -201,7 +206,7 @@ public class CullingTask implements Runnable {
                     cullable.setCulled(!visible);
                 } else {
                     cullable.setCulled(true);
-                    cullable.addCheckTimeout(1000);
+                    cullable.addCheckTimeout(600);
                 }
             }
         }

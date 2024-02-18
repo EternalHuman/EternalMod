@@ -11,9 +11,7 @@ public class CullableMixin implements Cullable {
 
 	private long lasttime = 0;
 	private long timeout = 0;
-	private boolean culled = false;
-	private boolean outOfCamera = false;
-	private boolean preOutOfCamera = false;
+	private boolean culled, offScreen;
 
 	@Override
 	public void addForcedVisible(long timeout) {
@@ -27,7 +25,17 @@ public class CullableMixin implements Cullable {
 
 	@Override
 	public void addCheckTimeout(long timeout) {
-		timeout = System.currentTimeMillis() + timeout;
+		this.timeout = System.currentTimeMillis() + timeout;
+	}
+
+	@Override
+	public void setOffScreen(boolean offScreen) {
+		this.offScreen = offScreen;
+	}
+
+	@Override
+	public boolean isOffScreen() {
+		return this.offScreen;
 	}
 
 	@Override

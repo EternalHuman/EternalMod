@@ -4,13 +4,16 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.dispenser.IPosition;
+import net.minecraft.util.Util;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.math.vector.Vector3i;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
 import ru.zefirka.jcmod.JCMod;
 
@@ -126,15 +129,7 @@ public class RenderUtils {
     }
 
     public static double dist(BlockPos blockPos, IPosition position) {
-        return dist(blockPos, position.x(), position.y(), position.z(), true);
-    }
-
-    public static double dist(BlockPos blockPos, double d, double e, double f, boolean bl) {
-        double g = bl ? 0.5D : 0.0D;
-        double h = (double) blockPos.getX() + g - d;
-        double i = (double) blockPos.getY() + g - e;
-        double j = (double) blockPos.getZ() + g - f;
-        return h + i + j;
+        return Math.sqrt(distSqr(blockPos, position.x(), position.y(), position.z(), true));
     }
 
     public static double distSqr(BlockPos blockPos, double d, double e, double f, boolean bl) {
@@ -145,10 +140,14 @@ public class RenderUtils {
         return h * h + i * i + j * j;
     }
 
-    public static boolean isPlayerLookingAtEntity(Vector3d visionVec, Vector3d position, Vector3i stalker, double fov) {
-        final Vector3d toEntity = new Vector3d(stalker.getX(), stalker.getY(), stalker.getZ()).subtract(position);
+    public static Vector3d fromVector3i(Vector3i vector3i) {
+        return new Vector3d(vector3i.getX(), vector3i.getY(), vector3i.getZ());
+    }
 
-        final double dotProduct = visionVec.dot(toEntity);
+    public static boolean isPlayerLookingAtEntity(Vector3d direction, Vector3d lookerPosition, Vector3i targetVector, double fov) {
+        final Vector3d toEntity = fromVector3i(targetVector).subtract(lookerPosition);
+
+        final double dotProduct = direction.dot(toEntity);
         return 90 * (1 - dotProduct) < fov / 2;
     }
 
@@ -186,4 +185,3 @@ public class RenderUtils {
         protected abstract void clean();
     }
 }
-

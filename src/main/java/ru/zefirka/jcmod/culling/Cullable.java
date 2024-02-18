@@ -6,6 +6,10 @@ public interface Cullable {
 
 	boolean isCheckTimeout();
 	void addCheckTimeout(long timeout);
+
+	void setOffScreen(boolean offScreen);
+
+	boolean isOffScreen();
 	
 	void setCulled(boolean value);
 	boolean isCulled();
