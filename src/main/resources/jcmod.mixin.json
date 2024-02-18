@@ -23,7 +23,6 @@
     "unrender.FurnaceAnimate",
     "unrender.RedstoneTorchAnimate",
     "unrender.RedstoneWallTorchAnimate",
-    "unrender.RedstoneWireAnimate",
     "unrender.RepeaterAnimate",
     "BlockEntityRenderDispatcherMixin",
     "WorldRendererMixin",
