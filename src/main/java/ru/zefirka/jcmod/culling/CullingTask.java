@@ -7,6 +7,7 @@ import java.util.Set;
 import com.logisticscraft.occlusionculling.OcclusionCullingInstance;
 import com.logisticscraft.occlusionculling.util.Vec3d;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.settings.PointOfView;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.item.ArmorStandEntity;
@@ -156,6 +157,7 @@ public class CullingTask implements Runnable {
         TileEntity entity;
         double fov = client.options.fov * client.player.getFieldOfViewModifier() * 1.05;
         Vector3d direction = client.player.getLookAngle();
+        boolean thirdPerson = client.options.getCameraType() == PointOfView.THIRD_PERSON_FRONT;
 
         Iterator<TileEntity> tileEntityIterator = client.level.blockEntityList.iterator();
         while (tileEntityIterator.hasNext()) {
@@ -187,7 +189,7 @@ public class CullingTask implements Runnable {
                     cullable.addForcedVisible(500);
                     continue;
                 }
-                if (!RenderUtils.isPlayerLookingAtEntity(direction, cameraMC, pos, fov)) {
+                if (!thirdPerson && !RenderUtils.isPlayerLookingAtEntity(direction, cameraMC, pos, fov)) {
                     cullable.setCulled(true);
                     cullable.setOffScreen(true);
                     continue;
