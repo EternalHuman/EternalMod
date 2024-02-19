@@ -23,11 +23,8 @@ public class DebugHudMixin {
             DebugStats.tickedEntities = 0;
             DebugStats.skippedEntityTicks = 0;
         }
-        if (EternalOptimizer.getInstance().config.disableF3) {
-            return callback.getReturnValue();
-        }
         List<String> list = callback.getReturnValue();
-        list.add("[EternalMod] Last pass: " + EternalOptimizer.getInstance().cullingTask.lastTime + "ms");
+        list.add("[EternalMod] Last pass: " + DebugStats.lastTime + "ms");
         list.add("[EternalMod] Rendered Block Entities: " + DebugStats.renderedBlockEntities
                 + " Skipped: " + DebugStats.skippedBlockEntities);
         list.add("[EternalMod] Rendered Entities: " + DebugStats.renderedEntities + " Skipped: "

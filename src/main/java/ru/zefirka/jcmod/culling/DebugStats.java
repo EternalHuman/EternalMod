@@ -2,6 +2,7 @@ package ru.zefirka.jcmod.culling;
 
 public class DebugStats {
     // stats
+    public static long lastTime = 0;
     public static int renderedBlockEntities = 0;
     public static int skippedBlockEntities = 0;
     public static int renderedEntities = 0;

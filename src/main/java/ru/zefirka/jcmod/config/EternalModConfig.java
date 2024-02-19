@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
-public class Config {
+public class EternalModConfig {
 
     public int configVersion = 1;
     public boolean renderNametagsThroughWalls = true;
@@ -14,9 +14,6 @@ public class Config {
     public boolean debugMode = false;
     public int sleepDelay = 15;
     public int hitboxLimit = 50;
-    public boolean skipMarkerArmorStands = true;
-    public boolean tickCulling = true;
-    public Set<String> tickCullingWhitelist = new HashSet<>(Arrays.asList("minecraft:firework_rocket", "minecraft:boat"));
     public boolean disableF3 = false;
     
 }

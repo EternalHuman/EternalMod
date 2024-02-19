@@ -7,20 +7,17 @@ import lombok.Getter;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.client.settings.KeyBinding;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Util;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
-import ru.zefirka.jcmod.config.Config;
+import ru.zefirka.jcmod.config.EternalModConfig;
 import ru.zefirka.jcmod.config.ConfigUpgrader;
 import ru.zefirka.jcmod.Provider;
+import ru.zefirka.jcmod.mixins.CullableEntityType;
 import ru.zefirka.jcmod.updater.Updater;
 
 import java.io.File;
@@ -28,33 +25,25 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.HashSet;
-import java.util.Optional;
 import java.util.Set;
-import java.util.function.Function;
 
 public abstract class EternalOptimizer {
-    @Getter
-    private static EternalOptimizer instance;
     public OcclusionCullingInstance culling, cullingTiles;
-    public Set<TileEntityType<?>> blockEntityWhitelist = new HashSet<>();
-    public Set<EntityType<?>> entityWhistelist = new HashSet<>();
-    public static boolean enabled = true; // public static to make it faster for the jvm
+
     public CullingTask cullingTask;
     private Thread cullThread;
     protected KeyBinding keybind = new KeyBinding("key.optimization.toggle", -1, "EternalOptimizer");
-    protected boolean pressed = false;
+    private boolean pressed = false;
     private boolean lateInit = false;
-    private Set<Function<TileEntity, Boolean>> dynamicBlockEntityWhitelist = new HashSet<>();
-    private Set<Function<Entity, Boolean>> dynamicEntityWhitelist = new HashSet<>();
 
-    public Config config;
+    @Getter
+    private static EternalModConfig eternalModConfig;
     private final File settingsFile = new File("config", "eternalmod.json");
     private final File legacyVersion = new File("mods", "entityculling-forge-mc1.16.5-1.5.2.jar");
     private final File legacyStarlight = new File("mods", "starlight-forge-1.0.0-RC2-1.16.5.jar");
     private final Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
     public void onInitialize() {
-        instance = this;
         if (legacyVersion.exists()) {
             legacyVersion.delete();
             Updater.REBOOT = true;
@@ -66,24 +55,24 @@ public abstract class EternalOptimizer {
 
         if (settingsFile.exists()) {
             try {
-                config = gson.fromJson(new String(Files.readAllBytes(settingsFile.toPath()), StandardCharsets.UTF_8),
-                        Config.class);
+                eternalModConfig = gson.fromJson(new String(Files.readAllBytes(settingsFile.toPath()), StandardCharsets.UTF_8),
+                        EternalModConfig.class);
             } catch (Exception ex) {
                 System.out.println("Error while loading config! Creating a new one!");
                 ex.printStackTrace();
             }
         }
-        if (config == null) {
-            config = new Config();
+        if (eternalModConfig == null) {
+            eternalModConfig = new EternalModConfig();
             writeConfig();
         } else {
-            if (ConfigUpgrader.upgradeConfig(config)) {
-                writeConfig(); // Config got modified
+            if (ConfigUpgrader.upgradeConfig(eternalModConfig)) {
+                writeConfig();
             }
         }
-        culling = new OcclusionCullingInstance(config.cullingEntitiesDistance, new Provider());
+        culling = new OcclusionCullingInstance(eternalModConfig.cullingEntitiesDistance, new Provider());
         cullingTiles = new OcclusionCullingInstance(70, new Provider());
-        cullingTask = new CullingTask(culling, cullingTiles, blockEntityWhitelist, entityWhistelist, this);
+        cullingTask = new CullingTask(culling, cullingTiles, eternalModConfig);
 
         cullThread = new Thread(cullingTask, "CullThread");
         cullThread.setUncaughtExceptionHandler((thread, ex) -> {
@@ -98,7 +87,7 @@ public abstract class EternalOptimizer {
         if (settingsFile.exists())
             settingsFile.delete();
         try {
-            Files.write(settingsFile.toPath(), gson.toJson(config).getBytes(StandardCharsets.UTF_8));
+            Files.write(settingsFile.toPath(), gson.toJson(eternalModConfig).getBytes(StandardCharsets.UTF_8));
         } catch (IOException e1) {
             e1.printStackTrace();
         }
@@ -108,49 +97,50 @@ public abstract class EternalOptimizer {
         cullingTask.requestCull = true;
     }
 
-    @SuppressWarnings("resource")
     public void clientTick() {
         if (!lateInit) {
             lateInit = true;
             cullThread.start();
-            for (String blockId : config.blockEntityWhitelist) {
-                Optional<TileEntityType<?>> block =  Registry.BLOCK_ENTITY_TYPE
-                        .getOptional(new ResourceLocation(blockId));
-                block.ifPresent(b -> {
-                    blockEntityWhitelist.add(b);
-                });
+            for (String blockId : eternalModConfig.blockEntityWhitelist) {
+                Registry.BLOCK_ENTITY_TYPE.getOptional(new ResourceLocation(blockId)).ifPresent(e -> ((CullableType) e).setCullWhitelisted(true));
             }
-            for (String entityType : config.tickCullingWhitelist) {
-                Optional<EntityType<?>> entity =  Registry.ENTITY_TYPE
-                        .getOptional(new ResourceLocation(entityType));
-                entity.ifPresent(e -> {
-                    entityWhistelist.add(e);
-                });
-            }
-            for (String entityType : config.entityWhitelist) {
-                Optional<EntityType<?>> entity =  Registry.ENTITY_TYPE
-                        .getOptional(new ResourceLocation(entityType));
-                entity.ifPresent(e -> {
-                    entityWhistelist.add(e);
-                });
+            for (String entityType : eternalModConfig.entityWhitelist) {
+                Registry.ENTITY_TYPE.getOptional(new ResourceLocation(entityType)).ifPresent(e -> ((CullableType) e).setCullWhitelisted(true));
             }
         }
         if (keybind.isDown()) {
-            if (pressed)
-                return;
+            if (pressed) return;
             pressed = true;
             cullingTask.disableBlockEntityCulling = !cullingTask.disableBlockEntityCulling;
-            enabled = !enabled;
+            cullingTask.disableEntityCulling = !cullingTask.disableEntityCulling;
             ClientPlayerEntity player = Minecraft.getInstance().player;
-            if (!cullingTask.disableBlockEntityCulling) {
-                if (player != null) {
+            if (player != null) {
+                if (!cullingTask.disableEntityCulling) {
                     player.sendMessage(new StringTextComponent("Optimization enabled! Good :)").withStyle(TextFormatting.GREEN),
                             Util.NIL_UUID);
-                }
-            } else {
-                if (player != null) {
+                } else {
                     player.sendMessage(new StringTextComponent("Optimization disabled! Bad :(").withStyle(TextFormatting.RED),
                             Util.NIL_UUID);
+                    Minecraft client = Minecraft.getInstance();
+                    client.level.entitiesForRendering().forEach(entity -> {
+                        try {
+                            if (client.player == entity) return;
+                            Cullable cullable = (Cullable) entity;
+                            cullable.setCulled(false);
+                            cullable.setOffScreen(false);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    });
+                    player.level.blockEntityList.forEach(entity -> {
+                        try {
+                            Cullable cullable = (Cullable) entity;
+                            cullable.setCulled(false);
+                            cullable.setOffScreen(false);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    });
                 }
             }
         } else {
@@ -161,45 +151,4 @@ public abstract class EternalOptimizer {
     }
 
     public abstract void initModloader();
-
-    public abstract AxisAlignedBB setupAABB(TileEntity entity, BlockPos pos);
-
-    public boolean isDynamicWhitelisted(TileEntity entity) {
-        for (Function<TileEntity, Boolean> fun : dynamicBlockEntityWhitelist) {
-            if (fun.apply(entity)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public boolean isDynamicWhitelisted(Entity entity) {
-        for (Function<Entity, Boolean> fun : dynamicEntityWhitelist) {
-            if (fun.apply(entity)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    /**
-     * Add a dynamic function that can return true to disable culling for a
-     * BlockEntity temporarly.
-     *
-     * @param function
-     */
-    public void addDynamicBlockEntityWhitelist(Function<TileEntity, Boolean> function) {
-        this.dynamicBlockEntityWhitelist.add(function);
-    }
-
-    /**
-     * Add a dynamic function that can return true to disable culling for an entity
-     * temporarly.
-     *
-     * @param function
-     */
-    public void addDynamicEntityWhitelist(Function<Entity, Boolean> function) {
-        this.dynamicEntityWhitelist.add(function);
-    }
-
 }

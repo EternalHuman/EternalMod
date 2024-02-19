@@ -3,6 +3,7 @@ package ru.zefirka.jcmod.mixins;
 import net.minecraft.entity.Entity;
 import net.minecraft.tileentity.TileEntity;
 import org.spongepowered.asm.mixin.Mixin;
+import ru.zefirka.jcmod.culling.CullableType;
 import ru.zefirka.jcmod.culling.EternalOptimizer;
 import ru.zefirka.jcmod.culling.Cullable;
 
@@ -53,7 +54,6 @@ public class CullableMixin implements Cullable {
 
 	@Override
 	public boolean isCulled() {
-		if (!EternalOptimizer.enabled) return false;
 		return culled;
 	}
 }

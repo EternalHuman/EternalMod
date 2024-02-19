@@ -29,18 +29,13 @@ public class WorldRendererMixin {
                               MatrixStack matrices, IRenderTypeBuffer vertexConsumers, CallbackInfo info) {
         Cullable cullable = (Cullable) entity;
         if (!cullable.isForcedVisible() && cullable.isCulled() && !entity.noCulling) {
-            @SuppressWarnings("unchecked")
             EntityRenderer<Entity> entityRenderer = (EntityRenderer<Entity>) entityRenderDispatcher.getRenderer(entity);
-            @SuppressWarnings("unchecked")
             EntityRendererInter<Entity> entityRendererInter = (EntityRendererInter<Entity>) entityRenderer;
-            if (EternalOptimizer.getInstance().config.renderNametagsThroughWalls && matrices != null
+            if (EternalOptimizer.getEternalModConfig().renderNametagsThroughWalls && matrices != null
                     && vertexConsumers != null && entityRendererInter.shadowShouldShowName(entity)) {
-                double x = MathHelper.lerp(tickDelta, entity.xOld, entity.getX())
-                        - cameraX;
-                double y = MathHelper.lerp(tickDelta, entity.yOld, entity.getY())
-                        - cameraY;
-                double z = MathHelper.lerp(tickDelta, entity.zOld, entity.getZ())
-                        - cameraZ;
+                double x = MathHelper.lerp(tickDelta, entity.xOld, entity.getX()) - cameraX;
+                double y = MathHelper.lerp(tickDelta, entity.yOld, entity.getY()) - cameraY;
+                double z = MathHelper.lerp(tickDelta, entity.zOld, entity.getZ()) - cameraZ;
                 Vector3d vec3d = entityRenderer.getRenderOffset(entity, tickDelta);
                 double d = x + vec3d.x;
                 double e = y + vec3d.y;
