@@ -60,7 +60,7 @@ public class Updater {
                                     .append(UpdaterSource.ONE_DRIVE, "https://onedrive.live.com/download?cid=CE8924A0FDC7D9EB&resid=CE8924A0FDC7D9EB%21807&authkey=ADr1CCPiG7KQ6mc"))
                     .build());
 
-            /*initFile(UpdateFile.builder()
+            initFile(UpdateFile.builder()
                     .id("mod")
                     .fileName("EternalMod-STABLE.jar")
                     .path(absolutePath + File.separator + "mods")
@@ -72,7 +72,7 @@ public class Updater {
                                     .append(UpdaterSource.GOOGLE_DRIVE, "https://drive.google.com/uc?export=download&id=14UYDk0Gx1Hn4oC8srqX2neHO0rlLXCqA")
                                     .append(UpdaterSource.ONE_DRIVE, "https://onedrive.live.com/download?cid=CE8924A0FDC7D9EB&resid=CE8924A0FDC7D9EB%21808&authkey=ALvCLnPcFBdCg38"))
                     .rebootClient(true)
-                    .build()); */
+                    .build());
 
             try {
                 Class.forName("net.optifine.Config");
