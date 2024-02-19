@@ -5,6 +5,7 @@ import com.google.common.collect.Lists;
 import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourcePackInfo;
 import net.minecraft.resources.ResourcePackList;
+
 import java.util.ArrayList;
 import java.util.List;
 

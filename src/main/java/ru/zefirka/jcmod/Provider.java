@@ -1,7 +1,6 @@
 package ru.zefirka.jcmod;
 
 import com.logisticscraft.occlusionculling.DataProvider;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.util.math.BlockPos;

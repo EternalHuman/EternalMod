@@ -1,6 +1,5 @@
 package ru.zefirka.jcmod.mixins.client.multiplayer;
 
-import ru.zefirka.jcmod.lightoptimizer.common.light.StarLightLightingProvider;
 import net.minecraft.client.network.play.ClientPlayNetHandler;
 import net.minecraft.client.network.play.IClientPlayNetHandler;
 import net.minecraft.client.world.ClientWorld;
@@ -19,6 +18,8 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import ru.zefirka.jcmod.lightoptimizer.common.light.StarLightLightingProvider;
+
 import javax.annotation.Nullable;
 
 @Mixin(ClientPlayNetHandler.class)

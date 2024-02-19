@@ -18,7 +18,9 @@ import net.minecraftforge.client.event.RenderWorldLastEvent;
 import ru.zefirka.jcmod.JCMod;
 
 import java.awt.*;
-import java.util.*;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 public class RenderUtils {
     private static final int GL_FRONT_AND_BACK = 1032;

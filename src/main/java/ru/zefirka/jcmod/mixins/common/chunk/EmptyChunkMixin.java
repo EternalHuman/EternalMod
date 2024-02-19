@@ -1,15 +1,14 @@
 package ru.zefirka.jcmod.mixins.common.chunk;
 
-import ru.zefirka.jcmod.lightoptimizer.common.chunk.ExtendedChunk;
-import ru.zefirka.jcmod.lightoptimizer.common.light.SWMRNibbleArray;
-import ru.zefirka.jcmod.lightoptimizer.common.light.StarLightEngine;
-import ru.zefirka.jcmod.lightoptimizer.common.util.WorldUtil;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.ChunkPrimer;
 import net.minecraft.world.chunk.EmptyChunk;
 import net.minecraft.world.chunk.IChunk;
 import org.spongepowered.asm.mixin.Mixin;
+import ru.zefirka.jcmod.lightoptimizer.common.chunk.ExtendedChunk;
+import ru.zefirka.jcmod.lightoptimizer.common.light.SWMRNibbleArray;
+import ru.zefirka.jcmod.lightoptimizer.common.light.StarLightEngine;
 
 @Mixin(EmptyChunk.class)
 public abstract class EmptyChunkMixin extends Chunk implements IChunk, ExtendedChunk {

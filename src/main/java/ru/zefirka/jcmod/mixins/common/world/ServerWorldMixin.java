@@ -1,8 +1,5 @@
 package ru.zefirka.jcmod.mixins.common.world;
 
-import ru.zefirka.jcmod.lightoptimizer.common.light.VariableBlockLightHandler;
-import ru.zefirka.jcmod.lightoptimizer.common.util.CoordinateUtils;
-import ru.zefirka.jcmod.lightoptimizer.common.world.ExtendedWorld;
 import com.mojang.datafixers.util.Either;
 import net.minecraft.profiler.IProfiler;
 import net.minecraft.util.RegistryKey;
@@ -20,6 +17,10 @@ import net.minecraft.world.storage.ISpawnWorldInfo;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
+import ru.zefirka.jcmod.lightoptimizer.common.light.VariableBlockLightHandler;
+import ru.zefirka.jcmod.lightoptimizer.common.util.CoordinateUtils;
+import ru.zefirka.jcmod.lightoptimizer.common.world.ExtendedWorld;
+
 import java.util.function.Supplier;
 
 @Mixin(ServerWorld.class)

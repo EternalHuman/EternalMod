@@ -1,9 +1,5 @@
 package ru.zefirka.jcmod.lightoptimizer.common.light;
 
-import ru.zefirka.jcmod.lightoptimizer.common.blockstate.ExtendedAbstractBlockState;
-import ru.zefirka.jcmod.lightoptimizer.common.chunk.ExtendedChunk;
-import ru.zefirka.jcmod.lightoptimizer.common.chunk.ExtendedChunkSection;
-import ru.zefirka.jcmod.lightoptimizer.common.util.WorldUtil;
 import it.unimi.dsi.fastutil.shorts.ShortCollection;
 import it.unimi.dsi.fastutil.shorts.ShortIterator;
 import net.minecraft.block.BlockState;
@@ -17,6 +13,11 @@ import net.minecraft.world.chunk.ChunkSection;
 import net.minecraft.world.chunk.ChunkStatus;
 import net.minecraft.world.chunk.IChunk;
 import net.minecraft.world.chunk.IChunkLightProvider;
+import ru.zefirka.jcmod.lightoptimizer.common.blockstate.ExtendedAbstractBlockState;
+import ru.zefirka.jcmod.lightoptimizer.common.chunk.ExtendedChunk;
+import ru.zefirka.jcmod.lightoptimizer.common.chunk.ExtendedChunkSection;
+import ru.zefirka.jcmod.lightoptimizer.common.util.WorldUtil;
+
 import java.util.Arrays;
 import java.util.Set;
 

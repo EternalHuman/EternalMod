@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 import net.minecraftforge.fml.loading.progress.StartupMessageManager;
 import ru.zefirka.jcmod.JCMod;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.math.BigInteger;

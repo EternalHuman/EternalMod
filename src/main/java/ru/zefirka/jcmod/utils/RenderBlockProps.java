@@ -3,6 +3,7 @@ package ru.zefirka.jcmod.utils;
 import com.google.common.base.Objects;
 import lombok.Getter;
 import net.minecraft.util.math.BlockPos;
+
 import javax.annotation.concurrent.Immutable;
 
 @Immutable @Getter

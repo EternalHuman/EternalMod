@@ -1,8 +1,5 @@
 package ru.zefirka.jcmod.mixins.common.chunk;
 
-import ru.zefirka.jcmod.lightoptimizer.common.chunk.ExtendedChunk;
-import ru.zefirka.jcmod.lightoptimizer.common.light.SWMRNibbleArray;
-import ru.zefirka.jcmod.lightoptimizer.common.light.StarLightEngine;
 import net.minecraft.block.Block;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.util.math.ChunkPos;
@@ -19,6 +16,9 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import ru.zefirka.jcmod.lightoptimizer.common.chunk.ExtendedChunk;
+import ru.zefirka.jcmod.lightoptimizer.common.light.SWMRNibbleArray;
+import ru.zefirka.jcmod.lightoptimizer.common.light.StarLightEngine;
 
 import java.util.function.Consumer;
 

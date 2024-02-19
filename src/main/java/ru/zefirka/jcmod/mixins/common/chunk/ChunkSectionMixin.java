@@ -1,7 +1,5 @@
 package ru.zefirka.jcmod.mixins.common.chunk;
 
-import ru.zefirka.jcmod.lightoptimizer.common.blockstate.ExtendedAbstractBlockState;
-import ru.zefirka.jcmod.lightoptimizer.common.chunk.ExtendedChunkSection;
 import net.minecraft.block.BlockState;
 import net.minecraft.util.palette.PalettedContainer;
 import net.minecraft.world.chunk.ChunkSection;
@@ -15,6 +13,8 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import ru.zefirka.jcmod.lightoptimizer.common.blockstate.ExtendedAbstractBlockState;
+import ru.zefirka.jcmod.lightoptimizer.common.chunk.ExtendedChunkSection;
 
 @Mixin(ChunkSection.class)
 public abstract class ChunkSectionMixin implements ExtendedChunkSection {

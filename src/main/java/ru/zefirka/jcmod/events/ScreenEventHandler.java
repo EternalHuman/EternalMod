@@ -16,6 +16,7 @@ import net.minecraftforge.fml.common.Mod;
 import ru.zefirka.jcmod.JCMod;
 import ru.zefirka.jcmod.updater.Updater;
 import ru.zefirka.jcmod.utils.ResourcePack;
+
 import java.util.Iterator;
 
 @Mod.EventBusSubscriber(modid = JCMod.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)

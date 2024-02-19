@@ -1,11 +1,7 @@
 package ru.zefirka.jcmod.lightoptimizer.common.light;
 
-import it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
-import ru.zefirka.jcmod.lightoptimizer.common.chunk.ExtendedChunk;
-import ru.zefirka.jcmod.lightoptimizer.common.util.CoordinateUtils;
-import ru.zefirka.jcmod.lightoptimizer.common.util.WorldUtil;
-import ru.zefirka.jcmod.lightoptimizer.common.world.ExtendedWorld;
 import it.unimi.dsi.fastutil.longs.Long2ObjectLinkedOpenHashMap;
+import it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
 import it.unimi.dsi.fastutil.shorts.ShortCollection;
 import it.unimi.dsi.fastutil.shorts.ShortOpenHashSet;
 import net.minecraft.util.math.BlockPos;
@@ -19,9 +15,13 @@ import net.minecraft.world.chunk.NibbleArray;
 import net.minecraft.world.lighting.IWorldLightListener;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraft.world.server.TicketType;
+import ru.zefirka.jcmod.lightoptimizer.common.chunk.ExtendedChunk;
+import ru.zefirka.jcmod.lightoptimizer.common.util.CoordinateUtils;
+import ru.zefirka.jcmod.lightoptimizer.common.util.WorldUtil;
+import ru.zefirka.jcmod.lightoptimizer.common.world.ExtendedWorld;
+
 import java.util.ArrayDeque;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;

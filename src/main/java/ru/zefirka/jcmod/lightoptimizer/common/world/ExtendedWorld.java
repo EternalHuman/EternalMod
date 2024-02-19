@@ -1,8 +1,8 @@
 package ru.zefirka.jcmod.lightoptimizer.common.world;
 
-import ru.zefirka.jcmod.lightoptimizer.common.light.VariableBlockLightHandler;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.IChunk;
+import ru.zefirka.jcmod.lightoptimizer.common.light.VariableBlockLightHandler;
 
 public interface ExtendedWorld {
 

@@ -1,11 +1,5 @@
 package ru.zefirka.jcmod.lightoptimizer.common.light;
 
-import ru.zefirka.jcmod.lightoptimizer.common.blockstate.ExtendedAbstractBlockState;
-import ru.zefirka.jcmod.lightoptimizer.common.chunk.ExtendedChunkSection;
-import ru.zefirka.jcmod.lightoptimizer.common.util.CoordinateUtils;
-import ru.zefirka.jcmod.lightoptimizer.common.util.IntegerUtil;
-import ru.zefirka.jcmod.lightoptimizer.common.util.WorldUtil;
-import ru.zefirka.jcmod.lightoptimizer.common.world.ExtendedWorld;
 import it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap;
 import it.unimi.dsi.fastutil.shorts.ShortCollection;
 import it.unimi.dsi.fastutil.shorts.ShortIterator;
@@ -23,6 +17,13 @@ import net.minecraft.world.World;
 import net.minecraft.world.chunk.ChunkSection;
 import net.minecraft.world.chunk.IChunk;
 import net.minecraft.world.chunk.IChunkLightProvider;
+import ru.zefirka.jcmod.lightoptimizer.common.blockstate.ExtendedAbstractBlockState;
+import ru.zefirka.jcmod.lightoptimizer.common.chunk.ExtendedChunkSection;
+import ru.zefirka.jcmod.lightoptimizer.common.util.CoordinateUtils;
+import ru.zefirka.jcmod.lightoptimizer.common.util.IntegerUtil;
+import ru.zefirka.jcmod.lightoptimizer.common.util.WorldUtil;
+import ru.zefirka.jcmod.lightoptimizer.common.world.ExtendedWorld;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;

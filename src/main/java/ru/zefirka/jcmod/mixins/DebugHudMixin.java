@@ -1,13 +1,13 @@
 package ru.zefirka.jcmod.mixins;
 
-import java.util.List;
 import net.minecraft.client.gui.overlay.DebugOverlayGui;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import ru.zefirka.jcmod.culling.DebugStats;
-import ru.zefirka.jcmod.culling.EternalOptimizer;
+
+import java.util.List;
 
 @Mixin(DebugOverlayGui.class)
 public class DebugHudMixin {

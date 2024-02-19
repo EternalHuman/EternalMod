@@ -1,10 +1,6 @@
 package ru.zefirka.jcmod;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.settings.AttackIndicatorStatus;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.TickEvent;
@@ -13,12 +9,13 @@ import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.network.FMLNetworkConstants;
+import org.apache.commons.lang3.tuple.Pair;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import ru.zefirka.jcmod.culling.EternalOptimizer;
 import ru.zefirka.jcmod.updater.Updater;
+
 import java.io.IOException;
-import org.apache.commons.lang3.tuple.Pair;
 
 @Mod("jcmod")
 public class JCMod extends EternalOptimizer {
@@ -69,9 +66,4 @@ public class JCMod extends EternalOptimizer {
     private void doWorldTick(TickEvent.WorldTickEvent event) {
         worldTick();
     }
-
-    public AxisAlignedBB setupAABB(TileEntity entity, BlockPos pos) {
-        return entity.getRenderBoundingBox();
-    }
-
 }

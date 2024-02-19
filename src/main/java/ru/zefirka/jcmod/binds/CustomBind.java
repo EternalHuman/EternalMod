@@ -5,7 +5,6 @@ import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.client.util.InputMappings;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
-import ru.zefirka.jcmod.JCMod;
 
 import java.util.function.Consumer;
 

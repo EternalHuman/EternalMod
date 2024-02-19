@@ -1,6 +1,5 @@
 package ru.zefirka.jcmod.mixins.common.blockstate;
 
-import ru.zefirka.jcmod.lightoptimizer.common.blockstate.ExtendedAbstractBlockState;
 import com.google.common.collect.ImmutableMap;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.block.AbstractBlock;
@@ -15,6 +14,8 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import ru.zefirka.jcmod.lightoptimizer.common.blockstate.ExtendedAbstractBlockState;
+
 import javax.annotation.Nullable;
 
 @Mixin(AbstractBlock.AbstractBlockState.class)

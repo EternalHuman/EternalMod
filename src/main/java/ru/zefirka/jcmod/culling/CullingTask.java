@@ -1,9 +1,5 @@
 package ru.zefirka.jcmod.culling;
 
-import java.util.ConcurrentModificationException;
-import java.util.Iterator;
-import java.util.Set;
-
 import com.logisticscraft.occlusionculling.OcclusionCullingInstance;
 import com.logisticscraft.occlusionculling.util.Vec3d;
 import net.minecraft.client.Minecraft;
@@ -12,12 +8,14 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.item.ArmorStandEntity;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
 import ru.zefirka.jcmod.config.EternalModConfig;
 import ru.zefirka.jcmod.utils.RenderUtils;
+
+import java.util.ConcurrentModificationException;
+import java.util.Iterator;
 
 public class CullingTask implements Runnable {
 

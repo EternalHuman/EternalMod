@@ -1,6 +1,7 @@
 package ru.zefirka.jcmod.lightoptimizer.common.light;
 
 import net.minecraft.util.math.BlockPos;
+
 import java.util.Collection;
 
 /**

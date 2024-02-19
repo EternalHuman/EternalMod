@@ -6,13 +6,11 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
-import net.minecraftforge.event.world.ChunkEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import ru.zefirka.jcmod.JCMod;
-import ru.zefirka.jcmod.utils.RenderBlockProps;
 import ru.zefirka.jcmod.utils.RenderUtils;
-import java.awt.*;
+
 import java.util.concurrent.TimeUnit;
 
 @Mod.EventBusSubscriber(modid = JCMod.MODID, value = Dist.CLIENT)

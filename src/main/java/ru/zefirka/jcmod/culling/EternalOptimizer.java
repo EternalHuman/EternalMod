@@ -7,25 +7,20 @@ import lombok.Getter;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.client.settings.KeyBinding;
-import net.minecraft.entity.EntityType;
-import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Util;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
-import ru.zefirka.jcmod.config.EternalModConfig;
-import ru.zefirka.jcmod.config.ConfigUpgrader;
 import ru.zefirka.jcmod.Provider;
-import ru.zefirka.jcmod.mixins.CullableEntityType;
+import ru.zefirka.jcmod.config.ConfigUpgrader;
+import ru.zefirka.jcmod.config.EternalModConfig;
 import ru.zefirka.jcmod.updater.Updater;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.util.HashSet;
-import java.util.Set;
 
 public abstract class EternalOptimizer {
     public OcclusionCullingInstance culling, cullingTiles;

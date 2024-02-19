@@ -1,12 +1,11 @@
 package ru.zefirka.jcmod.updater;
 
 import cpw.mods.modlauncher.api.ITransformer;
-import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.loading.FMLLoader;
-import net.minecraftforge.fml.loading.moddiscovery.ModInfo;
 import net.minecraftforge.fml.loading.progress.StartupMessageManager;
 import ru.zefirka.jcmod.JCMod;
 import ru.zefirka.jcmod.utils.BuilderEnumMap;
+
 import java.io.File;
 import java.net.URL;
 import java.util.HashMap;

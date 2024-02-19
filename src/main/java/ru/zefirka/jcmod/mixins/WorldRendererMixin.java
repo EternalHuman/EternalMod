@@ -13,10 +13,10 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import ru.zefirka.jcmod.culling.DebugStats;
-import ru.zefirka.jcmod.culling.EternalOptimizer;
 import ru.zefirka.jcmod.culling.Cullable;
+import ru.zefirka.jcmod.culling.DebugStats;
 import ru.zefirka.jcmod.culling.EntityRendererInter;
+import ru.zefirka.jcmod.culling.EternalOptimizer;
 
 @Mixin(WorldRenderer.class)
 public class WorldRendererMixin {

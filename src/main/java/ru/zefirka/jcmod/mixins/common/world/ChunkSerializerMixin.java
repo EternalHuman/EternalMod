@@ -1,9 +1,5 @@
 package ru.zefirka.jcmod.mixins.common.world;
 
-import ru.zefirka.jcmod.lightoptimizer.common.chunk.ExtendedChunk;
-import ru.zefirka.jcmod.lightoptimizer.common.light.SWMRNibbleArray;
-import ru.zefirka.jcmod.lightoptimizer.common.light.StarLightEngine;
-import ru.zefirka.jcmod.lightoptimizer.common.util.WorldUtil;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.ListNBT;
 import net.minecraft.util.math.ChunkPos;
@@ -21,6 +17,10 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import ru.zefirka.jcmod.lightoptimizer.common.chunk.ExtendedChunk;
+import ru.zefirka.jcmod.lightoptimizer.common.light.SWMRNibbleArray;
+import ru.zefirka.jcmod.lightoptimizer.common.light.StarLightEngine;
+import ru.zefirka.jcmod.lightoptimizer.common.util.WorldUtil;
 
 @Mixin(ChunkSerializer.class)
 public abstract class ChunkSerializerMixin {

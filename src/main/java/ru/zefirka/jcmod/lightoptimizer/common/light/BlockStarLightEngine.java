@@ -1,23 +1,17 @@
 package ru.zefirka.jcmod.lightoptimizer.common.light;
 
-import ru.zefirka.jcmod.lightoptimizer.common.blockstate.ExtendedAbstractBlockState;
-import ru.zefirka.jcmod.lightoptimizer.common.chunk.ExtendedChunk;
-import ru.zefirka.jcmod.lightoptimizer.common.chunk.ExtendedChunkSection;
-import ru.zefirka.jcmod.lightoptimizer.common.world.ExtendedWorld;
 import net.minecraft.block.BlockState;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.util.palette.PalettedContainer;
 import net.minecraft.world.World;
-import net.minecraft.world.chunk.Chunk;
-import net.minecraft.world.chunk.ChunkPrimerWrapper;
-import net.minecraft.world.chunk.ChunkSection;
-import net.minecraft.world.chunk.ChunkStatus;
-import net.minecraft.world.chunk.IChunk;
-import net.minecraft.world.chunk.IChunkLightProvider;
+import net.minecraft.world.chunk.*;
+import ru.zefirka.jcmod.lightoptimizer.common.blockstate.ExtendedAbstractBlockState;
+import ru.zefirka.jcmod.lightoptimizer.common.chunk.ExtendedChunk;
+import ru.zefirka.jcmod.lightoptimizer.common.chunk.ExtendedChunkSection;
+
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;

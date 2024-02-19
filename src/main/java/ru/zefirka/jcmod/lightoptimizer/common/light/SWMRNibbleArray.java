@@ -1,6 +1,7 @@
 package ru.zefirka.jcmod.lightoptimizer.common.light;
 
 import net.minecraft.world.chunk.NibbleArray;
+
 import java.util.ArrayDeque;
 import java.util.Arrays;
 
