@@ -53,4 +53,5 @@ public class WorldRendererMixin {
         DebugStats.renderedEntities++;
     }
 
+
 }

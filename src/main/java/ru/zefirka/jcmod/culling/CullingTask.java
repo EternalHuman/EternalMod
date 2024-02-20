@@ -28,7 +28,6 @@ public class CullingTask implements Runnable {
     private final int sleepDelay;
     private final EternalModConfig eternalModConfig;
     private final int hitboxLimit;
-    public long lastTime = 0;
 
 
     private Vec3d lastPos = new Vec3d(0, 0, 0);
