@@ -141,7 +141,7 @@ public class MixinMatrix4f implements Matrix4fExtended {
     }
 
     private void rotateY(Quaternion quaternion) {
-        float y = quaternion.i();
+        float y = quaternion.j();
         float w = quaternion.r();
 
         float yy = 2.0F * y * y;

@@ -19,6 +19,9 @@
   "client": [
     "perf.items.MixinItemColors",
     "perf.items.MixinItemRenderer",
+    "perf.matrix.MixinMatrixStack",
+    "perf.matrix.MixinVertexConsumer",
+    "perf.font.MixinGlyphRenderer",
     "perf.fastrender.model.MixinCuboid",
     "perf.fastrender.model.MixinSpriteTexturedVertexConsumer",
     "perf.fastrender.model.MixinVertexConsumer",
