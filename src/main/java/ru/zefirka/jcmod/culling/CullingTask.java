@@ -82,7 +82,7 @@ public class CullingTask implements Runnable {
             try {
                 entity = iterable.next();
             } catch (NullPointerException | ConcurrentModificationException ex) {
-                break;
+                continue;
             }
             if (entity == client.player) {
                 continue;
@@ -132,8 +132,7 @@ public class CullingTask implements Runnable {
             try {
                 entity = tileEntityIterator.next();
             } catch (NullPointerException | ConcurrentModificationException ex) {
-                ex.printStackTrace();
-                break;
+                continue;
             }
             if (entity.isRemoved() || ((CullableType) entity.getType()).isCullWhitelisted()) {
                 continue;
