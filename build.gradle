@@ -129,6 +129,7 @@ dependencies {
     minecraft 'net.minecraftforge:forge:1.16.5-36.2.41'
     compileOnly 'org.projectlombok:lombok:1.18.28'
     annotationProcessor 'org.projectlombok:lombok:1.18.28'
+    //implementation files('libs/OptiFine-1.16.5_HD_U_G8.jar')
     //minecraft "com.mojang:minecraft:1.16.5"
     // You may put jars on which you depend on in ./libs or you may define them like so..
     // compile "some.group:artifact:version:classifier"

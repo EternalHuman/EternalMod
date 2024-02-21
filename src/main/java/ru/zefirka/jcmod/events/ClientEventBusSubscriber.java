@@ -13,5 +13,6 @@ public class ClientEventBusSubscriber {
     public static void clientSetup(FMLClientSetupEvent event) {
         BindManager.init();
         JCMod.INSTANCE.onInitialize();
+        System.out.println("EternalMod fully initialised!");
     }
 }

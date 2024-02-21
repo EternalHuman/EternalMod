@@ -35,7 +35,6 @@ public class Updater {
         currentUpdater = UpdaterSource.DROPBOX;
         try {
             StartupMessageManager.addModMessage("UPDATES CHECK...");
-
             initHashSums();
 
             initFile(UpdateFile.builder().id("rp")

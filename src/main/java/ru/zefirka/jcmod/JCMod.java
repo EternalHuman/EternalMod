@@ -20,6 +20,7 @@ import java.io.IOException;
 @Mod("jcmod")
 public class JCMod extends EternalOptimizer {
     public static final String MODID = "jcmod";
+    public static final String VERSION = "2.1.1";
     public static JCMod INSTANCE;
 
     public static final String VK_LINK = "https://vk.com/eternaljc";
@@ -33,6 +34,7 @@ public class JCMod extends EternalOptimizer {
     public static Minecraft MINECRAFT;
 
     public JCMod() {
+        System.out.println("Starting EternalMod v" + VERSION);
         INSTANCE = this;
         MINECRAFT = Minecraft.getInstance();
         try {
@@ -42,7 +44,6 @@ public class JCMod extends EternalOptimizer {
             e.printStackTrace();
         }
         MINECRAFT.options.realmsNotifications = false;
-        MINECRAFT.options.skipMultiplayerWarning = true;
         Updater.init();
         ModLoadingContext.get().registerExtensionPoint(ExtensionPoint.DISPLAYTEST, () -> Pair.of(() -> FMLNetworkConstants.IGNORESERVERONLY, (a, b) -> true));
     }

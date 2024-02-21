@@ -11,6 +11,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import ru.zefirka.jcmod.model.quad.ModelQuadView;
 import ru.zefirka.jcmod.utils.quad.ModelQuadFlags;
+
 import static ru.zefirka.jcmod.utils.quad.ModelQuadUtil.*;
 
 @Mixin(BakedQuad.class)

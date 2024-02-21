@@ -1,12 +1,12 @@
 package com.logisticscraft.occlusionculling;
 
-import java.util.Arrays;
-import java.util.BitSet;
-
 import com.logisticscraft.occlusionculling.cache.ArrayOcclusionCache;
 import com.logisticscraft.occlusionculling.cache.OcclusionCache;
 import com.logisticscraft.occlusionculling.util.MathUtilities;
 import com.logisticscraft.occlusionculling.util.Vec3d;
+
+import java.util.Arrays;
+import java.util.BitSet;
 
 public class OcclusionCullingInstance {
 

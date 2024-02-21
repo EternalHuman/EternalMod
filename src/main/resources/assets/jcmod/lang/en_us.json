@@ -32,7 +32,7 @@
   "menu.select" : "§2Alternative connection",
   "menu.vklink" : "§bVK",
   "menu.dslink" : "§9Discord",
-  "menu.updated" : "§4§l§nUpdate. Please reboot client.",
+  "menu.updated" : "§a§l§nUpdate. Please reboot client.",
 
   "eternalmod.cl.cooldown" : "§b§lJ§c§lC §7> §4The next usage of Chest radar will be available in %s §4sec!",
   "eternalmod.cl.enabled" : "§b§lJ§c§lC §7> §2Chest radar is enabled and will work for %s §2seconds!",

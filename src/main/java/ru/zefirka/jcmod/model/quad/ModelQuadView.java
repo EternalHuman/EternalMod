@@ -1,6 +1,7 @@
 package ru.zefirka.jcmod.model.quad;
 
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+
 import java.nio.ByteBuffer;
 
 /**
