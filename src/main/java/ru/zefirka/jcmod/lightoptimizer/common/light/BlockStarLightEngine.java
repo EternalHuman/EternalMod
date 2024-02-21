@@ -93,7 +93,8 @@ public final class BlockStarLightEngine extends StarLightEngine {
         final int currentLevel = this.getLightLevel(worldX, worldY, worldZ);
         final BlockState blockState = this.getBlockState(worldX, worldY, worldZ);
 
-        final int emittedLevel = blockState.getLightEmission() & emittedMask;
+        this.checkBlockPos.set(worldX, worldY, worldZ);
+        final int emittedLevel = blockState.getLightValue(lightAccess.getLevel(), this.checkBlockPos) & emittedMask; // Forge
 
 
         this.setLightLevel(worldX, worldY, worldZ, emittedLevel);
