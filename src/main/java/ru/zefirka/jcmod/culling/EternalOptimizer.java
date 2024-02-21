@@ -7,6 +7,7 @@ import lombok.Getter;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.client.settings.KeyBinding;
+import net.minecraft.entity.EntityType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Util;
 import net.minecraft.util.registry.Registry;
@@ -21,6 +22,8 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.util.Arrays;
+import java.util.List;
 
 public abstract class EternalOptimizer {
     public OcclusionCullingInstance culling, cullingTiles;
@@ -30,6 +33,7 @@ public abstract class EternalOptimizer {
     protected KeyBinding keybind = new KeyBinding("key.optimization.toggle", -1, "EternalOptimizer");
     private boolean pressed = false;
     private boolean lateInit = false;
+    private static final List<EntityType> noCullingEntities = Arrays.asList(EntityType.ENDER_DRAGON, EntityType.LIGHTNING_BOLT, EntityType.FISHING_BOBBER);
 
     @Getter
     private static EternalModConfig eternalModConfig;
@@ -102,6 +106,9 @@ public abstract class EternalOptimizer {
             for (String entityType : eternalModConfig.entityWhitelist) {
                 Registry.ENTITY_TYPE.getOptional(new ResourceLocation(entityType)).ifPresent(e -> ((CullableType) e).setCullWhitelisted(true));
             }
+            noCullingEntities.forEach(entityType -> {
+                ((CullableType) entityType).setCullWhitelisted(true);
+            });
         }
         if (keybind.isDown()) {
             if (pressed) return;
