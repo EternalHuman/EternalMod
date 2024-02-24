@@ -17,6 +17,9 @@
     "common.world.WorldMixin"
   ],
   "client": [
+    "perf.particles.MixinBillboardParticle",
+    "perf.fastrender.model.MixinMultipartBakedModel",
+    "perf.fastrender.model.MixinWeightedBakedModel",
     "perf.items.MixinItemColors",
     "perf.items.MixinItemRenderer",
     "perf.matrix.MixinMatrixStack",
@@ -28,7 +31,8 @@
     "perf.fastrender.model.MixinBufferBuilder",
     "perf.fastrender.model.MixinVertexFormat",
     "perf.fastrender.MixinDirection",
-    "perf.sprite.MixinSprite",
+    "perf.sprite.MixinSpriteAtlasTexture",
+    "perf.sprite.MixinSpriteBillboardParticle",
     "perf.blocks.MixinBlockModelRenderer",
     "perf.quad.MixinBakedQuad",
     "perf.fastrender.model.MixinMatrix3f",

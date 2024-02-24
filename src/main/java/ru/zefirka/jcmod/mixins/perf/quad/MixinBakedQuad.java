@@ -52,12 +52,7 @@ public class MixinBakedQuad implements ModelQuadView {
 
     @Override
     public int getColor(int idx) {
-    	if(vertexOffset(idx) + COLOR_INDEX < vertices.length) {
-            return this.vertices[vertexOffset(idx) + COLOR_INDEX];
-        } else
-        {
-            return vertices.length;
-        }
+        return this.vertices[vertexOffset(idx) +  COLOR_INDEX];
     }
 
     @Override

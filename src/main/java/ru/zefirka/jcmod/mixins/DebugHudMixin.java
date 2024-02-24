@@ -5,6 +5,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import ru.zefirka.jcmod.JCMod;
 import ru.zefirka.jcmod.culling.DebugStats;
 
 import java.util.List;
@@ -24,6 +25,7 @@ public class DebugHudMixin {
             DebugStats.skippedEntityTicks = 0;
         }
         List<String> list = callback.getReturnValue();
+        list.add("[EternalMod] Version: " + JCMod.VERSION);
         list.add("[EternalMod] Last pass: " + DebugStats.lastTime + "ms");
         list.add("[EternalMod] Rendered Block Entities: " + DebugStats.renderedBlockEntities
                 + " Skipped: " + DebugStats.skippedBlockEntities);

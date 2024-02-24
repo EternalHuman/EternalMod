@@ -28,6 +28,9 @@ public abstract class MixinSpriteTexturedVertexConsumer implements VertexDrain {
         if (type == VanillaVertexTypes.QUADS) {
             return (T) new SpriteTexturedVertexTransformer.Quad(VertexDrain.of(this.delegate)
                     .createSink(VanillaVertexTypes.QUADS), this.sprite);
+        } else if (type == VanillaVertexTypes.PARTICLES) {
+            return (T) new SpriteTexturedVertexTransformer.Particle(VertexDrain.of(this.delegate)
+                    .createSink(VanillaVertexTypes.PARTICLES), this.sprite);
         } else if (type == VanillaVertexTypes.GLYPHS) {
             return (T) new SpriteTexturedVertexTransformer.Glyph(VertexDrain.of(this.delegate)
                     .createSink(VanillaVertexTypes.GLYPHS), this.sprite);

@@ -3,6 +3,7 @@ package ru.zefirka.jcmod.utils.vertex.transformers;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import ru.zefirka.jcmod.utils.vertex.VertexSink;
 import ru.zefirka.jcmod.utils.vertex.formats.glyph.GlyphVertexSink;
+import ru.zefirka.jcmod.utils.vertex.formats.particle.ParticleVertexSink;
 import ru.zefirka.jcmod.utils.vertex.formats.quad.QuadVertexSink;
 
 /**
@@ -46,6 +47,20 @@ public abstract class SpriteTexturedVertexTransformer<T extends VertexSink> exte
             v = this.transformTextureV(v);
 
             this.delegate.writeQuad(x, y, z, color, u, v, light, overlay, normal);
+        }
+    }
+
+    public static class Particle extends SpriteTexturedVertexTransformer<ParticleVertexSink> implements ParticleVertexSink {
+        public Particle(ParticleVertexSink delegate, TextureAtlasSprite sprite) {
+            super(delegate, sprite);
+        }
+
+        @Override
+        public void writeParticle(float x, float y, float z, float u, float v, int color, int light) {
+            u = this.transformTextureU(u);
+            v = this.transformTextureV(v);
+
+            this.delegate.writeParticle(x, y, z, u, v, color, light);
         }
     }
 

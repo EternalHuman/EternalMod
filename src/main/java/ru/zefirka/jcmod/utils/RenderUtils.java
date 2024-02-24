@@ -16,6 +16,10 @@ import net.minecraft.util.math.vector.Vector3i;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
 import ru.zefirka.jcmod.JCMod;
+import ru.zefirka.jcmod.utils.color.ColorABGR;
+import ru.zefirka.jcmod.utils.vertex.VanillaVertexTypes;
+import ru.zefirka.jcmod.utils.vertex.VertexDrain;
+import ru.zefirka.jcmod.utils.vertex.formats.line.LineVertexSink;
 
 import java.awt.*;
 import java.util.Collections;
@@ -27,7 +31,7 @@ public class RenderUtils {
     private static final int GL_LINE = 6913;
     private static final int GL_FILL = 6914;
     private static final int GL_LINES = 1;
-    private static final float OPACITY = 1;
+    public static final float OPACITY = 1;
 
     private static final Map<BlockPos, RenderBlockProps> syncRenderMap = Collections.synchronizedMap(new HashMap<>());
 
@@ -76,45 +80,48 @@ public class RenderUtils {
     }
 
     private static void renderBlock(IVertexBuilder buffer, RenderBlockProps props) {
-        final float red = (props.getColor() >> 16 & 0xff) / 255f;
-        final float green = (props.getColor() >> 8 & 0xff) / 255f;
-        final float blue = (props.getColor() & 0xff) / 255f;
+        int color = props.getColor();
+        LineVertexSink lines = VertexDrain.of(buffer)
+                .createSink(VanillaVertexTypes.LINES);
+        lines.ensureCapacity(24);
 
         //.vertex?
-        buffer.vertex(0, 1, 0).color(red, green, blue, OPACITY).endVertex();
-        buffer.vertex(1, 1, 0).color(red, green, blue, OPACITY).endVertex();
-        buffer.vertex(1, 1, 0).color(red, green, blue, OPACITY).endVertex();
-        buffer.vertex(1, 1, 1).color(red, green, blue, OPACITY).endVertex();
-        buffer.vertex(1, 1, 1).color(red, green, blue, OPACITY).endVertex();
-        buffer.vertex(0, 1, 1).color(red, green, blue, OPACITY).endVertex();
-        buffer.vertex(0, 1, 1).color(red, green, blue, OPACITY).endVertex();
-        buffer.vertex(0, 1, 0).color(red, green, blue, OPACITY).endVertex();
+        lines.vertexLine(0, 1, 0, color);
+        lines.vertexLine(1, 1, 0, color);
+        lines.vertexLine(1, 1, 0, color);
+        lines.vertexLine(1, 1, 1, color);
+        lines.vertexLine(1, 1, 1, color);
+        lines.vertexLine(0, 1, 1, color);
+        lines.vertexLine(0, 1, 1, color);
+        lines.vertexLine(0, 1, 0, color);
 
         // BOTTOM
-        buffer.vertex(1, 0, 0).color(red, green, blue, OPACITY).endVertex();
-        buffer.vertex(1, 0, 1).color(red, green, blue, OPACITY).endVertex();
-        buffer.vertex(1, 0, 1).color(red, green, blue, OPACITY).endVertex();
-        buffer.vertex(0, 0, 1).color(red, green, blue, OPACITY).endVertex();
-        buffer.vertex(0, 0, 1).color(red, green, blue, OPACITY).endVertex();
-        buffer.vertex(0, 0, 0).color(red, green, blue, OPACITY).endVertex();
-        buffer.vertex(0, 0, 0).color(red, green, blue, OPACITY).endVertex();
-        buffer.vertex(1, 0, 0).color(red, green, blue, OPACITY).endVertex();
+       lines.vertexLine(1, 0, 0, color);
+       lines.vertexLine(1, 0, 1, color);
+       lines.vertexLine(1, 0, 1, color);
+       lines.vertexLine(0, 0, 1, color);
+       lines.vertexLine(0, 0, 1, color);
+       lines.vertexLine(0, 0, 0, color);
+       lines.vertexLine(0, 0, 0, color);
+       lines.vertexLine(1, 0, 0, color);
 
         // Edgevertex
-        buffer.vertex(1, 0, 1).color(red, green, blue, OPACITY).endVertex();
-        buffer.vertex(1, 1, 1).color(red, green, blue, OPACITY).endVertex();
+        lines.vertexLine(1, 0, 1, color);
+        lines.vertexLine(1, 1, 1, color);
 
         // Edgevertex
-        buffer.vertex(1, 0, 0).color(red, green, blue, OPACITY).endVertex();
-        buffer.vertex(1, 1, 0).color(red, green, blue, OPACITY).endVertex();
+        lines.vertexLine(1, 0, 0, color);
+        lines.vertexLine(1, 1, 0, color);
 
         // Edgevertex
-        buffer.vertex(0, 0, 1).color(red, green, blue, OPACITY).endVertex();
-        buffer.vertex(0, 1, 1).color(red, green, blue, OPACITY).endVertex();
+        lines.vertexLine(0, 0, 1, color);
+        lines.vertexLine(0, 1, 1, color);
 
         // Edgevertex
-        buffer.vertex(0, 0, 0).color(red, green, blue, OPACITY).endVertex();
-        buffer.vertex(0, 1, 0).color(red, green, blue, OPACITY).endVertex();
+        lines.vertexLine(0, 0, 0, color);
+        lines.vertexLine(0, 1, 0, color);
+
+        lines.flush();
     }
 
     // Vec3i forward compatibility functions

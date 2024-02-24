@@ -2,20 +2,40 @@ package ru.zefirka.jcmod.utils.color;
 
 public interface ColorU8 {
     /**
-     * The maximum value of a color component.
+     * The number of bits used for each color component.
      */
-    float COMPONENT_RANGE = 255.0f;
+    int COMPONENT_BITS = 8;
 
     /**
-     * Constant value which can be multiplied with a floating-point color component to get the normalized value. The
-     * multiplication is slightly faster than a floating point division, and this code is a hot path which justifies it.
+     * The bitwise mask for each color component.
      */
-    float NORM = 1.0f / COMPONENT_RANGE;
+    int COMPONENT_MASK = (1 << COMPONENT_BITS) - 1;
 
     /**
-     * Normalizes a color component to the range of 0..1.
+     * The maximum value of a color component. Used for converting normalizing floats to integers.
      */
-    static float normalize(float v) {
-        return v * NORM;
+    float COMPONENT_RANGE = (float) COMPONENT_MASK;
+
+    /**
+     * The multiplicative inverse of (value / COMPONENT_RANGE). Used for converting integers to normalized floats.
+     */
+    float COMPONENT_RANGE_INVERSE = 1.0f / COMPONENT_RANGE;
+
+    /**
+     * Converts a normalized float to an integer component.
+     * @param value The floating point value in the range of 0.0..1.0
+     * @return The integer component of the floating point value in 0..255 range
+     */
+    static int normalizedFloatToByte(float value) {
+        return (int) (value * COMPONENT_RANGE) & COMPONENT_MASK;
+    }
+
+    /**
+     * Converts an integer component to a normalized floating point value.
+     * @param value The integer component in 0..255 range
+     * @return The floating point value of the integer component in the range of 0.0..1.0
+     */
+    static float byteToNormalizedFloat(int value) {
+        return (float) value * COMPONENT_RANGE_INVERSE;
     }
 }

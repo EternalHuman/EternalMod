@@ -17,6 +17,9 @@ public class Norm3b {
      * The maximum value of a normal's vector component.
      */
     private static final float COMPONENT_RANGE = 127.0f;
+    private static final int X_COMPONENT_OFFSET = 0;
+    private static final int Y_COMPONENT_OFFSET = 8;
+    private static final int Z_COMPONENT_OFFSET = 16;
 
     /**
      * Constant value which can be multiplied with a floating-point vector component to get the normalized value. The
@@ -44,8 +47,9 @@ public class Norm3b {
         int normY = encode(y);
         int normZ = encode(z);
 
-        return (normZ << 16) | (normY << 8) | normX;
+        return (normZ << Z_COMPONENT_OFFSET) | (normY << Y_COMPONENT_OFFSET) | (normX << X_COMPONENT_OFFSET);
     }
+
 
     /**
      * Encodes a float in the range of -1.0..1.0 to a normalized unsigned integer in the range of 0..255 which can then
@@ -61,7 +65,7 @@ public class Norm3b {
      * @param norm The packed normal
      */
     public static float unpackX(int norm) {
-        return ((byte) (norm & 0xFF)) * NORM;
+        return ((byte) ((norm >> X_COMPONENT_OFFSET) & 0xFF)) * NORM;
     }
 
     /**
@@ -69,7 +73,7 @@ public class Norm3b {
      * @param norm The packed normal
      */
     public static float unpackY(int norm) {
-        return ((byte) ((norm >> 8) & 0xFF)) * NORM;
+        return ((byte) ((norm >> Y_COMPONENT_OFFSET) & 0xFF)) * NORM;
     }
 
     /**
@@ -77,6 +81,6 @@ public class Norm3b {
      * @param norm The packed normal
      */
     public static float unpackZ(int norm) {
-        return ((byte) ((norm >> 16) & 0xFF)) * NORM;
+        return ((byte) ((norm >> Z_COMPONENT_OFFSET) & 0xFF)) * NORM;
     }
 }
