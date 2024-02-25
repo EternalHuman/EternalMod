@@ -31,6 +31,8 @@
     "perf.fastrender.model.MixinBufferBuilder",
     "perf.fastrender.model.MixinVertexFormat",
     "perf.fastrender.MixinDirection",
+    "perf.signs.MixinTexturedRenderLayers",
+    "perf.signs.MixinRenderLayer",
     "perf.sprite.MixinSpriteAtlasTexture",
     "perf.sprite.MixinSpriteBillboardParticle",
     "perf.blocks.MixinBlockModelRenderer",

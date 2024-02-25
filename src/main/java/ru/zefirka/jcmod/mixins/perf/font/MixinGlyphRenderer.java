@@ -3,6 +3,7 @@ package ru.zefirka.jcmod.mixins.perf.font;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 import net.minecraft.client.gui.fonts.TexturedGlyph;
 import net.minecraft.util.math.vector.Matrix4f;
+import org.lwjgl.system.MemoryStack;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
