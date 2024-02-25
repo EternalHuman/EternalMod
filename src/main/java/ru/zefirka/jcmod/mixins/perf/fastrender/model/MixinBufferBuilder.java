@@ -46,7 +46,7 @@ public class MixinBufferBuilder implements VertexBufferView, VertexDrain {
     @Redirect(method = "popNextBuffer", at = @At(value = "INVOKE", target = "Ljava/nio/Buffer;limit(I)Ljava/nio/Buffer;"))
     public Buffer debugGetNextBuffer(Buffer buffer, int newLimit) {
         ensureBufferCapacity(newLimit);
-        buffer = (Buffer) this.buffer;
+        buffer = this.buffer;
         buffer.limit(newLimit);
         return buffer;
     }

@@ -162,7 +162,11 @@ public class RenderUtils {
     }
 
     public static void debug(String debug) {
-        Minecraft.getInstance().player.sendMessage(new StringTextComponent(debug), Util.NIL_UUID);
+        Minecraft minecraft = Minecraft.getInstance();
+        if (minecraft == null) return;
+        if (minecraft.player == null) return;
+        if (minecraft.player.tickCount < 10) return;
+        minecraft.player.sendMessage(new StringTextComponent(debug), Util.NIL_UUID);
     }
 
     /**

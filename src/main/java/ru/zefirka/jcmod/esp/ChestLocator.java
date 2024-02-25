@@ -15,7 +15,7 @@ import java.util.concurrent.TimeUnit;
 
 @Mod.EventBusSubscriber(modid = JCMod.MODID, value = Dist.CLIENT)
 public class ChestLocator {
-    public static final long COOLDOWN = TimeUnit.SECONDS.toMillis(20);
+    public static final long COOLDOWN = TimeUnit.SECONDS.toMillis(16);
     public static final long DURATION = TimeUnit.SECONDS.toMillis(15);
 
     @Getter
