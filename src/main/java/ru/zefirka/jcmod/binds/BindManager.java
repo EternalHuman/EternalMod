@@ -25,16 +25,7 @@ public class BindManager
 
     public static void init() {
         createKeyBind("key.bind.cl", clientPlayerEntity -> {
-            long endTime = ChestLocator.getLastEspTime() + ChestLocator.COOLDOWN;
-            long nowTime = System.currentTimeMillis();
-            if (nowTime < endTime) {
-                int leftSeconds = (int) ((endTime - nowTime) / 1000);
-                clientPlayerEntity.sendMessage(new TranslationTextComponent("eternalmod.cl.cooldown", leftSeconds),
-                        clientPlayerEntity.getUUID());
-                return;
-            }
             ChestLocator.runChestFinder();
-            ChestLocator.setLastEspTime(nowTime);
             ChestLocator.setEnabled(true);
             clientPlayerEntity.sendMessage(new TranslationTextComponent("eternalmod.cl.enabled", ChestLocator.DURATION / 1000),
                     clientPlayerEntity.getUUID());
@@ -44,8 +35,7 @@ public class BindManager
                                 @Override
                                 public void run() {
                                     ChestLocator.setEnabled(false);
-                                    clientPlayerEntity.sendMessage(new TranslationTextComponent("eternalmod.cl.disabled",
-                                                    (ChestLocator.COOLDOWN - ChestLocator.DURATION) / 1000),
+                                    clientPlayerEntity.sendMessage(new TranslationTextComponent("eternalmod.cl.disabled"),
                                             clientPlayerEntity.getUUID());
                                 }
                             }),

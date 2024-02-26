@@ -34,7 +34,7 @@
   "menu.dslink" : "§9Discord",
   "menu.updated" : "§a§l§nUpdate. Please reboot client.",
 
-  "eternalmod.cl.cooldown" : "§b§lJ§c§lC §7> §4The next usage of Chest radar will be available in %s §4sec!",
+  "eternalmod.cl.cooldown" : "§b§lJ§c§lC §7> §4Chest radar is disabled!",
   "eternalmod.cl.enabled" : "§b§lJ§c§lC §7> §2Chest radar is enabled and will work for %s §2seconds!",
   "eternalmod.cl.disabled" : "§b§lJ§c§lC §7> §cChest radar has turned off. Next possible usage in %s §csec."
 }
