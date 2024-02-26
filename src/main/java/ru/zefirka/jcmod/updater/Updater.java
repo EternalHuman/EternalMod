@@ -60,7 +60,7 @@ public class Updater {
                     .build());
 
             initFile(UpdateFile.builder()
-                    .id("mod")
+                    .id("mod1")
                     .fileName("EternalMod-STABLE.jar")
                     .path(absolutePath + File.separator + "mods")
                     .updateUrls(

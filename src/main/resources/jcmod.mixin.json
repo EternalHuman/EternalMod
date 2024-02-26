@@ -19,7 +19,6 @@
   "client": [
     "perf.particles.MixinBillboardParticle",
     "perf.fastrender.model.MixinMultipartBakedModel",
-    "perf.fastrender.model.MixinWeightedBakedModel",
     "perf.items.MixinItemColors",
     "perf.items.MixinItemRenderer",
     "perf.matrix.MixinMatrixStack",

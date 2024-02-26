@@ -7,7 +7,7 @@ import org.spongepowered.asm.mixin.*;
 import ru.zefirka.jcmod.utils.color.ColorMixer;
 
 @Mixin(TextureAtlasSprite.InterpolationData.class)
-public abstract class MixinSpriteInterpolated {
+public class MixinSpriteInterpolated {
     @Shadow
     @Final
     private NativeImage[] activeFrame;
