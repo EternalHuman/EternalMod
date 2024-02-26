@@ -20,7 +20,7 @@ public class TileRenderer {
     public java.util.Set<TileEntity> blockEntitiesToUnload;
 
     @Inject(method = "tickBlockEntities", at = @At("HEAD"))
-    public void removeTile(CallbackInfo ci) {
+    private void removeTile(CallbackInfo ci) {
         if (ChestLocator.isEnabled()) {
             this.blockEntitiesToUnload.forEach(tileEntity -> {
                 if (tileEntity.getType() != TileEntityType.CHEST) return;
@@ -30,14 +30,14 @@ public class TileRenderer {
     }
 
     @Inject(method = "removeBlockEntity", at = @At(value = "TAIL"), locals = LocalCapture.CAPTURE_FAILHARD)
-    public void removeTile(BlockPos p_175713_1_, CallbackInfo ci, TileEntity tileentity) {
+    private void removeTile(BlockPos p_175713_1_, CallbackInfo ci, TileEntity tileentity) {
         if (ChestLocator.isEnabled() && tileentity.getType() == TileEntityType.CHEST) {
             RenderUtils.removeChest(tileentity.getBlockPos());
         }
     }
 
     @Inject(method = "addBlockEntity", at = @At("TAIL"))
-    public void addTile(TileEntity p_175700_1_, CallbackInfoReturnable<Boolean> cir) {
+    private void addTile(TileEntity p_175700_1_, CallbackInfoReturnable<Boolean> cir) {
         if (ChestLocator.isEnabled() && p_175700_1_.getType() == TileEntityType.CHEST) {
             RenderUtils.addChest(p_175700_1_.getBlockPos());
         }

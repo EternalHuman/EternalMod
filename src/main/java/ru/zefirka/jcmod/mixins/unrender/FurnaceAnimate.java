@@ -16,7 +16,7 @@ import java.util.Random;
 @Mixin(FurnaceBlock.class)
 public class FurnaceAnimate {
     @Inject(method = "animateTick", at = @At("HEAD"), cancellable = true)
-    public void tickEntity(BlockState p_180655_1_, World p_180655_2_, BlockPos p_180655_3_, Random p_180655_4_, CallbackInfo ci) {
+    private void tickEntity(BlockState p_180655_1_, World p_180655_2_, BlockPos p_180655_3_, Random p_180655_4_, CallbackInfo ci) {
         TileEntity tileEntity = p_180655_2_.getBlockEntity(p_180655_3_);
         if (tileEntity != null && ((Cullable) tileEntity).isCulled()) {
             ci.cancel();

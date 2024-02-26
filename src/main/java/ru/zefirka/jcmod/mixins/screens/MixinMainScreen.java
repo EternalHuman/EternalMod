@@ -31,7 +31,7 @@ public class MixinMainScreen extends Screen {
      * @reason Rewrite menu screen
      */
     @Overwrite
-    public void createNormalMenuOptions(int p_73969_1_, int p_73969_2_) {
+    private void createNormalMenuOptions(int p_73969_1_, int p_73969_2_) {
         if (!Updater.REBOOT) {
             Button.ITooltip button$itooltip = Button.NO_TOOLTIP;
 

@@ -20,7 +20,7 @@ import java.io.IOException;
 @Mod("jcmod")
 public class JCMod extends EternalOptimizer {
     public static final String MODID = "jcmod";
-    public static final String VERSION = "2.3.0";
+    public static final String VERSION = "2.4.0";
     public static JCMod INSTANCE;
 
     public static final String VK_LINK = "https://vk.com/eternaljc";
