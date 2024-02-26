@@ -25,6 +25,7 @@ public class BindManager
 
     public static void init() {
         createKeyBind("key.bind.cl", clientPlayerEntity -> {
+            if (ChestLocator.isEnabled()) return;
             ChestLocator.runChestFinder();
             ChestLocator.setEnabled(true);
             clientPlayerEntity.sendMessage(new TranslationTextComponent("eternalmod.cl.enabled", ChestLocator.DURATION / 1000),

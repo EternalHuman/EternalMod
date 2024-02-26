@@ -30,7 +30,6 @@
     "perf.fastrender.model.MixinVertexConsumer",
     "perf.fastrender.model.MixinBufferBuilder",
     "perf.fastrender.model.MixinVertexFormat",
-    "perf.fastrender.model.MixinModelPart",
     "perf.fastrender.MixinDirection",
     "perf.signs.MixinTexturedRenderLayers",
     "perf.sprite.MixinSpriteInterpolated",
